@@ -74,8 +74,8 @@ void Error_Handler(void);
 #define LPUART1_RX_GPIO_Port GPIOA
 #define ULTRASSONIC_ECO_Pin GPIO_PIN_4
 #define ULTRASSONIC_ECO_GPIO_Port GPIOA
-#define LD2_Pin GPIO_PIN_5
-#define LD2_GPIO_Port GPIOA
+#define YELLOW_LED_Pin GPIO_PIN_5
+#define YELLOW_LED_GPIO_Port GPIOA
 #define IR2_AD_Pin GPIO_PIN_6
 #define IR2_AD_GPIO_Port GPIOA
 #define BATTERY_AD_Pin GPIO_PIN_7
@@ -104,10 +104,10 @@ void Error_Handler(void);
 #define IR5_AD_GPIO_Port GPIOA
 #define LEFT_MOTOR_DIR_IN4_Pin GPIO_PIN_10
 #define LEFT_MOTOR_DIR_IN4_GPIO_Port GPIOA
-#define RED_PWM_Pin GPIO_PIN_11
-#define RED_PWM_GPIO_Port GPIOA
-#define GREEN_PWM_Pin GPIO_PIN_12
-#define GREEN_PWM_GPIO_Port GPIOA
+#define RED_LED_Pin GPIO_PIN_11
+#define RED_LED_GPIO_Port GPIOA
+#define GREEN_LED_Pin GPIO_PIN_12
+#define GREEN_LED_GPIO_Port GPIOA
 #define T_SWDIO_Pin GPIO_PIN_13
 #define T_SWDIO_GPIO_Port GPIOA
 #define T_SWCLK_Pin GPIO_PIN_14
@@ -132,8 +132,8 @@ void Error_Handler(void);
 #define BT_UP_GPIO_Port GPIOB
 #define LEFT_MOTOR_DIR_IN3_Pin GPIO_PIN_7
 #define LEFT_MOTOR_DIR_IN3_GPIO_Port GPIOB
-#define BLUE_PWM_Pin GPIO_PIN_8
-#define BLUE_PWM_GPIO_Port GPIOB
+#define BLUE_LED_Pin GPIO_PIN_8
+#define BLUE_LED_GPIO_Port GPIOB
 #define RIGHT_MOTOR_DIR_IN2_Pin GPIO_PIN_9
 #define RIGHT_MOTOR_DIR_IN2_GPIO_Port GPIOB
 

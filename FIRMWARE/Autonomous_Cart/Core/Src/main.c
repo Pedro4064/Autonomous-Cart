@@ -106,6 +106,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -420,10 +421,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LD2_Pin|LEFT_MOTOR_DIR_IN4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, YELLOW_LED_Pin|LEFT_MOTOR_DIR_IN4_Pin|RED_LED_Pin|GREEN_LED_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, RIGHT_MOTOR_DIR_IN1_Pin|LEFT_MOTOR_DIR_IN3_Pin|RIGHT_MOTOR_DIR_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, RIGHT_MOTOR_DIR_IN1_Pin|LEFT_MOTOR_DIR_IN3_Pin|BLUE_LED_Pin|RIGHT_MOTOR_DIR_IN2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : B1_Pin BT_ENTER_Pin BT_DOWN_Pin BT_LEFT_Pin
                            BT_RIGHT_Pin */
@@ -449,8 +450,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF2_TIM3;
   HAL_GPIO_Init(ULTRASSONIC_ECO_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LD2_Pin LEFT_MOTOR_DIR_IN4_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin|LEFT_MOTOR_DIR_IN4_Pin;
+  /*Configure GPIO pins : YELLOW_LED_Pin LEFT_MOTOR_DIR_IN4_Pin RED_LED_Pin GREEN_LED_Pin */
+  GPIO_InitStruct.Pin = YELLOW_LED_Pin|LEFT_MOTOR_DIR_IN4_Pin|RED_LED_Pin|GREEN_LED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -472,8 +473,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : RIGHT_MOTOR_DIR_IN1_Pin LEFT_MOTOR_DIR_IN3_Pin RIGHT_MOTOR_DIR_IN2_Pin */
-  GPIO_InitStruct.Pin = RIGHT_MOTOR_DIR_IN1_Pin|LEFT_MOTOR_DIR_IN3_Pin|RIGHT_MOTOR_DIR_IN2_Pin;
+  /*Configure GPIO pins : RIGHT_MOTOR_DIR_IN1_Pin LEFT_MOTOR_DIR_IN3_Pin BLUE_LED_Pin RIGHT_MOTOR_DIR_IN2_Pin */
+  GPIO_InitStruct.Pin = RIGHT_MOTOR_DIR_IN1_Pin|LEFT_MOTOR_DIR_IN3_Pin|BLUE_LED_Pin|RIGHT_MOTOR_DIR_IN2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -490,22 +491,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(IR5_AD_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : RED_PWM_Pin */
-  GPIO_InitStruct.Pin = RED_PWM_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF11_TIM1;
-  HAL_GPIO_Init(RED_PWM_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : GREEN_PWM_Pin */
-  GPIO_InitStruct.Pin = GREEN_PWM_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF10_TIM4;
-  HAL_GPIO_Init(GREEN_PWM_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : BUZZER_PWM_Pin */
   GPIO_InitStruct.Pin = BUZZER_PWM_Pin;
@@ -550,14 +535,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BT_UP_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : BLUE_PWM_Pin */
-  GPIO_InitStruct.Pin = BLUE_PWM_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF2_TIM4;
-  HAL_GPIO_Init(BLUE_PWM_GPIO_Port, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
