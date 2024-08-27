@@ -22,6 +22,7 @@
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"
+#include "powerTrainSystem.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -94,6 +95,7 @@ int main(void)
   MX_ADC3_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
+  vPowerTrainSystemInit();
 
   /* USER CODE END 2 */
 
@@ -101,6 +103,32 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  	  /*
+	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
+	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
+	  HAL_Delay(3000);
+	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,0);
+	  HAL_Delay(3000);
+	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
+	  HAL_Delay(3000);
+	  */
+	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
+
+	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
+	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 500);
+	  HAL_Delay(3000);
+	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,0);
+	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 0);
+	  HAL_Delay(1000);
+
+	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
+	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
+
+	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
+	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 500);
+	  HAL_Delay(3000);
 
     /* USER CODE END WHILE */
 
