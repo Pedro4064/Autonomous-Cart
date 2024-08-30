@@ -22,7 +22,6 @@
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"
-#include "powerTrainSystem.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -94,6 +93,8 @@ int main(void)
   MX_ADC2_Init();
   MX_ADC3_Init();
   MX_TIM1_Init();
+  MX_TIM16_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   vPowerTrainSystemInit();
 
@@ -103,16 +104,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  	  /*
-	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
-	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
-	  HAL_Delay(3000);
-	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,0);
-	  HAL_Delay(3000);
-	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
-	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
-	  HAL_Delay(3000);
-	  */
+
 	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
 	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
 

@@ -48,7 +48,6 @@
      PC10   ------> SPI3_SCK
      PC11   ------> SPI3_MISO
      PC12   ------> SPI3_MOSI
-     PB4   ------> S_TIM16_CH1
      PB5   ------> S_TIM17_CH1
 */
 void MX_GPIO_Init(void)
@@ -148,14 +147,6 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(SW_FRONTAL_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = LEFT_ENCODER_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF1_TIM16;
-  HAL_GPIO_Init(LEFT_ENCODER_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = RIGHT_ENCODER_Pin;
