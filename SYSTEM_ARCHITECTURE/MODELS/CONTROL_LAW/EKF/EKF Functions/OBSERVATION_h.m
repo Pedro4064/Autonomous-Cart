@@ -41,7 +41,7 @@ function z = OBSERVATION_h(x)
 % resulting states.
 
     z = [
-            cos(x(7)) + sin(x(7));
+            x(3).*cos(x(7)) + x(6).*sin(x(7));
             x(8)
         ];
 
