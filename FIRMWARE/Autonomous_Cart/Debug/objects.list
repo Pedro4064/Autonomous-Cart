@@ -1,5 +1,6 @@
+"./Core/Src/ComSystemInterface.o"
+"./Core/Src/LineSensorSystemInterface.o"
 "./Core/Src/adc.o"
-"./Core/Src/communication.o"
 "./Core/Src/gpio.o"
 "./Core/Src/main.o"
 "./Core/Src/powerTrainSystem.o"

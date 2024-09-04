@@ -22,6 +22,7 @@
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"
+#include "ComSystemInterface.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */

@@ -1,0 +1,4 @@
+1725480917568	Rename resource 'communication.c'
+1725480929534	Rename resource 'communication.h'
+1725481518377	Move 'LineSensorSystemInterface.c' to 'Src'
+1725481521035	Move 'LineSensorSystemInterface.h' to 'Inc'

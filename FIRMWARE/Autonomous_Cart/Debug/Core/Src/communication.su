@@ -1,2 +1,0 @@
-../Core/Src/communication.c:54:6:vCommunicationAppendCharacter	16	static
-../Core/Src/communication.c:87:6:vCommunicationSentToFloat	40	static
