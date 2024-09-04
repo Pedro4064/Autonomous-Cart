@@ -1,4 +1,4 @@
-function y_ddot_x_body = OBSERVATION_x_ddot_body(x)
+function z = OBSERVATION_x_ddot_body(x)
 %OBSERVATION_X_DDOT_BODY Function responsible to transform the states of
 %the system into the measured value.
 %
@@ -38,7 +38,12 @@ function y_ddot_x_body = OBSERVATION_x_ddot_body(x)
 %
 % This model also requires the Ts variable (the sampling period), r (the radious
 % of the wheel), and L (distance between wheels) to be loaded into the workspace!!
+    Ts = 0.1;
+    % y_ddot_x_body = (Ts.^2 .* cos(x(5))).^-1 + (Ts .* cos(x(5))).^-1 + (Ts.^2 .* sin(x(5))).^-1 + (Ts .* sin(x(5))).^-1;
+    z = [
+            cos(x(7)) + sin(x(7));
+            x(8)
+           ]
 
-y_ddot_x_body = (Ts.^2 .* cos(x(5))).^-1 + (Ts .* cos(x(5))).^-1 + (Ts.^2 .* sin(x(5))).^-1 + (Ts .* sin(x(5))).^-1;
 end
 
