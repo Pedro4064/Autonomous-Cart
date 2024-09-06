@@ -1,5 +1,5 @@
-"./Core/Src/ComSystemInterface.o"
-"./Core/Src/LineSensorSystemInterface.o"
+"./Core/Src/ComSystem.o"
+"./Core/Src/LineSensorSystem.o"
 "./Core/Src/adc.o"
 "./Core/Src/gpio.o"
 "./Core/Src/main.o"

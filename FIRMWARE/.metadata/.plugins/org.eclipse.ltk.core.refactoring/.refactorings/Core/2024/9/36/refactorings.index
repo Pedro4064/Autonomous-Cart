@@ -2,3 +2,7 @@
 1725480929534	Rename resource 'communication.h'
 1725481518377	Move 'LineSensorSystemInterface.c' to 'Src'
 1725481521035	Move 'LineSensorSystemInterface.h' to 'Inc'
+1725661000685	Rename resource 'ComSystemInterface.c'
+1725661008063	Rename resource 'LineSensorSystemInterface.c'
+1725661019983	Rename resource 'ComSystemInterface.h'
+1725661027683	Rename resource 'LineSensorSystemInterface.h'

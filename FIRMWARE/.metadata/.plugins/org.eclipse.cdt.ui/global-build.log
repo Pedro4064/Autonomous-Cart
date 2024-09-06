@@ -165,3 +165,93 @@ Finished building: default.size.stdout
  
 Finished building: Autonomous_Cart.list
  
+19:17:09 **** Incremental Build of configuration Debug for project Autonomous_Cart ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/ComSystem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/ComSystem.d" -MT"Core/Src/ComSystem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/ComSystem.o"
+arm-none-eabi-gcc "../Core/Src/LineSensorSystem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/LineSensorSystem.d" -MT"Core/Src/LineSensorSystem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/LineSensorSystem.o"
+arm-none-eabi-gcc "../Core/Src/adc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/adc.d" -MT"Core/Src/adc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/adc.o"
+arm-none-eabi-gcc "../Core/Src/gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/gpio.d" -MT"Core/Src/gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/gpio.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32g4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32g4xx_hal_msp.d" -MT"Core/Src/stm32g4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32g4xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32g4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32g4xx_it.d" -MT"Core/Src/stm32g4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32g4xx_it.o"
+arm-none-eabi-gcc "../Core/Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/syscalls.d" -MT"Core/Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/syscalls.o"
+arm-none-eabi-gcc "../Core/Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/sysmem.d" -MT"Core/Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/sysmem.o"
+arm-none-eabi-gcc "../Core/Src/system_stm32g4xx.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/system_stm32g4xx.d" -MT"Core/Src/system_stm32g4xx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/system_stm32g4xx.o"
+arm-none-eabi-gcc "../Core/Src/tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/tim.d" -MT"Core/Src/tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/tim.o"
+arm-none-eabi-gcc "../Core/Src/usart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/usart.d" -MT"Core/Src/usart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/usart.o"
+In file included from ../Core/Src/LineSensorSystem.c:8:
+../Core/Inc/LineSensorSystem.h:11:1: warning: data definition has no type or storage class
+   11 | LineSensorSystemInit(float *pLineSensorsReadings);
+      | ^~~~~~~~~~~~~~~~~~~~
+../Core/Inc/LineSensorSystem.h:11:1: warning: type defaults to 'int' in declaration of 'LineSensorSystemInit' [-Wimplicit-int]
+../Core/Src/LineSensorSystem.c:10:10: fatal error: dma.h: No such file or directory
+   10 | #include "dma.h"
+      |          ^~~~~~~
+compilation terminated.
+../Core/Src/main.c:25:10: fatal error: ComSystemInterface.h: No such file or directory
+   25 | #include "ComSystemInterface.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make: *** [Core/Src/subdir.mk:52: Core/Src/main.o] Error 1
+make: *** Waiting for unfinished jobs....
+make: *** [Core/Src/subdir.mk:52: Core/Src/LineSensorSystem.o] Error 1
+../Core/Src/ComSystem.c:15:10: fatal error: ComSystemInterface.h: No such file or directory
+   15 | #include "ComSystemInterface.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make: *** [Core/Src/subdir.mk:52: Core/Src/ComSystem.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+19:17:42 **** Incremental Build of configuration Debug for project Autonomous_Cart ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/ComSystem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/ComSystem.d" -MT"Core/Src/ComSystem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/ComSystem.o"
+arm-none-eabi-gcc "../Core/Src/LineSensorSystem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/LineSensorSystem.d" -MT"Core/Src/LineSensorSystem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/LineSensorSystem.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/LineSensorSystem.c:8:
+../Core/Inc/LineSensorSystem.h:11:1: warning: data definition has no type or storage class
+   11 | LineSensorSystemInit(float *pLineSensorsReadings);
+      | ^~~~~~~~~~~~~~~~~~~~
+../Core/Inc/LineSensorSystem.h:11:1: warning: type defaults to 'int' in declaration of 'LineSensorSystemInit' [-Wimplicit-int]
+../Core/Src/LineSensorSystem.c:10:10: fatal error: dma.h: No such file or directory
+   10 | #include "dma.h"
+      |          ^~~~~~~
+compilation terminated.
+make: *** [Core/Src/subdir.mk:52: Core/Src/LineSensorSystem.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/main.c:25:10: fatal error: ComSystemInterface.h: No such file or directory
+   25 | #include "ComSystemInterface.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make: *** [Core/Src/subdir.mk:52: Core/Src/main.o] Error 1
+In file included from ../Core/Src/ComSystem.c:15:
+../Core/Inc/ComSystem.h:52:1: warning: parameter names (without types) in function declaration
+   52 | void vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands);
+      | ^~~~
+../Core/Src/ComSystem.c:108:1: warning: return type defaults to 'int' [-Wimplicit-int]
+  108 | vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands){
+      | ^~~~~~~~~~~~~~
+../Core/Src/ComSystem.c:108:1: warning: conflicting types for 'vComSystemInit'
+../Core/Inc/ComSystem.h:52:6: note: previous declaration of 'vComSystemInit' with type 'void()'
+   52 | void vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands);
+      |      ^~~~~~~~~~~~~~
+../Core/Src/ComSystem.c: In function 'vComSystemInit':
+../Core/Src/ComSystem.c:108:1: warning: type of 'pTelemetryData' defaults to 'int' [-Wimplicit-int]
+  108 | vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands){
+      | ^~~~~~~~~~~~~~
+../Core/Src/ComSystem.c:108:1: warning: type of 'pStateEstimate' defaults to 'int' [-Wimplicit-int]
+../Core/Src/ComSystem.c:108:1: warning: type of 'pMotorCommands' defaults to 'int' [-Wimplicit-int]
+../Core/Src/ComSystem.c: At top level:
+../Core/Src/ComSystem.c:113:1: warning: return type defaults to 'int' [-Wimplicit-int]
+  113 | vComSystemSendRobotData(){
+      | ^~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/ComSystem.c:113:1: warning: conflicting types for 'vComSystemSendRobotData'
+../Core/Inc/ComSystem.h:54:6: note: previous declaration of 'vComSystemSendRobotData' with type 'void()'
+   54 | void vComSystemSendRobotData();
+      |      ^~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/ComSystem.c:118:1: warning: return type defaults to 'int' [-Wimplicit-int]
+  118 | vComSystemParseIncomingData(){
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/ComSystem.c:118:1: warning: conflicting types for 'vComSystemParseIncomingData'
+../Core/Inc/ComSystem.h:56:6: note: previous declaration of 'vComSystemParseIncomingData' with type 'void()'
+   56 | void vComSystemParseIncomingData();
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
