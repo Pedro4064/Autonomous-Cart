@@ -38,16 +38,10 @@
         * Output
         * EVENT_OUT
         * EXTI
-     PA4   ------> S_TIM3_CH2
      PB2   ------> S_TIM20_CH1
      PB10   ------> USART3_TX
      PB11   ------> USART3_RX
-     PB15   ------> ADC4_IN5
-     PA9   ------> ADC5_IN2
-     PA15   ------> S_TIM8_CH1
-     PC10   ------> SPI3_SCK
-     PC11   ------> SPI3_MISO
-     PC12   ------> SPI3_MOSI
+     PC6   ------> S_TIM3_CH1
      PB5   ------> S_TIM17_CH1
 */
 void MX_GPIO_Init(void)
@@ -75,14 +69,6 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = ULTRASSONIC_ECO_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF2_TIM3;
-  HAL_GPIO_Init(ULTRASSONIC_ECO_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PAPin PAPin PAPin PAPin */
   GPIO_InitStruct.Pin = YELLOW_LED_Pin|RIGHT_MOTOR_DIR_IN4_Pin|RED_LED_Pin|GREEN_LED_Pin;
@@ -115,32 +101,12 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = IR4_AD_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(IR4_AD_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = IR5_AD_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(IR5_AD_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = BUZZER_PWM_Pin;
+  GPIO_InitStruct.Pin = ULTRASSONIC_ECO_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF2_TIM8;
-  HAL_GPIO_Init(BUZZER_PWM_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PCPin PCPin PCPin */
-  GPIO_InitStruct.Pin = IMU_SPI_SCK_Pin|IMU_SPI_MISO_Pin|IMU_SPI_MOSI_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF6_SPI3;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  GPIO_InitStruct.Alternate = GPIO_AF2_TIM3;
+  HAL_GPIO_Init(ULTRASSONIC_ECO_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = SW_FRONTAL_Pin;
