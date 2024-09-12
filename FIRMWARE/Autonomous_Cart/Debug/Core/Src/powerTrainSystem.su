@@ -1,3 +1,3 @@
-../Core/Src/powerTrainSystem.c:16:6:vPowerTrainSystemInit	8	static
-../Core/Src/powerTrainSystem.c:22:6:vPowerTrainSystemSetMotorDirection	16	static
-../Core/Src/powerTrainSystem.c:49:6:vPowerTrainSystemSetMotorSpeed	32	static
+../Core/Src/PowerTrainSystem.c:16:6:vPowerTrainSystemInit	8	static
+../Core/Src/PowerTrainSystem.c:22:6:vPowerTrainSystemSetMotorDirection	16	static
+../Core/Src/PowerTrainSystem.c:49:6:vPowerTrainSystemSetMotorSpeed	32	static

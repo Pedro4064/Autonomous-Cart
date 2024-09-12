@@ -8,6 +8,6 @@
 #ifndef LINESENSORSYSTEMINTERFACE_H_
 #define LINESENSORSYSTEMINTERFACE_H_
 
-LineSensorSystemInit(float *pLineSensorsReadings);
+void vLineSensorSystemInit(long unsigned int *pLineSensorsReadings);
 
 #endif /* LINESENSORSYSTEMINTERFACE_H_ */

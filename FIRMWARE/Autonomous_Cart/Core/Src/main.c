@@ -19,10 +19,15 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "dma.h"
+#include "i2c.h"
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"
+#include "PowerTrainSystem.h"
+#include "LineSensorSystem.h"
 #include "ComSystem.h"
+#include "encoderSystem.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -47,8 +52,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-unsigned char c;
-unsigned char* message;
+uint32_t pLineSensorsReadings[5];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -90,27 +94,45 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_LPUART1_UART_Init();
   MX_ADC1_Init();
   MX_ADC2_Init();
   MX_ADC3_Init();
   MX_TIM1_Init();
+  MX_TIM16_Init();
+  MX_TIM4_Init();
+  MX_ADC4_Init();
+  MX_ADC5_Init();
+  MX_I2C2_Init();
+  MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
-  HAL_Delay(20000);
-  message = "AT+NAME=Embarcados_GrupoB1";
-  HAL_UART_Transmit_IT(&hlpuart1,  message, 27);
-  message = "AT+PSWD=1234";
-  HAL_UART_Transmit_IT(&hlpuart1,  message, 13);
-  message = "AT+ROLE=0";
-  HAL_UART_Transmit_IT(&hlpuart1,  message, 10);
-  message = "AT+UART=115200";
-  HAL_UART_Transmit_IT(&hlpuart1,  message, 15);
+  vPowerTrainSystemInit();
+  vLineSensorSystemInit(pLineSensorsReadings);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
+
+	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
+	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 500);
+	  HAL_Delay(3000);
+	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,0);
+	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 0);
+	  HAL_Delay(1000);
+
+	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
+	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
+
+	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
+	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 500);
+	  HAL_Delay(3000);
 
     /* USER CODE END WHILE */
 
@@ -166,22 +188,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
-// ***************************************************** //
-// Method name: HAL_UART_RxCpltCallback                  //
-// Method description: Essa função é chamada pela própria//
-//                    UART no momento em que ocorre uma  //
-//                    entrada no terminal Putty.         //
-// Input params: UART_HandleTypeDef * huart              //
-// Output params: n/a                                    //
-// ***************************************************** //
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef * huart) {
-    if (huart == &hlpuart1) {
-        // enter = 13
-        HAL_UART_Receive_IT(&hlpuart1, &c, 1);
-        //vCommunicationSMProcessByteCommunication(c);
-    }
-}
 
 /* USER CODE END 4 */
 

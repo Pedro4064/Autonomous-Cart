@@ -1,36 +1,22 @@
-10:08:34 **** Incremental Build of configuration Debug for project Autonomous_Cart ****
+19:49:49 **** Incremental Build of configuration Debug for project Autonomous_Cart ****
 make -j16 all 
-arm-none-eabi-gcc "../Core/Src/LineSensorSystem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/LineSensorSystem.d" -MT"Core/Src/LineSensorSystem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/LineSensorSystem.o"
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-In file included from ../Core/Src/LineSensorSystem.c:8:
-../Core/Inc/LineSensorSystem.h:11:1: warning: data definition has no type or storage class
-   11 | LineSensorSystemInit(float *pLineSensorsReadings);
-      | ^~~~~~~~~~~~~~~~~~~~
-../Core/Inc/LineSensorSystem.h:11:1: warning: type defaults to 'int' in declaration of 'LineSensorSystemInit' [-Wimplicit-int]
-../Core/Src/LineSensorSystem.c:10:10: fatal error: dma.h: No such file or directory
-   10 | #include "dma.h"
-      |          ^~~~~~~
-compilation terminated.
-In file included from ../Core/Src/main.c:25:
+In file included from ../Core/Src/main.c:29:
 ../Core/Inc/ComSystem.h:52:1: warning: parameter names (without types) in function declaration
    52 | void vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands);
       | ^~~~
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:100:11: warning: pointer targets in assignment from 'char *' to 'unsigned char *' differ in signedness [-Wpointer-sign]
-  100 |   message = "AT+NAME=Embarcados_GrupoB1";
-      |           ^
-../Core/Src/main.c:102:11: warning: pointer targets in assignment from 'char *' to 'unsigned char *' differ in signedness [-Wpointer-sign]
-  102 |   message = "AT+PSWD=1234";
-      |           ^
-../Core/Src/main.c:104:11: warning: pointer targets in assignment from 'char *' to 'unsigned char *' differ in signedness [-Wpointer-sign]
-  104 |   message = "AT+ROLE=0";
-      |           ^
-../Core/Src/main.c:106:11: warning: pointer targets in assignment from 'char *' to 'unsigned char *' differ in signedness [-Wpointer-sign]
-  106 |   message = "AT+UART=115200";
-      |           ^
-make: *** [Core/Src/subdir.mk:52: Core/Src/LineSensorSystem.o] Error 1
-make: *** Waiting for unfinished jobs....
-"make -j16 all" terminated with exit code 2. Build might be incomplete.
+arm-none-eabi-gcc -o "Autonomous_Cart.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\njsne\OneDrive\Documentos\ES070\Autonomous-Cart\FIRMWARE\Autonomous_Cart\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Autonomous_Cart.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_1.16.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.200.202406191623/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: warning: Autonomous_Cart.elf has a LOAD segment with RWX permissions
+Finished building target: Autonomous_Cart.elf
+ 
+arm-none-eabi-size  Autonomous_Cart.elf 
+arm-none-eabi-objdump -h -S Autonomous_Cart.elf  > "Autonomous_Cart.list"
+   text	   data	    bss	    dec	    hex	filename
+  30932	     20	   3348	  34300	   85fc	Autonomous_Cart.elf
+Finished building: default.size.stdout
+ 
+Finished building: Autonomous_Cart.list
+ 
 
-10:08:35 Build Failed. 3 errors, 7 warnings. (took 719ms)
+19:49:50 Build Finished. 0 errors, 2 warnings. (took 1s.531ms)
 
