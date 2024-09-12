@@ -1,6 +1,5 @@
-19:17:42 **** Incremental Build of configuration Debug for project Autonomous_Cart ****
+10:08:34 **** Incremental Build of configuration Debug for project Autonomous_Cart ****
 make -j16 all 
-arm-none-eabi-gcc "../Core/Src/ComSystem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/ComSystem.d" -MT"Core/Src/ComSystem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/ComSystem.o"
 arm-none-eabi-gcc "../Core/Src/LineSensorSystem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/LineSensorSystem.d" -MT"Core/Src/LineSensorSystem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/LineSensorSystem.o"
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 In file included from ../Core/Src/LineSensorSystem.c:8:
@@ -12,46 +11,26 @@ In file included from ../Core/Src/LineSensorSystem.c:8:
    10 | #include "dma.h"
       |          ^~~~~~~
 compilation terminated.
-make: *** [Core/Src/subdir.mk:52: Core/Src/LineSensorSystem.o] Error 1
-make: *** Waiting for unfinished jobs....
-../Core/Src/main.c:25:10: fatal error: ComSystemInterface.h: No such file or directory
-   25 | #include "ComSystemInterface.h"
-      |          ^~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make: *** [Core/Src/subdir.mk:52: Core/Src/main.o] Error 1
-In file included from ../Core/Src/ComSystem.c:15:
+In file included from ../Core/Src/main.c:25:
 ../Core/Inc/ComSystem.h:52:1: warning: parameter names (without types) in function declaration
    52 | void vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands);
       | ^~~~
-../Core/Src/ComSystem.c:108:1: warning: return type defaults to 'int' [-Wimplicit-int]
-  108 | vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands){
-      | ^~~~~~~~~~~~~~
-../Core/Src/ComSystem.c:108:1: warning: conflicting types for 'vComSystemInit'
-../Core/Inc/ComSystem.h:52:6: note: previous declaration of 'vComSystemInit' with type 'void()'
-   52 | void vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands);
-      |      ^~~~~~~~~~~~~~
-../Core/Src/ComSystem.c: In function 'vComSystemInit':
-../Core/Src/ComSystem.c:108:1: warning: type of 'pTelemetryData' defaults to 'int' [-Wimplicit-int]
-  108 | vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands){
-      | ^~~~~~~~~~~~~~
-../Core/Src/ComSystem.c:108:1: warning: type of 'pStateEstimate' defaults to 'int' [-Wimplicit-int]
-../Core/Src/ComSystem.c:108:1: warning: type of 'pMotorCommands' defaults to 'int' [-Wimplicit-int]
-../Core/Src/ComSystem.c: At top level:
-../Core/Src/ComSystem.c:113:1: warning: return type defaults to 'int' [-Wimplicit-int]
-  113 | vComSystemSendRobotData(){
-      | ^~~~~~~~~~~~~~~~~~~~~~~
-../Core/Src/ComSystem.c:113:1: warning: conflicting types for 'vComSystemSendRobotData'
-../Core/Inc/ComSystem.h:54:6: note: previous declaration of 'vComSystemSendRobotData' with type 'void()'
-   54 | void vComSystemSendRobotData();
-      |      ^~~~~~~~~~~~~~~~~~~~~~~
-../Core/Src/ComSystem.c:118:1: warning: return type defaults to 'int' [-Wimplicit-int]
-  118 | vComSystemParseIncomingData(){
-      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-../Core/Src/ComSystem.c:118:1: warning: conflicting types for 'vComSystemParseIncomingData'
-../Core/Inc/ComSystem.h:56:6: note: previous declaration of 'vComSystemParseIncomingData' with type 'void()'
-   56 | void vComSystemParseIncomingData();
-      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:100:11: warning: pointer targets in assignment from 'char *' to 'unsigned char *' differ in signedness [-Wpointer-sign]
+  100 |   message = "AT+NAME=Embarcados_GrupoB1";
+      |           ^
+../Core/Src/main.c:102:11: warning: pointer targets in assignment from 'char *' to 'unsigned char *' differ in signedness [-Wpointer-sign]
+  102 |   message = "AT+PSWD=1234";
+      |           ^
+../Core/Src/main.c:104:11: warning: pointer targets in assignment from 'char *' to 'unsigned char *' differ in signedness [-Wpointer-sign]
+  104 |   message = "AT+ROLE=0";
+      |           ^
+../Core/Src/main.c:106:11: warning: pointer targets in assignment from 'char *' to 'unsigned char *' differ in signedness [-Wpointer-sign]
+  106 |   message = "AT+UART=115200";
+      |           ^
+make: *** [Core/Src/subdir.mk:52: Core/Src/LineSensorSystem.o] Error 1
+make: *** Waiting for unfinished jobs....
 "make -j16 all" terminated with exit code 2. Build might be incomplete.
 
-19:17:43 Build Failed. 5 errors, 12 warnings. (took 1s.19ms)
+10:08:35 Build Failed. 3 errors, 7 warnings. (took 719ms)
 
