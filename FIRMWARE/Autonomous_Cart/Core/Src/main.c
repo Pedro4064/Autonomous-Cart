@@ -24,10 +24,6 @@
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"
-#include "PowerTrainSystem.h"
-#include "LineSensorSystem.h"
-#include "ComSystem.h"
-#include "encoderSystem.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
