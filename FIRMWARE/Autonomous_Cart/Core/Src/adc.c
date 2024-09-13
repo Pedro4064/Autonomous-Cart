@@ -65,7 +65,7 @@ void MX_ADC1_Init(void)
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.DMAContinuousRequests = ENABLE;
   hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
   hadc1.Init.OversamplingMode = DISABLE;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
@@ -186,7 +186,7 @@ void MX_ADC3_Init(void)
   hadc3.Init.ScanConvMode = ADC_SCAN_DISABLE;
   hadc3.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   hadc3.Init.LowPowerAutoWait = DISABLE;
-  hadc3.Init.ContinuousConvMode = DISABLE;
+  hadc3.Init.ContinuousConvMode = ENABLE;
   hadc3.Init.NbrOfConversion = 1;
   hadc3.Init.DiscontinuousConvMode = DISABLE;
   hadc3.Init.ExternalTrigConv = ADC_SOFTWARE_START;
@@ -248,12 +248,12 @@ void MX_ADC4_Init(void)
   hadc4.Init.ScanConvMode = ADC_SCAN_DISABLE;
   hadc4.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   hadc4.Init.LowPowerAutoWait = DISABLE;
-  hadc4.Init.ContinuousConvMode = DISABLE;
+  hadc4.Init.ContinuousConvMode = ENABLE;
   hadc4.Init.NbrOfConversion = 1;
   hadc4.Init.DiscontinuousConvMode = DISABLE;
   hadc4.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc4.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-  hadc4.Init.DMAContinuousRequests = DISABLE;
+  hadc4.Init.DMAContinuousRequests = ENABLE;
   hadc4.Init.Overrun = ADC_OVR_DATA_PRESERVED;
   hadc4.Init.OversamplingMode = DISABLE;
   if (HAL_ADC_Init(&hadc4) != HAL_OK)
@@ -307,7 +307,7 @@ void MX_ADC5_Init(void)
   hadc5.Init.DiscontinuousConvMode = DISABLE;
   hadc5.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc5.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-  hadc5.Init.DMAContinuousRequests = DISABLE;
+  hadc5.Init.DMAContinuousRequests = ENABLE;
   hadc5.Init.Overrun = ADC_OVR_DATA_PRESERVED;
   hadc5.Init.OversamplingMode = DISABLE;
   if (HAL_ADC_Init(&hadc5) != HAL_OK)

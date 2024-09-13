@@ -21,31 +21,31 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, DATA
   8 .data         0000000c  20000000  080078dc  00009000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00000710  2000000c  080078e8  0000900c  2**2
+  9 .bss          00000714  2000000c  080078e8  0000900c  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  2000071c  080078e8  0000971c  2**0
+ 10 ._user_heap_stack 00000600  20000720  080078e8  00009720  2**0
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  0000900c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0001c618  00000000  00000000  0000903c  2**0
+ 12 .debug_info   0001c63c  00000000  00000000  0000903c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 000039b5  00000000  00000000  00025654  2**0
+ 13 .debug_abbrev 000039b5  00000000  00000000  00025678  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 000018b0  00000000  00000000  00029010  2**3
+ 14 .debug_aranges 000018b0  00000000  00000000  00029030  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_rnglists 0000133e  00000000  00000000  0002a8c0  2**0
+ 15 .debug_rnglists 0000133e  00000000  00000000  0002a8e0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  00003cb5  00000000  00000000  0002bbfe  2**0
+ 16 .debug_macro  00003cb5  00000000  00000000  0002bc1e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   000203f6  00000000  00000000  0002f8b3  2**0
+ 17 .debug_line   000203f1  00000000  00000000  0002f8d3  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0011240a  00000000  00000000  0004fca9  2**0
+ 18 .debug_str    00112415  00000000  00000000  0004fcc4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  001620b3  2**0
+ 19 .comment      00000043  00000000  00000000  001620d9  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00006938  00000000  00000000  001620f8  2**2
+ 20 .debug_frame  00006938  00000000  00000000  0016211c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000080  00000000  00000000  00168a30  2**0
+ 21 .debug_line_str 00000080  00000000  00000000  00168a54  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -380,69 +380,68 @@ void vLineSensorSystemInit(uint32_t *pLineSensorsReadings){
  800054e:	6078      	str	r0, [r7, #4]
 	HAL_ADCEx_Calibration_Start(&IR1_AD, ADC_SINGLE_ENDED);
  8000550:	217f      	movs	r1, #127	@ 0x7f
- 8000552:	481c      	ldr	r0, [pc, #112]	@ (80005c4 <vLineSensorSystemInit+0x7c>)
+ 8000552:	481b      	ldr	r0, [pc, #108]	@ (80005c0 <vLineSensorSystemInit+0x78>)
  8000554:	f003 f8c2 	bl	80036dc <HAL_ADCEx_Calibration_Start>
 	HAL_ADC_Start_DMA(&IR1_AD, &pLineSensorsReadings[0] , 1);
  8000558:	2201      	movs	r2, #1
  800055a:	6879      	ldr	r1, [r7, #4]
- 800055c:	4819      	ldr	r0, [pc, #100]	@ (80005c4 <vLineSensorSystemInit+0x7c>)
+ 800055c:	4818      	ldr	r0, [pc, #96]	@ (80005c0 <vLineSensorSystemInit+0x78>)
  800055e:	f002 f9af 	bl	80028c0 <HAL_ADC_Start_DMA>
 
 	HAL_ADCEx_Calibration_Start(&IR2_AD, ADC_SINGLE_ENDED);
  8000562:	217f      	movs	r1, #127	@ 0x7f
- 8000564:	4818      	ldr	r0, [pc, #96]	@ (80005c8 <vLineSensorSystemInit+0x80>)
+ 8000564:	4817      	ldr	r0, [pc, #92]	@ (80005c4 <vLineSensorSystemInit+0x7c>)
  8000566:	f003 f8b9 	bl	80036dc <HAL_ADCEx_Calibration_Start>
-	HAL_ADC_Start_DMA(&IR2_AD, &pLineSensorsReadings[1] , 1);
- 800056a:	687b      	ldr	r3, [r7, #4]
- 800056c:	3304      	adds	r3, #4
- 800056e:	2201      	movs	r2, #1
- 8000570:	4619      	mov	r1, r3
- 8000572:	4815      	ldr	r0, [pc, #84]	@ (80005c8 <vLineSensorSystemInit+0x80>)
- 8000574:	f002 f9a4 	bl	80028c0 <HAL_ADC_Start_DMA>
+	HAL_ADC_Start_DMA(&IR2_AD, &uiAdcValue , 1);
+ 800056a:	2201      	movs	r2, #1
+ 800056c:	4916      	ldr	r1, [pc, #88]	@ (80005c8 <vLineSensorSystemInit+0x80>)
+ 800056e:	4815      	ldr	r0, [pc, #84]	@ (80005c4 <vLineSensorSystemInit+0x7c>)
+ 8000570:	f002 f9a6 	bl	80028c0 <HAL_ADC_Start_DMA>
 
 	HAL_ADCEx_Calibration_Start(&IR3_AD, ADC_SINGLE_ENDED);
- 8000578:	217f      	movs	r1, #127	@ 0x7f
- 800057a:	4814      	ldr	r0, [pc, #80]	@ (80005cc <vLineSensorSystemInit+0x84>)
- 800057c:	f003 f8ae 	bl	80036dc <HAL_ADCEx_Calibration_Start>
+ 8000574:	217f      	movs	r1, #127	@ 0x7f
+ 8000576:	4815      	ldr	r0, [pc, #84]	@ (80005cc <vLineSensorSystemInit+0x84>)
+ 8000578:	f003 f8b0 	bl	80036dc <HAL_ADCEx_Calibration_Start>
 	HAL_ADC_Start_DMA(&IR3_AD, &pLineSensorsReadings[2] , 1);
- 8000580:	687b      	ldr	r3, [r7, #4]
- 8000582:	3308      	adds	r3, #8
- 8000584:	2201      	movs	r2, #1
- 8000586:	4619      	mov	r1, r3
- 8000588:	4810      	ldr	r0, [pc, #64]	@ (80005cc <vLineSensorSystemInit+0x84>)
- 800058a:	f002 f999 	bl	80028c0 <HAL_ADC_Start_DMA>
+ 800057c:	687b      	ldr	r3, [r7, #4]
+ 800057e:	3308      	adds	r3, #8
+ 8000580:	2201      	movs	r2, #1
+ 8000582:	4619      	mov	r1, r3
+ 8000584:	4811      	ldr	r0, [pc, #68]	@ (80005cc <vLineSensorSystemInit+0x84>)
+ 8000586:	f002 f99b 	bl	80028c0 <HAL_ADC_Start_DMA>
 
 	HAL_ADCEx_Calibration_Start(&IR4_AD, ADC_SINGLE_ENDED);
- 800058e:	217f      	movs	r1, #127	@ 0x7f
- 8000590:	480f      	ldr	r0, [pc, #60]	@ (80005d0 <vLineSensorSystemInit+0x88>)
- 8000592:	f003 f8a3 	bl	80036dc <HAL_ADCEx_Calibration_Start>
+ 800058a:	217f      	movs	r1, #127	@ 0x7f
+ 800058c:	4810      	ldr	r0, [pc, #64]	@ (80005d0 <vLineSensorSystemInit+0x88>)
+ 800058e:	f003 f8a5 	bl	80036dc <HAL_ADCEx_Calibration_Start>
 	HAL_ADC_Start_DMA(&IR4_AD, &pLineSensorsReadings[3] , 1);
- 8000596:	687b      	ldr	r3, [r7, #4]
- 8000598:	330c      	adds	r3, #12
- 800059a:	2201      	movs	r2, #1
- 800059c:	4619      	mov	r1, r3
- 800059e:	480c      	ldr	r0, [pc, #48]	@ (80005d0 <vLineSensorSystemInit+0x88>)
- 80005a0:	f002 f98e 	bl	80028c0 <HAL_ADC_Start_DMA>
+ 8000592:	687b      	ldr	r3, [r7, #4]
+ 8000594:	330c      	adds	r3, #12
+ 8000596:	2201      	movs	r2, #1
+ 8000598:	4619      	mov	r1, r3
+ 800059a:	480d      	ldr	r0, [pc, #52]	@ (80005d0 <vLineSensorSystemInit+0x88>)
+ 800059c:	f002 f990 	bl	80028c0 <HAL_ADC_Start_DMA>
 
 	HAL_ADCEx_Calibration_Start(&IR5_AD, ADC_SINGLE_ENDED);
- 80005a4:	217f      	movs	r1, #127	@ 0x7f
- 80005a6:	480b      	ldr	r0, [pc, #44]	@ (80005d4 <vLineSensorSystemInit+0x8c>)
- 80005a8:	f003 f898 	bl	80036dc <HAL_ADCEx_Calibration_Start>
+ 80005a0:	217f      	movs	r1, #127	@ 0x7f
+ 80005a2:	480c      	ldr	r0, [pc, #48]	@ (80005d4 <vLineSensorSystemInit+0x8c>)
+ 80005a4:	f003 f89a 	bl	80036dc <HAL_ADCEx_Calibration_Start>
 	HAL_ADC_Start_DMA(&IR5_AD, &pLineSensorsReadings[4] , 1);
- 80005ac:	687b      	ldr	r3, [r7, #4]
- 80005ae:	3310      	adds	r3, #16
- 80005b0:	2201      	movs	r2, #1
- 80005b2:	4619      	mov	r1, r3
- 80005b4:	4807      	ldr	r0, [pc, #28]	@ (80005d4 <vLineSensorSystemInit+0x8c>)
- 80005b6:	f002 f983 	bl	80028c0 <HAL_ADC_Start_DMA>
+ 80005a8:	687b      	ldr	r3, [r7, #4]
+ 80005aa:	3310      	adds	r3, #16
+ 80005ac:	2201      	movs	r2, #1
+ 80005ae:	4619      	mov	r1, r3
+ 80005b0:	4808      	ldr	r0, [pc, #32]	@ (80005d4 <vLineSensorSystemInit+0x8c>)
+ 80005b2:	f002 f985 	bl	80028c0 <HAL_ADC_Start_DMA>
 }
- 80005ba:	bf00      	nop
- 80005bc:	3708      	adds	r7, #8
- 80005be:	46bd      	mov	sp, r7
- 80005c0:	bd80      	pop	{r7, pc}
- 80005c2:	bf00      	nop
- 80005c4:	20000028 	.word	0x20000028
- 80005c8:	20000094 	.word	0x20000094
+ 80005b6:	bf00      	nop
+ 80005b8:	3708      	adds	r7, #8
+ 80005ba:	46bd      	mov	sp, r7
+ 80005bc:	bd80      	pop	{r7, pc}
+ 80005be:	bf00      	nop
+ 80005c0:	20000028 	.word	0x20000028
+ 80005c4:	20000094 	.word	0x20000094
+ 80005c8:	20000494 	.word	0x20000494
  80005cc:	20000100 	.word	0x20000100
  80005d0:	2000016c 	.word	0x2000016c
  80005d4:	200001d8 	.word	0x200001d8
@@ -472,7 +471,7 @@ void vPowerTrainSystemInit(){
  80005f2:	bf00      	nop
  80005f4:	bd80      	pop	{r7, pc}
  80005f6:	bf00      	nop
- 80005f8:	20000494 	.word	0x20000494
+ 80005f8:	20000498 	.word	0x20000498
 
 080005fc <vPowerTrainSystemSetMotorDirection>:
 void vPowerTrainSystemSetMotorDirection(Motor xMotor, MotorSpin xDirection){
@@ -616,7 +615,7 @@ void vPowerTrainSystemSetMotorSpeed(Motor xMotor,double fSpeed){
  80006ea:	46bd      	mov	sp, r7
  80006ec:	bd90      	pop	{r4, r7, pc}
  80006ee:	bf00      	nop
- 80006f0:	20000494 	.word	0x20000494
+ 80006f0:	20000498 	.word	0x20000498
 
 080006f4 <MX_ADC1_Init>:
 DMA_HandleTypeDef hdma_adc4;
@@ -702,9 +701,9 @@ void MX_ADC1_Init(void)
  8000760:	4b1e      	ldr	r3, [pc, #120]	@ (80007dc <MX_ADC1_Init+0xe8>)
  8000762:	2200      	movs	r2, #0
  8000764:	631a      	str	r2, [r3, #48]	@ 0x30
-  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.DMAContinuousRequests = ENABLE;
  8000766:	4b1d      	ldr	r3, [pc, #116]	@ (80007dc <MX_ADC1_Init+0xe8>)
- 8000768:	2200      	movs	r2, #0
+ 8000768:	2201      	movs	r2, #1
  800076a:	f883 2038 	strb.w	r2, [r3, #56]	@ 0x38
   hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
  800076e:	4b1b      	ldr	r3, [pc, #108]	@ (80007dc <MX_ADC1_Init+0xe8>)
@@ -1015,9 +1014,9 @@ void MX_ADC3_Init(void)
  800091a:	4b26      	ldr	r3, [pc, #152]	@ (80009b4 <MX_ADC3_Init+0xe4>)
  800091c:	2200      	movs	r2, #0
  800091e:	771a      	strb	r2, [r3, #28]
-  hadc3.Init.ContinuousConvMode = DISABLE;
+  hadc3.Init.ContinuousConvMode = ENABLE;
  8000920:	4b24      	ldr	r3, [pc, #144]	@ (80009b4 <MX_ADC3_Init+0xe4>)
- 8000922:	2200      	movs	r2, #0
+ 8000922:	2201      	movs	r2, #1
  8000924:	775a      	strb	r2, [r3, #29]
   hadc3.Init.NbrOfConversion = 1;
  8000926:	4b23      	ldr	r3, [pc, #140]	@ (80009b4 <MX_ADC3_Init+0xe4>)
@@ -1176,9 +1175,9 @@ void MX_ADC4_Init(void)
  80009fe:	4b20      	ldr	r3, [pc, #128]	@ (8000a80 <MX_ADC4_Init+0xc0>)
  8000a00:	2200      	movs	r2, #0
  8000a02:	771a      	strb	r2, [r3, #28]
-  hadc4.Init.ContinuousConvMode = DISABLE;
+  hadc4.Init.ContinuousConvMode = ENABLE;
  8000a04:	4b1e      	ldr	r3, [pc, #120]	@ (8000a80 <MX_ADC4_Init+0xc0>)
- 8000a06:	2200      	movs	r2, #0
+ 8000a06:	2201      	movs	r2, #1
  8000a08:	775a      	strb	r2, [r3, #29]
   hadc4.Init.NbrOfConversion = 1;
  8000a0a:	4b1d      	ldr	r3, [pc, #116]	@ (8000a80 <MX_ADC4_Init+0xc0>)
@@ -1196,9 +1195,9 @@ void MX_ADC4_Init(void)
  8000a1e:	4b18      	ldr	r3, [pc, #96]	@ (8000a80 <MX_ADC4_Init+0xc0>)
  8000a20:	2200      	movs	r2, #0
  8000a22:	631a      	str	r2, [r3, #48]	@ 0x30
-  hadc4.Init.DMAContinuousRequests = DISABLE;
+  hadc4.Init.DMAContinuousRequests = ENABLE;
  8000a24:	4b16      	ldr	r3, [pc, #88]	@ (8000a80 <MX_ADC4_Init+0xc0>)
- 8000a26:	2200      	movs	r2, #0
+ 8000a26:	2201      	movs	r2, #1
  8000a28:	f883 2038 	strb.w	r2, [r3, #56]	@ 0x38
   hadc4.Init.Overrun = ADC_OVR_DATA_PRESERVED;
  8000a2c:	4b14      	ldr	r3, [pc, #80]	@ (8000a80 <MX_ADC4_Init+0xc0>)
@@ -1340,9 +1339,9 @@ void MX_ADC5_Init(void)
  8000aea:	4b18      	ldr	r3, [pc, #96]	@ (8000b4c <MX_ADC5_Init+0xc0>)
  8000aec:	2200      	movs	r2, #0
  8000aee:	631a      	str	r2, [r3, #48]	@ 0x30
-  hadc5.Init.DMAContinuousRequests = DISABLE;
+  hadc5.Init.DMAContinuousRequests = ENABLE;
  8000af0:	4b16      	ldr	r3, [pc, #88]	@ (8000b4c <MX_ADC5_Init+0xc0>)
- 8000af2:	2200      	movs	r2, #0
+ 8000af2:	2201      	movs	r2, #1
  8000af4:	f883 2038 	strb.w	r2, [r3, #56]	@ 0x38
   hadc5.Init.Overrun = ADC_OVR_DATA_PRESERVED;
  8000af8:	4b14      	ldr	r3, [pc, #80]	@ (8000b4c <MX_ADC5_Init+0xc0>)
@@ -2784,11 +2783,11 @@ int main(void)
   MX_TIM8_Init();
  800148c:	f000 fa64 	bl	8001958 <MX_TIM8_Init>
   /* USER CODE BEGIN 2 */
-  vPowerTrainSystemInit();
- 8001490:	f7ff f8a2 	bl	80005d8 <vPowerTrainSystemInit>
   vLineSensorSystemInit(pLineSensorsReadings);
- 8001494:	4826      	ldr	r0, [pc, #152]	@ (8001530 <main+0xe0>)
- 8001496:	f7ff f857 	bl	8000548 <vLineSensorSystemInit>
+ 8001490:	4827      	ldr	r0, [pc, #156]	@ (8001530 <main+0xe0>)
+ 8001492:	f7ff f859 	bl	8000548 <vLineSensorSystemInit>
+  vPowerTrainSystemInit();
+ 8001496:	f7ff f89f 	bl	80005d8 <vPowerTrainSystemInit>
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -3357,7 +3356,7 @@ void DMA1_Channel6_IRQHandler(void)
  80016ee:	bf00      	nop
  80016f0:	bd80      	pop	{r7, pc}
  80016f2:	bf00      	nop
- 80016f4:	20000658 	.word	0x20000658
+ 80016f4:	2000065c 	.word	0x2000065c
 
 080016f8 <DMA1_Channel7_IRQHandler>:
 
@@ -3381,7 +3380,7 @@ void DMA1_Channel7_IRQHandler(void)
  8001702:	bf00      	nop
  8001704:	bd80      	pop	{r7, pc}
  8001706:	bf00      	nop
- 8001708:	200006b8 	.word	0x200006b8
+ 8001708:	200006bc 	.word	0x200006bc
 
 0800170c <EXTI15_10_IRQHandler>:
 
@@ -3677,7 +3676,7 @@ void MX_TIM1_Init(void)
  80018aa:	3770      	adds	r7, #112	@ 0x70
  80018ac:	46bd      	mov	sp, r7
  80018ae:	bd80      	pop	{r7, pc}
- 80018b0:	20000494 	.word	0x20000494
+ 80018b0:	20000498 	.word	0x20000498
  80018b4:	40012c00 	.word	0x40012c00
 
 080018b8 <MX_TIM4_Init>:
@@ -3786,7 +3785,7 @@ void MX_TIM4_Init(void)
  800194a:	46bd      	mov	sp, r7
  800194c:	bd80      	pop	{r7, pc}
  800194e:	bf00      	nop
- 8001950:	200004e0 	.word	0x200004e0
+ 8001950:	200004e4 	.word	0x200004e4
  8001954:	40000800 	.word	0x40000800
 
 08001958 <MX_TIM8_Init>:
@@ -3984,7 +3983,7 @@ void MX_TIM8_Init(void)
  8001a72:	46bd      	mov	sp, r7
  8001a74:	bd80      	pop	{r7, pc}
  8001a76:	bf00      	nop
- 8001a78:	2000052c 	.word	0x2000052c
+ 8001a78:	20000530 	.word	0x20000530
  8001a7c:	40013400 	.word	0x40013400
 
 08001a80 <MX_TIM16_Init>:
@@ -4150,7 +4149,7 @@ void MX_TIM16_Init(void)
  8001b66:	46bd      	mov	sp, r7
  8001b68:	bd80      	pop	{r7, pc}
  8001b6a:	bf00      	nop
- 8001b6c:	20000578 	.word	0x20000578
+ 8001b6c:	2000057c 	.word	0x2000057c
  8001b70:	40014400 	.word	0x40014400
 
 08001b74 <HAL_TIM_Base_MspInit>:
@@ -4545,7 +4544,7 @@ void MX_LPUART1_UART_Init(void)
  8001dd2:	bf00      	nop
  8001dd4:	bd80      	pop	{r7, pc}
  8001dd6:	bf00      	nop
- 8001dd8:	200005c4 	.word	0x200005c4
+ 8001dd8:	200005c8 	.word	0x200005c8
  8001ddc:	40008000 	.word	0x40008000
 
 08001de0 <HAL_UART_MspInit>:
@@ -4774,9 +4773,9 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
  8001f2e:	bf00      	nop
  8001f30:	40008000 	.word	0x40008000
  8001f34:	40021000 	.word	0x40021000
- 8001f38:	20000658 	.word	0x20000658
+ 8001f38:	2000065c 	.word	0x2000065c
  8001f3c:	4002006c 	.word	0x4002006c
- 8001f40:	200006b8 	.word	0x200006b8
+ 8001f40:	200006bc 	.word	0x200006bc
  8001f44:	40020080 	.word	0x40020080
 
 08001f48 <Reset_Handler>:
@@ -4875,7 +4874,7 @@ LoopForever:
   ldr r2, =_sbss
  8001f90:	2000000c 	.word	0x2000000c
   ldr r4, =_ebss
- 8001f94:	2000071c 	.word	0x2000071c
+ 8001f94:	20000720 	.word	0x20000720
 
 08001f98 <ADC1_2_IRQHandler>:
  * @retval : None
@@ -5049,7 +5048,7 @@ __weak void HAL_IncTick(void)
  8002054:	46bd      	mov	sp, r7
  8002056:	f85d 7b04 	ldr.w	r7, [sp], #4
  800205a:	4770      	bx	lr
- 800205c:	20000718 	.word	0x20000718
+ 800205c:	2000071c 	.word	0x2000071c
  8002060:	20000008 	.word	0x20000008
 
 08002064 <HAL_GetTick>:
@@ -5070,7 +5069,7 @@ __weak uint32_t HAL_GetTick(void)
  8002070:	f85d 7b04 	ldr.w	r7, [sp], #4
  8002074:	4770      	bx	lr
  8002076:	bf00      	nop
- 8002078:	20000718 	.word	0x20000718
+ 8002078:	2000071c 	.word	0x2000071c
 
 0800207c <HAL_Delay>:
   *       implementations in user file.

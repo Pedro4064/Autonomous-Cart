@@ -53,6 +53,8 @@
 
 /* USER CODE BEGIN PV */
 uint32_t pLineSensorsReadings[5];
+uint32_t uiAdcValue;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -107,8 +109,9 @@ int main(void)
   MX_I2C2_Init();
   MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
-  vPowerTrainSystemInit();
   vLineSensorSystemInit(pLineSensorsReadings);
+  vPowerTrainSystemInit();
+
 
   /* USER CODE END 2 */
 
