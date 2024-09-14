@@ -6,7 +6,7 @@
  */
 
 
-#include <powerTrainSystem.h>
+#include <PowerTrainSystem.h>
 #include <tim.h>
 
 #define MOTOR_TIM htim1

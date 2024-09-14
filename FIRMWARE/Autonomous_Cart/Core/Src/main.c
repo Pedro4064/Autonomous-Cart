@@ -24,6 +24,7 @@
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"
+#include "PowerTrainSystem.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -49,6 +50,7 @@
 
 /* USER CODE BEGIN PV */
 uint32_t pLineSensorsReadings[5];
+int contador_encoder=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -102,9 +104,11 @@ int main(void)
   MX_ADC5_Init();
   MX_I2C2_Init();
   MX_TIM8_Init();
+  MX_TIM17_Init();
   /* USER CODE BEGIN 2 */
   vPowerTrainSystemInit();
-  vLineSensorSystemInit(pLineSensorsReadings);
+  HAL_TIM_IC_Start_IT(&htim17, TIM_CHANNEL_1);
+  //vLineSensorSystemInit(pLineSensorsReadings);
 
   /* USER CODE END 2 */
 
@@ -184,6 +188,13 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
+    if (htim->Instance == TIM17) {
+        contador_encoder++;
+        //valor_capturado = HAL_TIM_ReadCapturedValue(&htim17, TIM_CHANNEL_1);
+
+    }
+}
 
 /* USER CODE END 4 */
 
