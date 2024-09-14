@@ -24,11 +24,11 @@
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"
-#include "PowerTrainSystem.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "PowerTrainSystem.h"
+#include "encoderSystem.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -38,7 +38,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define INTERNAL_CLOCK htim4
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -106,8 +106,10 @@ int main(void)
   MX_TIM8_Init();
   MX_TIM17_Init();
   /* USER CODE BEGIN 2 */
+  HAL_TIM_Base_Start_IT(&INTERNAL_CLOCK);
   vPowerTrainSystemInit();
-  HAL_TIM_IC_Start_IT(&htim17, TIM_CHANNEL_1);
+  vEncoderSystemInit();
+
   //vLineSensorSystemInit(pLineSensorsReadings);
 
   /* USER CODE END 2 */
@@ -120,18 +122,18 @@ int main(void)
 	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
 	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
 
-	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
-	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 500);
-	  HAL_Delay(3000);
-	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,0);
+	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 1000);
+	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 500);
+	  HAL_Delay(60000);
+	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 0);
 	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 0);
-	  HAL_Delay(1000);
+	  HAL_Delay(10000);
 
 	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
 	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
 
-	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
-	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 500);
+	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 1000);
+	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 500);
 	  HAL_Delay(3000);
 
     /* USER CODE END WHILE */
@@ -191,11 +193,15 @@ void SystemClock_Config(void)
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
     if (htim->Instance == TIM17) {
         contador_encoder++;
-        //valor_capturado = HAL_TIM_ReadCapturedValue(&htim17, TIM_CHANNEL_1);
-
+    } /*if (htim->Instance == TIM16) {
+    	contador_encoder++;
+    }*/
+}
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+    if (htim->Instance == TIM4) {
+    	vEncoderSystemExecuteMeasurement();
     }
 }
-
 /* USER CODE END 4 */
 
 /**
