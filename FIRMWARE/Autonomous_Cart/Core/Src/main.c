@@ -24,10 +24,6 @@
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"
-#include "PowerTrainSystem.h"
-#include "LineSensorSystem.h"
-#include "ComSystem.h"
-#include "encoderSystem.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -53,6 +49,7 @@
 
 /* USER CODE BEGIN PV */
 uint32_t pLineSensorsReadings[5];
+uint32_t uiAdcValue;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -117,7 +114,7 @@ int main(void)
   while (1)
   {
 
-	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+	  /*vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
 	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
 
 	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
@@ -132,7 +129,7 @@ int main(void)
 
 	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
 	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 500);
-	  HAL_Delay(3000);
+	  HAL_Delay(3000);*/
 
     /* USER CODE END WHILE */
 
