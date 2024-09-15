@@ -120,21 +120,17 @@ int main(void)
   {
 
 	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
-	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
+	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR,CLOCKWISE);
 
 	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 1000);
-	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 500);
+	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 1000);
 	  HAL_Delay(60000);
 	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 0);
 	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 0);
 	  HAL_Delay(10000);
 
-	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
-	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
 
-	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 1000);
-	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 500);
-	  HAL_Delay(3000);
+
 
     /* USER CODE END WHILE */
 
@@ -197,6 +193,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
     	contador_encoder++;
     }*/
 }
+// chama a funcao de calcular o rpm a cada 1 min
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim->Instance == TIM4) {
     	vEncoderSystemExecuteMeasurement();

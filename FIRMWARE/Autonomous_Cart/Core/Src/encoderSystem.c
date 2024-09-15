@@ -13,7 +13,7 @@
 
 //volatile uint32_t contador_encoder = 0;  // Variável global para contar pulsos
 uint32_t rpm = 0;                        // Variável para armazenar o RPM
-uint32_t tempo_amostragem_ms = 1000;
+uint32_t tempo_amostragem_s = 1;
 
 extern contador_encoder;
 
@@ -27,9 +27,10 @@ void vEncoderSystemInit(void) {
 void vEncoderSystemExecuteMeasurement(){
 
 	   // Tempo de amostragem em segundos
-	    float tempo_amostragem_s = tempo_amostragem_ms / 1000.0;
+	    //float tempo_amostragem_s = tempo_amostragem_ms / 1000.0;
 
 	    // Calcula o RPM
+	    //motor 80:1 e sao duas pas logo para uma rotacao temos 160 do encoder
 	    rpm = (contador_encoder * 60) / (160 * tempo_amostragem_s);
 
 	    // Resetar o contador para a próxima amostragem
