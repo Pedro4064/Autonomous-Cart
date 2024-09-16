@@ -12,40 +12,43 @@
 #define ENCODER_CHANNEL TIM_CHANNEL_1
 
 //volatile uint32_t contador_encoder = 0;  // Variável global para contar pulsos
-uint32_t rpm_d = 0;// Variável para armazenar o RPM
-uint32_t rpm_e = 0;
 
-uint32_t tempo_amostragem_s = 1;
+static unsigned long int uiTimeSample = 1;
 
-extern contador_encoder;
-extern contador_encoder2;
 
-int* pLeftMotorCount;
-int* pRightMotorCount;
+static float* pLeftMotorRPM;
+static float* pRightMotorRPM;
+
+static unsigned long int uiRightMotorPulseCounter, uiLeftMotorPulseCounter;
 
 //void vEncoderSystemInit(int , int pRightMotorCount) {
-void vEncoderSystemInit(int *leftMotorCount, int *rightMotorCount) {
+void vEncoderSystemInit(float *leftMotorCount, float *rightMotorCount) {
 
-	pLeftMotorCount = leftMotorCount;
-	pRightMotorCount = rightMotorCount;
+	pLeftMotorRPM = leftMotorCount;
+	pRightMotorRPM = rightMotorCount;
 
 	HAL_TIM_IC_Start_IT(&LEFT_ENCODER_TIM, ENCODER_CHANNEL);
 	HAL_TIM_IC_Start_IT(&RIGHT_ENCODER_TIM, ENCODER_CHANNEL);
 
 
 }
+void vEncoderSystemCounterUpdate(TIM_HandleTypeDef *htim){
+
+    if (htim->Instance == TIM17) {
+
+    	uiRightMotorPulseCounter++;
+
+    }else if (htim->Instance == TIM16) {
+
+    	uiLeftMotorPulseCounter++;
+    }
+}
+
 void vEncoderSystemExecuteMeasurement(){
-
-	   // Tempo de amostragem em segundos
-	    //float tempo_amostragem_s = tempo_amostragem_ms / 1000.0;
-
 	    // Calcula o RPM
-	    //motor 80:1 e sao duas pas logo para uma rotacao temos 160 do encoder
-	    rpm_d = (contador_encoder * 60) / (160 * tempo_amostragem_s);
-	    rpm_e = (contador_encoder2 * 60) / (160 * tempo_amostragem_s);
+		*pRightMotorRPM = (uiRightMotorPulseCounter * 60.0) / (160.0 * uiTimeSample);
+	    *pLeftMotorRPM = (uiLeftMotorPulseCounter * 60.0) / (160.0 * uiTimeSample);
 	    // Resetar o contador para a próxima amostragem
-	    contador_encoder = 0;
-	    contador_encoder2 = 0;
-	    *pLeftMotorCount = 0;
-	    *pRightMotorCount = 0;
+	    uiRightMotorPulseCounter = 0;
+	    uiLeftMotorPulseCounter = 0;
 }
