@@ -1,5 +1,5 @@
 Core/Src/PowerTrainSystem.o: ../Core/Src/PowerTrainSystem.c \
- ../Core/Inc/powerTrainSystem.h ../Core/Inc/tim.h ../Core/Inc/main.h \
+ ../Core/Inc/PowerTrainSystem.h ../Core/Inc/tim.h ../Core/Inc/main.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  ../Core/Inc/stm32g4xx_hal_conf.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc.h \
@@ -34,7 +34,7 @@ Core/Src/PowerTrainSystem.o: ../Core/Src/PowerTrainSystem.c \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h
-../Core/Inc/powerTrainSystem.h:
+../Core/Inc/PowerTrainSystem.h:
 ../Core/Inc/tim.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:

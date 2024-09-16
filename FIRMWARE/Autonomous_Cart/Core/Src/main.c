@@ -27,7 +27,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "PowerTrainSystem.h"
+#include "encoderSystem.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -37,7 +38,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define INTERNAL_CLOCK htim4
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -49,7 +50,13 @@
 
 /* USER CODE BEGIN PV */
 uint32_t pLineSensorsReadings[5];
-uint32_t uiAdcValue;
+int contador_encoder=0;
+int contador_encoder2=0;
+extern int* pLeftMotorCount;
+extern int* pRightMotorCount;
+
+int leftMotorCount = 0;
+int rightMotorCount = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -103,9 +110,14 @@ int main(void)
   MX_ADC5_Init();
   MX_I2C2_Init();
   MX_TIM8_Init();
+  MX_TIM17_Init();
   /* USER CODE BEGIN 2 */
+  HAL_TIM_Base_Start_IT(&INTERNAL_CLOCK);
   vPowerTrainSystemInit();
-  vLineSensorSystemInit(pLineSensorsReadings);
+ // vEncoderSystemInit();
+  vEncoderSystemInit(&leftMotorCount, &rightMotorCount);
+
+  //vLineSensorSystemInit(pLineSensorsReadings);
 
   /* USER CODE END 2 */
 
@@ -114,22 +126,18 @@ int main(void)
   while (1)
   {
 
-	  /*vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
-	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
+	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR,CLOCKWISE);
 
-	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
-	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 500);
-	  HAL_Delay(3000);
-	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,0);
+	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 1000);
+	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 1000);
+	  HAL_Delay(60000);
+	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 0);
 	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 0);
-	  HAL_Delay(1000);
+	  HAL_Delay(10000);
 
-	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
-	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
 
-	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
-	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 500);
-	  HAL_Delay(3000);*/
+
 
     /* USER CODE END WHILE */
 
@@ -185,7 +193,21 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
+    if (htim->Instance == TIM17) {
+    	(*pRightMotorCount)++;
+        contador_encoder++;
+    } if (htim->Instance == TIM16) {
+    	(*pLeftMotorCount)++;
+    	contador_encoder2++;
+    }
+}
+// chama a funcao de calcular o rpm a cada 1 min
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+    if (htim->Instance == TIM4) {
+    	vEncoderSystemExecuteMeasurement();
+    }
+}
 /* USER CODE END 4 */
 
 /**
