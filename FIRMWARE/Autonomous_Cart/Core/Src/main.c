@@ -51,6 +51,7 @@
 /* USER CODE BEGIN PV */
 uint32_t pLineSensorsReadings[5];
 int contador_encoder=0;
+int contador_encoder2=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -189,9 +190,9 @@ void SystemClock_Config(void)
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
     if (htim->Instance == TIM17) {
         contador_encoder++;
-    } /*if (htim->Instance == TIM16) {
-    	contador_encoder++;
-    }*/
+    } if (htim->Instance == TIM16) {
+    	contador_encoder2++;
+    }
 }
 // chama a funcao de calcular o rpm a cada 1 min
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
