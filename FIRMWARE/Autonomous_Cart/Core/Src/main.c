@@ -116,7 +116,7 @@ int main(void)
   while (1)
   {
 
-	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+	  /*vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
 	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
 
 	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
@@ -131,7 +131,7 @@ int main(void)
 
 	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR,1000);
 	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 500);
-	  HAL_Delay(3000);
+	  HAL_Delay(3000);*/
 
     /* USER CODE END WHILE */
 
