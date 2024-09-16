@@ -20,12 +20,19 @@ uint32_t tempo_amostragem_s = 1;
 extern contador_encoder;
 extern contador_encoder2;
 
-static int* pLeftMotorCoun, pRightMotorCount;
+int* pLeftMotorCount;
+int* pRightMotorCount;
 
-//void vEncoderSystemInit(int pLeftMotorCount, int pRightMotorCount) {
-void vEncoderSystemInit(void) {
+//void vEncoderSystemInit(int , int pRightMotorCount) {
+void vEncoderSystemInit(int *leftMotorCount, int *rightMotorCount) {
+
+	pLeftMotorCount = leftMotorCount;
+	pRightMotorCount = rightMotorCount;
+
 	HAL_TIM_IC_Start_IT(&LEFT_ENCODER_TIM, ENCODER_CHANNEL);
 	HAL_TIM_IC_Start_IT(&RIGHT_ENCODER_TIM, ENCODER_CHANNEL);
+
+
 }
 void vEncoderSystemExecuteMeasurement(){
 
@@ -39,4 +46,6 @@ void vEncoderSystemExecuteMeasurement(){
 	    // Resetar o contador para a próxima amostragem
 	    contador_encoder = 0;
 	    contador_encoder2 = 0;
+	    *pLeftMotorCount = 0;
+	    *pRightMotorCount = 0;
 }

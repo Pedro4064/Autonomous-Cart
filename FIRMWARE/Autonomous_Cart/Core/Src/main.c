@@ -52,6 +52,11 @@
 uint32_t pLineSensorsReadings[5];
 int contador_encoder=0;
 int contador_encoder2=0;
+extern int* pLeftMotorCount;
+extern int* pRightMotorCount;
+
+int leftMotorCount = 0;
+int rightMotorCount = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -109,7 +114,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&INTERNAL_CLOCK);
   vPowerTrainSystemInit();
-  vEncoderSystemInit();
+ // vEncoderSystemInit();
+  vEncoderSystemInit(&leftMotorCount, &rightMotorCount);
 
   //vLineSensorSystemInit(pLineSensorsReadings);
 
@@ -189,8 +195,10 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
     if (htim->Instance == TIM17) {
+    	(*pRightMotorCount)++;
         contador_encoder++;
     } if (htim->Instance == TIM16) {
+    	(*pLeftMotorCount)++;
     	contador_encoder2++;
     }
 }
