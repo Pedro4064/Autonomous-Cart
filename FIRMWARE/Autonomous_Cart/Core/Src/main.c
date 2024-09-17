@@ -29,6 +29,9 @@
 /* USER CODE BEGIN Includes */
 #include "PowerTrainSystem.h"
 #include "encoderSystem.h"
+#include "BatteryVoltageSystem.h"
+//#include "LineSensorSystem.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -53,6 +56,8 @@ uint32_t pLineSensorsReadings[5];
 
 float leftMotorCount = 0;
 float rightMotorCount = 0;
+float BatteryCharge = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -110,9 +115,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&INTERNAL_CLOCK);
   vPowerTrainSystemInit();
-
+  vBatterySystemInit(&BatteryCharge);
   vEncoderSystemInit(&leftMotorCount, &rightMotorCount);
-
   //vLineSensorSystemInit(pLineSensorsReadings);
 
   /* USER CODE END 2 */
@@ -196,6 +200,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim->Instance == TIM4) {
     	vEncoderSystemExecuteMeasurement();
+    	vBatterySystemComputeMeasurement();
     }
 }
 /* USER CODE END 4 */

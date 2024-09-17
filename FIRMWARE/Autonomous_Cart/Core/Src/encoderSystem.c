@@ -21,7 +21,7 @@ static float* pRightMotorRPM;
 
 static unsigned long int uiRightMotorPulseCounter, uiLeftMotorPulseCounter;
 
-//void vEncoderSystemInit(int , int pRightMotorCount) {
+
 void vEncoderSystemInit(float *leftMotorCount, float *rightMotorCount) {
 
 	pLeftMotorRPM = leftMotorCount;
