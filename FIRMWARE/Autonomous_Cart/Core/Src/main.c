@@ -57,6 +57,8 @@ extern int* pRightMotorCount;
 
 int leftMotorCount = 0;
 int rightMotorCount = 0;
+
+unsigned char c;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -117,8 +119,8 @@ int main(void)
  // vEncoderSystemInit();
   vEncoderSystemInit(&leftMotorCount, &rightMotorCount);
 
-  //vLineSensorSystemInit(pLineSensorsReadings);
-
+  vLineSensorSystemInit(pLineSensorsReadings);
+  HAL_UART_Receive_IT(&hlpuart1, &c, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -126,7 +128,7 @@ int main(void)
   while (1)
   {
 
-	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+	  /*vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
 	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR,CLOCKWISE);
 
 	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 1000);
@@ -134,7 +136,7 @@ int main(void)
 	  HAL_Delay(60000);
 	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 0);
 	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 0);
-	  HAL_Delay(10000);
+	  HAL_Delay(10000);*/
 
 
 
@@ -208,6 +210,23 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     	vEncoderSystemExecuteMeasurement();
     }
 }
+
+// ***************************************************** //
+// Method name: HAL_UART_RxCpltCallback                  //
+// Method description: Essa função é chamada pela própria//
+//                    UART no momento em que ocorre uma  //
+//                    entrada no terminal Putty.         //
+// Input params: UART_HandleTypeDef * huart              //
+// Output params: n/a                                    //
+// ***************************************************** //
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef * huart) {
+	if (huart == &hlpuart1) {
+		// enter = 13
+		HAL_UART_Receive_IT(&hlpuart1, &c, 1);
+		vCommunicationAppendCharacter();
+	}
+}
+
 /* USER CODE END 4 */
 
 /**

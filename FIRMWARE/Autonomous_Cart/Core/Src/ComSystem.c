@@ -21,23 +21,7 @@ char cInputArray[100];
 unsigned char cOutputArray[10];
 int iCounterPosition;
 
-/*
-// ***************************************************** //
-// Method name: HAL_UART_RxCpltCallback                  //
-// Method description: Essa função é chamada pela própria//
-//                    UART no momento em que ocorre uma  //
-//                    entrada no terminal Putty.         //
-// Input params: UART_HandleTypeDef * huart              //
-// Output params: n/a                                    //
-// ***************************************************** //
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef * huart) {
-	if (huart == &hlpuart1) {
-		// enter = 13
-		HAL_UART_Receive_IT(&hlpuart1, &c, 1);
-		vCommunicationAppendCharacter();
-	}
-}
-*/
+
 
 // ***************************************************** //
 // Method name: vCommunicationAppendCharacter            //
@@ -53,21 +37,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef * huart) {
 // ***************************************************** //
 void vCommunicationAppendCharacter() {
 	if (c != 13) {
-		if(c == 44){
-			c = 46; //transforma a virgula em ponto
-		}
 		cInputArray[iCounterPosition] = c;
 		iCounterPosition ++;
 	}
 	else{
 		cInputArray[iCounterPosition] = '\0';
-		for(int i = 0; i < iCounterPosition; i++){
-			if (cInputArray[i] == 46){ //46 é a virgula
-				if (i + 3 <= iCounterPosition){
-					cInputArray[i + 4] = '\0';
-				}
-			}
-		}
 		iCounterPosition = 0;
 		vCommunicationSentToFloat();
 	}
@@ -86,36 +60,20 @@ void vCommunicationAppendCharacter() {
 // ***************************************************** //
 void vCommunicationSentToFloat(){
 	double dResult = atof(cInputArray);
-	if (dResult >= -1000 && dResult <= 1000){
-		dResult = 1 / dResult;
-		int iterator = 0;
-		for(double i = 1000; i >= 0.001; i = i/10){
-			int iResult = dResult / i;
-			cOutputArray[iterator] = iResult + 48;
-			iterator++;
-			dResult = dResult - (iResult)*i;
-			if(i == 1){
-				c =44;
-				cOutputArray[iterator] = c;
-				iterator++;
-			}
-		}
-	}
-    cOutputArray[8] = 13;
-	HAL_UART_Transmit_IT(&hlpuart1,  cOutputArray, 9);
+	HAL_UART_Transmit_IT(&hlpuart1,  cInputArray, strlen(cInputArray));
 }
 
-vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands){
+void vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands){
 
 }
 
 
-vComSystemSendRobotData(){
+void vComSystemSendRobotData(){
 
 }
 
 
-vComSystemParseIncomingData(){
+void vComSystemParseIncomingData(){
 
 }
 

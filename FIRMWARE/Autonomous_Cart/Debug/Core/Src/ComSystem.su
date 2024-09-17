@@ -1,5 +1,5 @@
-../Core/Src/ComSystem.c:54:6:vCommunicationAppendCharacter	16	static
-../Core/Src/ComSystem.c:87:6:vCommunicationSentToFloat	40	static
-../Core/Src/ComSystem.c:108:1:vComSystemInit	24	static
-../Core/Src/ComSystem.c:113:1:vComSystemSendRobotData	4	static
-../Core/Src/ComSystem.c:118:1:vComSystemParseIncomingData	4	static
+../Core/Src/ComSystem.c:38:6:vCommunicationAppendCharacter	8	static
+../Core/Src/ComSystem.c:61:6:vCommunicationSentToFloat	16	static
+../Core/Src/ComSystem.c:66:6:vComSystemInit	24	static
+../Core/Src/ComSystem.c:71:6:vComSystemSendRobotData	4	static
+../Core/Src/ComSystem.c:76:6:vComSystemParseIncomingData	4	static
