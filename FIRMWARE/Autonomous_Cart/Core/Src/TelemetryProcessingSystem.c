@@ -1,10 +1,12 @@
 #include "TelemetryProcessingSystem.h"
-#include "encoderSystem.h"
+#include "BatteryVoltageSystem.h"
 #include "LineSensorSystem.h"
+#include "encoderSystem.h"
 
 TelemetryData* pTelemetryData;
 TelemetryCallbackOrchestration xCallbackOrchestration = {.TimerInterruptLookup = {
                                                                                     {.htim = &htim4, .xRegisteredCallbacks = {vEncoderSystemExecuteMeasurement}}, 
+                                                                                    {.htim = &htim4, .xRegisteredCallbacks = {vBatterySystemComputeMeasurement}}, 
                                                                                 },
                                                           .InputCaptureLookup = {
                                                                                     {.htim = &htim17, .xRegisteredCallbacks = {vEncoderSystemCounterUpdate}},
@@ -15,6 +17,7 @@ TelemetryCallbackOrchestration xCallbackOrchestration = {.TimerInterruptLookup =
 void vTelemetrySystemInit(TelemetryData* pTelemetryData){
     vEncoderSystemInit(&(pTelemetryData->fLeftMotorRPM), &(pTelemetryData->fRightMotorRPM));
     vLineSensorSystemInit(&(pTelemetryData->uiLineSensorData));
+    vBatterySystemInit(&(pTelemetryData->fBatteryChargeData));
 }
 
 void vTelemetrySystemSchedulingHandler(TIM_HandleTypeDef* pTIM){
