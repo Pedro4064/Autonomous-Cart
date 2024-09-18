@@ -33,3 +33,6 @@
 **/.launch
 **/.metadata
 **/Debug
+
+# Vscode 
+**/.vscode
