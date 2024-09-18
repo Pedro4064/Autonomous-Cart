@@ -16,6 +16,7 @@
 #define IR5_AD hadc5
 
 extern uint32_t uiAdcValue;
+// adcValues[0] = pLineSensorsReadings[1] & 0x0000FFFF;
 
 void vLineSensorSystemInit(uint32_t *pLineSensorsReadings){
 	HAL_ADCEx_Calibration_Start(&IR1_AD, ADC_SINGLE_ENDED);

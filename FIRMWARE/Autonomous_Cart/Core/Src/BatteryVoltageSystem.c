@@ -12,7 +12,8 @@
 uint32_t fAdcValue;
 uint32_t *pAdcValue = &fAdcValue;
 float fTempValue;
-unsigned long int adcValues[2];
+unsigned int adcValues[2];
+extern uint32_t pLineSensorsReadings[5];
 
 void vBatterySystemInit(float *pBatteryCharge){
 	HAL_ADCEx_Calibration_Start(&BATTERY_AD, ADC_SINGLE_ENDED);
@@ -22,10 +23,7 @@ void vBatterySystemComputeMeasurement(){
 	//fAdcValue = HAL_ADC_GetValue(&BATTERY_AD);
 
 	// Aguardar a conversão do primeiro canal (IN3)
-
-	    adcValues[0] = HAL_ADC_GetValue(&hadc2);
-
-	    // Ler o valor convertido do canal IN4 (Rank 2)
-	    adcValues[1] = HAL_ADC_GetValue(&hadc2);
+		adcValues[1] = pLineSensorsReadings[1] >> 16;
+		adcValues[0] = pLineSensorsReadings[1] & 0x0000FFFF;
 
 }

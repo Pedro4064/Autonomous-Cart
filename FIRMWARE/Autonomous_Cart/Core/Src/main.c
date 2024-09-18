@@ -24,6 +24,7 @@
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"
+#include <stdlib.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -57,7 +58,7 @@ uint32_t pLineSensorsReadings[5];
 float leftMotorCount = 0;
 float rightMotorCount = 0;
 float BatteryCharge = 0;
-
+unsigned char c;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -115,9 +116,9 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&INTERNAL_CLOCK);
   vPowerTrainSystemInit();
+  vLineSensorSystemInit(pLineSensorsReadings);
   vBatterySystemInit(&BatteryCharge);
   vEncoderSystemInit(&leftMotorCount, &rightMotorCount);
-  //vLineSensorSystemInit(pLineSensorsReadings);
 
   /* USER CODE END 2 */
 
@@ -202,6 +203,22 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     	vEncoderSystemExecuteMeasurement();
     	vBatterySystemComputeMeasurement();
     }
+}
+
+// ***************************************************** //
+// Method name: HAL_UART_RxCpltCallback                  //
+// Method description: Essa função é chamada pela própria//
+//                    UART no momento em que ocorre uma  //
+//                    entrada no terminal Putty.         //
+// Input params: UART_HandleTypeDef * huart              //
+// Output params: n/a                                    //
+// ***************************************************** //
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef * huart) {
+	if (huart == &hlpuart1) {
+		// enter = 13
+		HAL_UART_Receive_IT(&hlpuart1, &c, 1);
+		vCommunicationAppendCharacter();
+	}
 }
 /* USER CODE END 4 */
 
