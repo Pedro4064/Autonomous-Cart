@@ -1,3 +1,4 @@
+"./Core/Src/BatteryVoltageSystem.o"
 "./Core/Src/ComSystem.o"
 "./Core/Src/LineSensorSystem.o"
 "./Core/Src/PowerTrainSystem.o"

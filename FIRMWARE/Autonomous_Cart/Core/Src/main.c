@@ -29,6 +29,9 @@
 /* USER CODE BEGIN Includes */
 #include "PowerTrainSystem.h"
 #include "encoderSystem.h"
+#include "BatteryVoltageSystem.h"
+//#include "LineSensorSystem.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,15 +53,11 @@
 
 /* USER CODE BEGIN PV */
 uint32_t pLineSensorsReadings[5];
-int contador_encoder=0;
-int contador_encoder2=0;
-extern int* pLeftMotorCount;
-extern int* pRightMotorCount;
 
-int leftMotorCount = 0;
-int rightMotorCount = 0;
+float leftMotorCount = 0;
+float rightMotorCount = 0;
+float BatteryCharge = 0;
 
-unsigned char c;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -116,11 +115,10 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&INTERNAL_CLOCK);
   vPowerTrainSystemInit();
- // vEncoderSystemInit();
+  vBatterySystemInit(&BatteryCharge);
   vEncoderSystemInit(&leftMotorCount, &rightMotorCount);
+  //vLineSensorSystemInit(pLineSensorsReadings);
 
-  vLineSensorSystemInit(pLineSensorsReadings);
-  HAL_UART_Receive_IT(&hlpuart1, &c, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -128,7 +126,7 @@ int main(void)
   while (1)
   {
 
-	  /*vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
 	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR,CLOCKWISE);
 
 	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 1000);
@@ -136,7 +134,7 @@ int main(void)
 	  HAL_Delay(60000);
 	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 0);
 	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 0);
-	  HAL_Delay(10000);*/
+	  HAL_Delay(10000);
 
 
 
@@ -196,37 +194,15 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
-    if (htim->Instance == TIM17) {
-    	(*pRightMotorCount)++;
-        contador_encoder++;
-    } if (htim->Instance == TIM16) {
-    	(*pLeftMotorCount)++;
-    	contador_encoder2++;
-    }
+	vEncoderSystemCounterUpdate(htim);
 }
 // chama a funcao de calcular o rpm a cada 1 min
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim->Instance == TIM4) {
     	vEncoderSystemExecuteMeasurement();
+    	vBatterySystemComputeMeasurement();
     }
 }
-
-// ***************************************************** //
-// Method name: HAL_UART_RxCpltCallback                  //
-// Method description: Essa função é chamada pela própria//
-//                    UART no momento em que ocorre uma  //
-//                    entrada no terminal Putty.         //
-// Input params: UART_HandleTypeDef * huart              //
-// Output params: n/a                                    //
-// ***************************************************** //
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef * huart) {
-	if (huart == &hlpuart1) {
-		// enter = 13
-		HAL_UART_Receive_IT(&hlpuart1, &c, 1);
-		vCommunicationAppendCharacter();
-	}
-}
-
 /* USER CODE END 4 */
 
 /**
