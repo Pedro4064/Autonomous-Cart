@@ -64,16 +64,21 @@ void vCommunicationSentToFloat(){
 }
 
 void vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands){
-
+	HAL_UART_Receive_IT(&hlpuart1, &c, 1);
+	// precisamos atribuir uma variavel ponteiro para telemetry data, state estimate
+	// e pMotorCommands. Em linhas gerais toda base é de recebimento e envio.
 }
 
 
 void vComSystemSendRobotData(){
-
+	// aqui precisamos enviar as informações modificadas em uma codificação especifica
+	// ver parametro de comunicação bluetooth.
 }
 
 
 void vComSystemParseIncomingData(){
+	// aqui precisamos receber as informações modificadas em uma codificação especifica
+	// ver parametro de comunicação bluetooth.
 
 }
 
