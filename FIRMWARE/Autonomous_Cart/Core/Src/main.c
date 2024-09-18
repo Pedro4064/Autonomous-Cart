@@ -24,12 +24,16 @@
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"
+#include <stdlib.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "MissionSoftware.h"
 #include "PowerTrainSystem.h"
 #include "encoderSystem.h"
+#include "BatteryVoltageSystem.h"
+//#include "LineSensorSystem.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
