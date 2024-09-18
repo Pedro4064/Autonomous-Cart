@@ -12,10 +12,10 @@ typedef void (*EXTI_CALLBACK)(unsigned int);
 typedef struct TELEMETRY_DATA{
     float fLineSensorData;
     float fUltrasonicDistanceData;
-    float fBatteryChargeData;
     float fLeftMotorRPM;
     float fRightMotorRPM;
-    uint32_t uiLineSensorData;
+    float fBatteryChargeData;
+    unsigned long int uiLineSensorData[5];
 } TelemetryData;
 
 typedef struct TIM_CALLBACK_LOOKUP{
