@@ -24,7 +24,6 @@
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"
-#include <stdlib.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -119,6 +118,7 @@ int main(void)
 
 	  vMissionSoftwareMain();
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

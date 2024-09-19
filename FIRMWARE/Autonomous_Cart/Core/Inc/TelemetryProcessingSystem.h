@@ -1,4 +1,5 @@
 #include "tim.h"
+#include "imu.h"
 
 #ifndef __TELEMETRY_PROCESSING_SYSTEM_H__
 #define __TELEMETRY_PROCESSING_SYSTEM_H__
@@ -15,8 +16,16 @@ typedef struct TELEMETRY_DATA{
     float fLeftMotorRPM;
     float fRightMotorRPM;
     float fBatteryChargeData;
+    ImuReadings xImuReadings;
     unsigned long int uiLineSensorData[5];
 } TelemetryData;
+
+typedef union TELEMETRY_DATA_PACKAGE
+{
+    TelemetryData xTelemetryDataTable;
+    uint8_t uiTelemetryDataBuffer[64];
+
+}TelemetryDataPackage;
 
 typedef struct TIM_CALLBACK_LOOKUP{
     TIM_HandleTypeDef* htim;

@@ -1,12 +1,13 @@
 #include "TelemetryProcessingSystem.h"
 #include "PowerTrainSystem.h"
+#include "usart.h"
 #include "main.h"
 #include "tim.h"
 
 #define TASK_SCHEDULER_CLOCK htim4
 
 TelemetryData xTelemetryData;
-
+TelemetryDataPackage xTelemetryDataPackage;
 
 void vMissionSoftwareMain(void){
     // Initialize all subsystems
@@ -39,4 +40,6 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     vTelemetrySystemSchedulingHandler(htim);
+    xTelemetryDataPackage.xTelemetryDataTable = xTelemetryData;
+	//HAL_UART_Transmit(&hlpuart1,  &(xTelemetryDataPackage.uiTelemetryDataBuffer), sizeof(xTelemetryDataPackage.uiTelemetryDataBuffer), 1000);
 }
