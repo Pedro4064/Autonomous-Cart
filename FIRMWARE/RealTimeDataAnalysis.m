@@ -1,39 +1,49 @@
 clc; clear;
 
+n_points = 50;
 data_analysis_window = figure();
 tiledlayout('flow');
 
 nexttile(1);
 axes_motors = gca;
 motors_plots = cell(1,2);
-motors_plots{1} = plot(zeros(1, 100),'r-','parent',axes_motors), hold(axes_motors, 'on');
-motors_plots{2} = plot(zeros(1, 100),'g-','parent',axes_motors);
+
+motors_plots{1} = plot(zeros(1, n_points),'r-','parent',axes_motors), hold(axes_motors, 'on');
+motors_plots{2} = plot(zeros(1, n_points),'g-','parent',axes_motors);
+title('RPM - Motores');
 
 
 
 nexttile(2);
 axes_line = gca;
 line_plots = cell(1,5);
-line_plots{1} = plot(zeros(1, 100),'r-','parent',axes_line), hold(axes_line, 'on');
-line_plots{2} = plot(zeros(1, 100),'g-','parent',axes_line);
-line_plots{3} = plot(zeros(1, 100), 'b-','parent',axes_line);
-line_plots{4} = plot(zeros(1, 100),'k-','parent',axes_line), 
-line_plots{5} = plot(zeros(1, 100),'k-','parent',axes_line), hold(axes_line, 'off');
+line_plots{1} = plot(zeros(1, n_points),'r-','parent',axes_line), hold(axes_line, 'on');
+line_plots{2} = plot(zeros(1, n_points),'g-','parent',axes_line);
+line_plots{3} = plot(zeros(1, n_points), 'b-','parent',axes_line);
+line_plots{4} = plot(zeros(1, n_points),'k-','parent',axes_line), 
+line_plots{5} = plot(zeros(1, n_points),'k-','parent',axes_line), hold(axes_line, 'off');
+title('Sensores de Linha');
+% legend('Sen. 1', 'Sen. 2', 'Sen. 3', 'Sen. 4', 'Sen. 5');
 
 nexttile(3);
 axes_battery = gca;
 battery_plots = cell(1,1);
-battery_plots{1} = plot(zeros(1, 100),'r-','parent',axes_battery);
+battery_plots{1} = plot(zeros(1, n_points),'r-','parent',axes_battery);
+title('Sensoriamento - Bateria');
 
 nexttile([2, 3]);  
 axes_imu = gca;
 imu_plots = cell(1, 6);
-imu_plots{1} = plot(zeros(1, 100),'r-','parent',axes_imu), hold(axes_imu, 'on');
-imu_plots{2} = plot(zeros(1, 100),'g-','parent',axes_imu);
-imu_plots{3} = plot(zeros(1, 100), 'b-','parent',axes_imu);
-imu_plots{4} = plot(zeros(1, 100),'k-','parent',axes_imu), 
-imu_plots{5} = plot(zeros(1, 100),'k-','parent',axes_imu), 
-imu_plots{6} = plot(zeros(1, 100),'k-','parent',axes_imu), hold(axes_imu, 'off');
+yyaxis left;
+imu_plots{1} = plot(zeros(1, n_points),'r-','parent',axes_imu), hold(axes_imu, 'on');
+imu_plots{2} = plot(zeros(1, n_points),'g-','parent',axes_imu);
+imu_plots{3} = plot(zeros(1, n_points), 'b-','parent',axes_imu);
+yyaxis right;
+imu_plots{4} = plot(zeros(1, n_points),'r-','parent',axes_imu), 
+imu_plots{5} = plot(zeros(1, n_points),'g-','parent',axes_imu), 
+imu_plots{6} = plot(zeros(1, n_points),'b-','parent',axes_imu), hold(axes_imu, 'off');
+title('IMU - MPU6050');
+% legend('Acc. X', 'Acc. Y', 'Acc. Z', 'Gyr. X', 'Gyr. Y', 'Gyr. Z');
 
 
 
