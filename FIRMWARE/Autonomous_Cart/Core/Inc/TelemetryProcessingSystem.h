@@ -17,7 +17,8 @@ typedef struct TELEMETRY_DATA{
     float fRightMotorRPM;
     float fBatteryChargeData;
     ImuReadings xImuReadings;
-    unsigned long int uiLineSensorData[5];
+    unsigned long uiLineSensorData[5];
+    unsigned long uiRawAdcSensorData[5];
 } TelemetryData;
 
 typedef union TELEMETRY_DATA_PACKAGE

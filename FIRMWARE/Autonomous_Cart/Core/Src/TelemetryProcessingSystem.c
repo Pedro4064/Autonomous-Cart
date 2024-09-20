@@ -9,6 +9,7 @@ TelemetryCallbackOrchestration xCallbackOrchestration = {.TimerInterruptLookup =
                                                                                     {.htim = &htim4, .xRegisteredCallbacks = {vEncoderSystemExecuteMeasurement}}, 
                                                                                     {.htim = &htim4, .xRegisteredCallbacks = {vBatterySystemComputeMeasurement}}, 
                                                                                     {.htim = &htim4, .xRegisteredCallbacks = {vImuComputeMeasurements}}, 
+                                                                                    {.htim = &htim4, .xRegisteredCallbacks = {vLineSensorSystemProcessMeasurements}}, 
                                                                                 },
                                                           .InputCaptureLookup = {
                                                                                     {.htim = &htim17, .xRegisteredCallbacks = {vEncoderSystemCounterUpdate}},
@@ -18,7 +19,7 @@ TelemetryCallbackOrchestration xCallbackOrchestration = {.TimerInterruptLookup =
 
 void vTelemetrySystemInit(TelemetryData* pTelemetryData){
     vEncoderSystemInit(&(pTelemetryData->fLeftMotorRPM), &(pTelemetryData->fRightMotorRPM));
-    vLineSensorSystemInit(&(pTelemetryData->uiLineSensorData));
+    vLineSensorSystemInit(pTelemetryData->uiLineSensorData);
     vBatterySystemInit(&(pTelemetryData->fBatteryChargeData));
     vImuInit(&(pTelemetryData->xImuReadings));
 }
