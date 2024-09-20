@@ -49,7 +49,8 @@ void vImuInit(ImuReadings* pImuReadings)
     HAL_I2C_Mem_Write(&hi2c2, MPU6050_ADDR, SMPLRT_DIV_REG, REG_ADDR_SIZE, &uiData, 1, TIME_OUT);
 
     //Digital filter DLPF_CFG = 3
-    uiData = 0x03;
+    uiData = 0x06;
+    //uiData = 0x00;
     HAL_I2C_Mem_Write(&hi2c2, MPU6050_ADDR, CONFIG_REG, REG_ADDR_SIZE, &uiData, 1, TIME_OUT);
 
     //Gyroscope Configuration - Set full scale range to +-250o/s
