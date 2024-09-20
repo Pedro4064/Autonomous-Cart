@@ -1,10 +1,10 @@
 function callbackFcn(src, ~, motors_plots, line_plots, battery_plots, imu_plots)
 
-    persistent iteration_counter
-    if isempty(iteration_counter)
-        iteration_counter = 0;
-    end
-    iteration_counter = iteration_counter + 1;
+    % persistent iteration_counter
+    % if isempty(iteration_counter)
+        % iteration_counter = 0;
+    % end
+    % iteration_counter = iteration_counter + 1;
 
     % Parse transmitted data
     transmitted_data = read(src, 16, "single");
@@ -34,8 +34,8 @@ function callbackFcn(src, ~, motors_plots, line_plots, battery_plots, imu_plots)
     imu_plots{5}.YData = [imu_plots{5}.YData(2:end), imu_data(5)];   
     imu_plots{6}.YData = [imu_plots{6}.YData(2:end), imu_data(6)];   
 
-    if mod(iteration_counter, 5) == 0
-        drawnow;
-    end
+    % if mod(iteration_counter, 5) == 0
+        % drawnow;
+    % end
     % drawnow();
 end

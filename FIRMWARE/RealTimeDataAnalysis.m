@@ -10,6 +10,7 @@ motors_plots = cell(1,2);
 
 motors_plots{1} = plot(zeros(1, n_points),'r-','parent',axes_motors), hold(axes_motors, 'on');
 motors_plots{2} = plot(zeros(1, n_points),'g-','parent',axes_motors);
+ylim([0 80]);
 title('RPM - Motores');
 
 
