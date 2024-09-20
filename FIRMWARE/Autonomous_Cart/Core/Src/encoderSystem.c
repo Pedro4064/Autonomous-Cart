@@ -13,7 +13,7 @@
 
 //volatile uint32_t contador_encoder = 0;  // Variável global para contar pulsos
 
-static unsigned long int uiTimeSample = 1;
+static float fTimeSample = 0.08;
 
 
 static float* pLeftMotorRPM;
@@ -21,7 +21,7 @@ static float* pRightMotorRPM;
 
 static unsigned long int uiRightMotorPulseCounter, uiLeftMotorPulseCounter;
 
-//void vEncoderSystemInit(int , int pRightMotorCount) {
+
 void vEncoderSystemInit(float *leftMotorCount, float *rightMotorCount) {
 
 	pLeftMotorRPM = leftMotorCount;
@@ -46,8 +46,8 @@ void vEncoderSystemCounterUpdate(TIM_HandleTypeDef *htim){
 
 void vEncoderSystemExecuteMeasurement(){
 	    // Calcula o RPM
-		*pRightMotorRPM = (uiRightMotorPulseCounter * 60.0) / (160.0 * uiTimeSample);
-	    *pLeftMotorRPM = (uiLeftMotorPulseCounter * 60.0) / (160.0 * uiTimeSample);
+		*pRightMotorRPM = (uiRightMotorPulseCounter * 60.0) / (160.0 * fTimeSample);
+	    *pLeftMotorRPM = (uiLeftMotorPulseCounter * 60.0) / (160.0 * fTimeSample);
 	    // Resetar o contador para a próxima amostragem
 	    uiRightMotorPulseCounter = 0;
 	    uiLeftMotorPulseCounter = 0;

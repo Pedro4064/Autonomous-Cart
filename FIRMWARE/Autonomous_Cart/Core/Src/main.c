@@ -27,8 +27,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "MissionSoftware.h"
 #include "PowerTrainSystem.h"
 #include "encoderSystem.h"
+#include "BatteryVoltageSystem.h"
+//#include "LineSensorSystem.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -38,7 +42,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define INTERNAL_CLOCK htim4
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -49,10 +52,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint32_t pLineSensorsReadings[5];
-
-float leftMotorCount = 0;
-float rightMotorCount = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -108,12 +107,7 @@ int main(void)
   MX_TIM8_Init();
   MX_TIM17_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_Base_Start_IT(&INTERNAL_CLOCK);
-  vPowerTrainSystemInit();
 
-  vEncoderSystemInit(&leftMotorCount, &rightMotorCount);
-
-  //vLineSensorSystemInit(pLineSensorsReadings);
 
   /* USER CODE END 2 */
 
@@ -122,19 +116,7 @@ int main(void)
   while (1)
   {
 
-	  vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
-	  vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR,CLOCKWISE);
-
-	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 1000);
-	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 1000);
-	  HAL_Delay(60000);
-	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 0);
-	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 0);
-	  HAL_Delay(10000);
-
-
-
-
+	  vMissionSoftwareMain();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -189,15 +171,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
-	vEncoderSystemCounterUpdate(htim);
-}
-// chama a funcao de calcular o rpm a cada 1 min
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-    if (htim->Instance == TIM4) {
-    	vEncoderSystemExecuteMeasurement();
-    }
-}
 /* USER CODE END 4 */
 
 /**
