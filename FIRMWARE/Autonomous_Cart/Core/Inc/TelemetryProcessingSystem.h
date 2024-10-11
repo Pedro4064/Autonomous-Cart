@@ -11,6 +11,7 @@ typedef TIM_CALLBACK INPUT_CAPTURE_CALLBACK;
 typedef void (*EXTI_CALLBACK)(unsigned int);
 
 typedef struct TELEMETRY_DATA{
+	unsigned char ucCollisionStatus;
     float fLineSensorData;
     float fUltrasonicDistanceData;
     float fLeftMotorRPM;
