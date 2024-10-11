@@ -33,5 +33,5 @@ hold on;
 
 
 %%
-global track_map
+global track_map cost_map;
 sensor_emulation(x0, y0, deg2rad(-90))
