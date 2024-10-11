@@ -2,8 +2,15 @@ function cost = cost_fun(x)
 %COST_FUN Summary of this function goes here
 %   Detailed explanation goes here
 
-    global cost_map;
+    global cost_map track_map;
     
+    r = 3.5e-2;              % Radius of the wheel [m]
+    L = 10e-2;               % Distance between wheels [m]
+    
+    theta_0 = deg2rad(-90);  % Initial Theta value
+    x0 = 1;                  % Initial X Coordinate
+    y0 = 1.146;              % Initial Y Coordinate
+
     model_name = 'LINE_CONTROL';
     sim_in     = Simulink.SimulationInput(model_name);
     sim_in     = sim_in.setVariable('k', x(1:3));
@@ -13,7 +20,15 @@ function cost = cost_fun(x)
     sim_in     = sim_in.setVariable('P_left',  x(7));
     sim_in     = sim_in.setVariable('I_left',  x(8));
     sim_in     = sim_in.setVariable('D_left',  x(9));
-    
+
+    sim_in     = sim_in.setVariable('track_map', track_map);
+    sim_in     = sim_in.setVariable('r', r);
+    sim_in     = sim_in.setVariable('L', L);
+    sim_in     = sim_in.setVariable('theta_0', theta_0);
+    sim_in     = sim_in.setVariable('x0', x0);
+    sim_in     = sim_in.setVariable('y0', y0);
+
+
     out = sim(sim_in);
     theta_dot= out.logsout{6}.Values.Data;
     x_points = out.logsout{8}.Values.Data;

@@ -5,23 +5,8 @@ load track_map.mat
 
 global track_map cost_map;
 
-r = 3.5e-2;   % Radius of the wheel [m]
-L = 10e-2;    % Distance between wheels [m]
-Ts = 1/10;    % Sampling Rate of system
 
-theta_0 = deg2rad(-90);  % Initial Theta value
-x0 = 1;                  % Initial X Coordinate
-y0 = 1.146;              % Initial Y Coordinate
-states_0 = [0 0 0 0 0 0 theta_0 0];
-k = [1 1 1];
 
-P_left = 1;
-I_left = 1;
-D_left = 1;
-
-P_right = 1;
-I_right = 1;
-D_right = 1;
 
 %% Define Bounds for Optimization %%%%%%%%
 % All PID values must be greater than zero
@@ -39,7 +24,7 @@ ub = ones(1, 9) * 1000;  % Upper bounds (for example, you can adjust as needed)
 % Configure to use parallel in multi core
 %systems, and display iterations.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-options = optimoptions('ga', 'Display', 'iter', 'UseParallel', true);
+options = optimoptions('ga', 'Display', 'iter');%, 'UseParallel', true);
 
 % Run the Genetic Algorithm optimization
 [x_opt, fval] = ga(@cost_fun, 9, [], [], [], [], lb, ub, [], options);
