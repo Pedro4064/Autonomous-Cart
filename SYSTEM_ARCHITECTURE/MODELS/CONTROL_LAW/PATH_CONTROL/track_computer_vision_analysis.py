@@ -31,7 +31,7 @@ border_img = np.zeros((binary_map.shape[0], binary_map.shape[1], 3), dtype=np.ui
 
 # Add cost layers from borders
 color_gradient = np.linspace(0, 255, 86)
-for layer_index, layer_thickness in enumerate(range(900, 40, -10)):
+for layer_index, layer_thickness in enumerate(range(300, 40, -10)):
     border_thickness = int(layer_thickness * scaling_factor_x)
     border = cv2.drawContours(np.zeros_like(binary_map), contours, -1, 255, thickness=border_thickness)
     border_img[border == 255] = [0, 0, color_gradient[layer_index]]
@@ -48,7 +48,7 @@ plt.imshow(cv2.cvtColor(scaled_img, cv2.COLOR_BGR2RGB))
 plt.title('Scaled 2D Map with Borders (1mm per Pixel)')
 plt.show()
 
-savemat('track_map.mat', {'cost_map': scaled_img, 'track_map': scaled_img})
+savemat('track_map.mat', {'cost_map': scaled_img, 'track_map': scaled_binary_map})
 
 # Output scaled map dimensions and pixel-per-mm ratios
 print(f"Scaled map size: {scaled_img.shape[1]} pixels (width) x {scaled_img.shape[0]} pixels (height)")
