@@ -18,7 +18,7 @@ function sensor_readings = sensor_emulation(x_world, y_world, theta)
     
     sensor_1_coord = ceil(sensor_1_coord*1e3); % Convert to mm since 1px=1mm
     sensor_2_coord = ceil(sensor_2_coord*1e3); % Convert to mm since 1px=1mm
-    sensor_3_coord = ceil(sensor_3_coord*1e3); % Convert to mm since 1px=1mm
+    sensor_3_coord = ceil(sensor_3_coord*1e3) % Convert to mm since 1px=1mm
     sensor_4_coord = ceil(sensor_4_coord*1e3); % Convert to mm since 1px=1mm
     sensor_5_coord = ceil(sensor_5_coord*1e3); % Convert to mm since 1px=1mm
     
