@@ -1,6 +1,7 @@
 function sensor_readings = sensor_emulation(x_world, y_world, theta)
 
     global track_map
+    theta = theta - pi/2;
     rotation_matrix = [cos(theta) -sin(theta)
                         sin(theta) cos(theta)];
     

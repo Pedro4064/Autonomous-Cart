@@ -1,27 +1,33 @@
-%x = x_opt;
+x = x_opt;
 %x =     [0.0001    1.3405    7.5021    0.6319    0.0005    0.0001    0.0000    6.4999    9.6661];
 %x =     [6.3328    5.1110    8.9397    2.3632    6.0819    5.3784    8.6901    0.3448    5.5464]
 %x  = [1.8198    0.2780    4.2303    8.0298    1.2317    6.1204    3.2980    0.4734    4.0140];
-
+%x = [8.8645    9.4924    9.4504    4.8807    2.7518    2.9753    2.3675    1.5344    8.2179]
 load track_map
 r = 3.5e-2;              % Radius of the wheel [m]
 L = 10e-2;               % Distance between wheels [m]
 
-theta_0 = deg2rad(-90);  % Initial Theta value
+theta_0 = deg2rad(0);  % Initial Theta value
 x0 = 1;                  % Initial X Coordinate
 y0 = 1.146;              % Initial Y Coordinate
 
-model_name = 'LINE_CONTROL';
+model_name = 'THETA_ERROR_LINE_CONTROL';
 sim_in     = Simulink.SimulationInput(model_name);
-sim_in     = sim_in.setVariable('k_1', x(1));
-sim_in     = sim_in.setVariable('k_2', x(2));
-sim_in     = sim_in.setVariable('k_3', x(3));
-sim_in     = sim_in.setVariable('P_right', x(4));
-sim_in     = sim_in.setVariable('I_right', x(5));
-sim_in     = sim_in.setVariable('D_right', x(6));
-sim_in     = sim_in.setVariable('P_left',  x(7));
-sim_in     = sim_in.setVariable('I_left',  x(8));
-sim_in     = sim_in.setVariable('D_left',  x(9));
+%sim_in     = sim_in.setVariable('k_1', x(1));
+%sim_in     = sim_in.setVariable('k_2', x(2));
+%sim_in     = sim_in.setVariable('k_3', x(3));
+sim_in     = sim_in.setVariable('P_right', x(1));
+sim_in     = sim_in.setVariable('I_right', x(2));
+sim_in     = sim_in.setVariable('D_right', x(3));
+sim_in     = sim_in.setVariable('P_left',  x(4));
+sim_in     = sim_in.setVariable('I_left',  x(5));
+sim_in     = sim_in.setVariable('D_left',  x(6));
+
+sim_in     = sim_in.setVariable('P_sensor_1', [5.5e-2  7e-2]');
+sim_in     = sim_in.setVariable('P_sensor_2', [3e-2    7e-2]');
+sim_in     = sim_in.setVariable('P_sensor_3', [0     8.5e-2]');
+sim_in     = sim_in.setVariable('P_sensor_4', [-3e-2   7e-2]');
+sim_in     = sim_in.setVariable('P_sensor_5', [-5.5e-2 7e-2]');
 
 sim_in     = sim_in.setVariable('track_map', track_map);
 sim_in     = sim_in.setVariable('r', r);
@@ -33,8 +39,8 @@ sim_in     = sim_in.setVariable('y0', y0);
 
 out = sim(sim_in);
 theta_dot= out.logsout{6}.Values.Data;
-x_points = squeeze(out.logsout{8}.Values.Data);
-y_points = squeeze(out.logsout{9}.Values.Data);
+x_points = squeeze(out.logsout{12}.Values.Data);
+y_points = squeeze(out.logsout{13}.Values.Data);
 
 %imshow(track_map, [0 1]);  % Display the image
 imshow(cost_map);
