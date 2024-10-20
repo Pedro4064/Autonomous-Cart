@@ -38,7 +38,7 @@ sim_in     = sim_in.setVariable('y0', y0);
 
 
 out = sim(sim_in);
-theta_dot= out.logsout{6}.Values.Data;
+theta_dot= out.logsout{10}.Values.Data;
 x_points = squeeze(out.logsout{12}.Values.Data);
 y_points = squeeze(out.logsout{13}.Values.Data);
 

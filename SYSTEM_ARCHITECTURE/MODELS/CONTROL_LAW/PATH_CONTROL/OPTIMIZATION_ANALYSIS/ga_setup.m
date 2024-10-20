@@ -16,7 +16,7 @@ global track_map cost_map;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 lb = zeros(1, 6);        % Lower bounds (0 for each parameter)
-ub = ones(1, 6) * 10;   % Upper bounds (for example, you can adjust as needed)
+ub = ones(1, 6) * 10;    % Upper bounds (for example, you can adjust as needed)
 
 %% Configure and Run Optimization %%%%%%%%%
 % Configure to use parallel in multi core

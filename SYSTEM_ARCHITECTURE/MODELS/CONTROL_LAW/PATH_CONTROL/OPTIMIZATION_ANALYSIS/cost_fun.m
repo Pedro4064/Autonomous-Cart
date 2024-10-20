@@ -39,7 +39,7 @@ function cost = cost_fun(x)
 
 
     out = sim(sim_in);
-    theta_dot= squeeze(out.logsout{11}.Values.Data);
+    theta_dot= squeeze(out.logsout{10}.Values.Data);
     x_points = squeeze(out.logsout{12}.Values.Data);
     y_points = squeeze(out.logsout{13}.Values.Data);
     
@@ -74,7 +74,7 @@ function cost = cost_fun(x)
         cost = cost + (255 - offset_penality);
     end
     
-    %theta_dot_diff = diff(theta_dot);           % Calculate rate of change of theta_dot
-    %jitter_penalty = sum(abs(theta_dot_diff));  % Sum of absolute differences
-    %cost = cost + jitter_penalty * 1e2;         % Apply a scaling factor to the penalty
+    theta_dot_diff = diff(theta_dot);           % Calculate rate of change of theta_dot
+    jitter_penalty = max(abs(theta_dot_diff));  % Sum of absolute differences
+    cost = cost + jitter_penalty * 1e2;         % Apply a scaling factor to the penalty
 end
