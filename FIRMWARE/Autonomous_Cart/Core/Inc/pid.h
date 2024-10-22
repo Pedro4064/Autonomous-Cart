@@ -20,6 +20,9 @@ typedef struct pid_data_type {
     float fError_sum;               // Integrator cumulative error
     unsigned short usIntegratorSize; // Integrator window size
     float fOutputSaturation;        // Output saturation
+    unsigned short usIntegratorCount; // Counter used to control the integration error window
+    float fIntegratorBuffer[INTEGRATOR_MAX_SIZE]; // Buffer used to store the errors to generate the integral error
+
 } pid_data_type;
 
 /* ************************************************ */

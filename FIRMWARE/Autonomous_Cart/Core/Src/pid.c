@@ -9,11 +9,6 @@
 
 #include "pid.h"
 
-// Buffer used to store the errors to generate the integral error
-float fIntegratorBuffer[INTEGRATOR_MAX_SIZE] = {0};
-// Counter used to control the integration error window
-unsigned short usIntegratorCount = 0;
-
 /* ************************************************ */
 /* Method name:        vPidInit                     */
 /* Method description: Initialize the PID controller*/
@@ -29,6 +24,8 @@ void vPidInit(pid_data_type *pPid, float fKp, float fKi, float fKd, unsigned sho
     pPid->fKd = fKd;
     pPid->fError_previous = 0;
     pPid->fError_sum = 0.0;
+    pPid->fIntegratorBuffer[INTEGRATOR_MAX_SIZE] = {0};
+    pPid->usIntegratorCount = 0;
 
     // Saturates Integrator size (up to 10 s)
     if ((usIntSizeMs / UPDATE_RATE_MS) > INTEGRATOR_MAX_SIZE)
@@ -82,11 +79,11 @@ float fPidUpdateData(pid_data_type *pPid, float fSensorValue, float fSetValue) {
     fError = fSetValue - fSensorValue;
 
     // Integral error
-    pPid->fError_sum = pPid->fError_sum - fIntegratorBuffer[usIntegratorCount] + fError;
-    fIntegratorBuffer[usIntegratorCount] = fError;
+    pPid->fError_sum = pPid->fError_sum - pPid->fIntegratorBuffer[pPid->usIntegratorCount] + fError;
+    pPid->fIntegratorBuffer[pPid->usIntegratorCount] = fError;
 
-    if (++usIntegratorCount >= pPid->usIntegratorSize)
-        usIntegratorCount = 0;
+    if (++pPid->usIntegratorCount >= pPid->usIntegratorSize)
+        pPid->usIntegratorCount = 0;
 
     // Derivative error
     fDifference = (fError - pPid->fError_previous);
