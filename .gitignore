@@ -32,4 +32,8 @@
 **/.settings
 **/.launch
 **/.metadata
+**/.mxproject
 **/Debug
+
+# Vscode 
+**/.vscode

@@ -1,3 +1,0 @@
-../Core/Src/PowerTrainSystem.c:16:6:vPowerTrainSystemInit	1
-../Core/Src/PowerTrainSystem.c:22:6:vPowerTrainSystemSetMotorDirection	7
-../Core/Src/PowerTrainSystem.c:49:6:vPowerTrainSystemSetMotorSpeed	3
