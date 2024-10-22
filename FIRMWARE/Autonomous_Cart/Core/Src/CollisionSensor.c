@@ -17,5 +17,4 @@ void vCollisionSensorDetectionHandler(){
     vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 0);
     vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR , 0);
     //define como 1 a flag
-
 }

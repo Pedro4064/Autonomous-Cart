@@ -3,6 +3,7 @@
 #include "LineSensorSystem.h"
 #include "imu.h"
 #include "encoderSystem.h"
+#include "UltrassonicDistanceSystem.h"
 
 TelemetryData* pTelemetryData;
 TelemetryCallbackOrchestration xCallbackOrchestration = {.TimerInterruptLookup = {

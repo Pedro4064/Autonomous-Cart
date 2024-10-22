@@ -7,14 +7,21 @@
 
 #include "UltrassonicDistanceSystem.h"
 #include "main.h"
+#include "tim.h"
 
-#define TRIGGER_TIM htim20
+uint32_t IC_Val1 = 0;
+uint32_t IC_Val2 = 0;
+uint32_t Difference = 0;
+uint8_t Is_First_Captured = 0;  // is the first value captured ?
+uint8_t Distance  = 0;
+
+
 #define ECO_TIM htim3
-#define TRIGGER_CHANNEL TIM_CHANNEL_1
+#define ULTRASSONIC_CHANNEL TIM_CHANNEL_1
 
 
 void vUltrassonicDistanceSystemInit(float pDistanceMeasurement){
-
+	HAL_TIM_IC_Start_IT(&ECO_TIM, ULTRASSONIC_CHANNEL);
 }
 
 void vUltrassonicDistanceSystemExecuteMeasurement(){
@@ -55,7 +62,7 @@ void vUltrassonicDistanceSystemExecuteMeasurement(){
 
 void vUltrassonicDistanceSystemPulseHandler(){
 	HAL_GPIO_WritePin(ULTRASSONIC_TRIGGER_GPIO_Port, ULTRASSONIC_TRIGGER_Pin, GPIO_PIN_SET);  // pull the TRIG pin HIGH
-	delay(10);  // wait for 10 us
+	HAL_Delay(10);  // wait for 10 us
 	HAL_GPIO_WritePin(ULTRASSONIC_TRIGGER_GPIO_Port, ULTRASSONIC_TRIGGER_Pin, GPIO_PIN_RESET);  // pull the TRIG pin low
 
 	__HAL_TIM_ENABLE_IT(&ECO_TIM, TIM_IT_CC1);
