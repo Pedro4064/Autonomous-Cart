@@ -24,7 +24,7 @@
 MotorCommands xMotorCommands;
 pid_data_type xLeftMotorPid;
 pid_data_type xRightMotorPid;
-TelemetryData *pTelemetryData;
+static TelemetryData *pTelemetryData;
 
 void vPowerTrainSystemInit(TelemetryData *pTelData){
 	HAL_TIM_Base_Start(&MOTOR_TIM);

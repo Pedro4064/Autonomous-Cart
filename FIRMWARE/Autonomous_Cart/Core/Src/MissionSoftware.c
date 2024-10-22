@@ -7,7 +7,7 @@
 #include "tim.h"
 
 #define TASK_SCHEDULER_CLOCK htim4
-#define MOTOR_PID_SCHEDULER_CLOCK htim4 //! Change. Also remember to change PID library to account for different TS
+#define MOTOR_PID_SCHEDULER_CLOCK htim2 //! Change. Also remember to change PID library to account for different TS
 #define PATH_PID_SCHEDULER_CLOCK  htim4 //! Change. Also remember to change PID library to account for different TS
 
 TelemetryData xTelemetryData;
@@ -27,15 +27,15 @@ void vMissionSoftwareMain(void){
     // Main Application Loop
     while (1)
     {
-    	if(flag == 0){
-        vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
-        vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR,CLOCKWISE);
-
-        vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 1000);
-        vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 1000);
-        HAL_Delay(600000);
-
-    	}
+//    	if(flag == 0){
+//        vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+//        vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR,CLOCKWISE);
+//
+//        vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 1000);
+//        vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 1000);
+//        HAL_Delay(600000);
+//
+//    	}
     }
     
 }

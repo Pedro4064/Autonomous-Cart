@@ -37,10 +37,10 @@ void vLineSensorSystemInit(unsigned long (*pLineSensorsReadings)[5]){
 }
 
 void vLineSensorSystemProcessMeasurements(){
-	(*pLineSensorData)[0] = (xTelemetryData.uiRawAdcSensorData[0]);
-	(*pLineSensorData)[1] = (xTelemetryData.uiRawAdcSensorData[1] & 0x0000FFFF);
-	(*pLineSensorData)[2] = (xTelemetryData.uiRawAdcSensorData[2]);
-	(*pLineSensorData)[3] = xTelemetryData.uiRawAdcSensorData[3];
-	(*pLineSensorData)[4] = xTelemetryData.uiRawAdcSensorData[4];
+	(*pLineSensorData)[0] = (xTelemetryData.uiRawAdcSensorData[0] < 800);
+	(*pLineSensorData)[1] = (xTelemetryData.uiRawAdcSensorData[1] & 0x0000FFFF) < 800;
+	(*pLineSensorData)[2] = (xTelemetryData.uiRawAdcSensorData[2]) < 800;
+	(*pLineSensorData)[3] = xTelemetryData.uiRawAdcSensorData[3] < 800;
+	(*pLineSensorData)[4] = xTelemetryData.uiRawAdcSensorData[4] < 800;
 
 }
