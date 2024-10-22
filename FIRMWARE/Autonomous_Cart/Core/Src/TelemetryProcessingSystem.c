@@ -8,14 +8,14 @@
 TelemetryData* pTelemetryData;
 TelemetryCallbackOrchestration xCallbackOrchestration = {.TimerInterruptLookup = {
                                                                                     {.htim = &htim4, .xRegisteredCallbacks = {vEncoderSystemExecuteMeasurement}},
-																					{.htim = &htim3, .xRegisteredCallbacks = {vUltrassonicDistanceSystemExecuteMeasurement}},
-                                                                                    {.htim = &htim4, .xRegisteredCallbacks = {vBatterySystemComputeMeasurement}}, 
+																					{.htim = &htim4, .xRegisteredCallbacks = {vBatterySystemComputeMeasurement}},
                                                                                     {.htim = &htim4, .xRegisteredCallbacks = {vImuComputeMeasurements}}, 
                                                                                     {.htim = &htim4, .xRegisteredCallbacks = {vLineSensorSystemProcessMeasurements}}, 
                                                                                 },
                                                           .InputCaptureLookup = {
                                                                                     {.htim = &htim17, .xRegisteredCallbacks = {vEncoderSystemCounterUpdate}},
-                                                                                    {.htim = &htim16, .xRegisteredCallbacks = {vEncoderSystemCounterUpdate}}
+																					{.htim = &htim3, .xRegisteredCallbacks = {vUltrassonicDistanceSystemExecuteMeasurement}},
+																					{.htim = &htim16, .xRegisteredCallbacks = {vEncoderSystemCounterUpdate}},
                                                                                 }
                                                         };
 

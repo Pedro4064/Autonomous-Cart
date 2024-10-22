@@ -13,7 +13,7 @@ uint32_t IC_Val1 = 0;
 uint32_t IC_Val2 = 0;
 uint32_t Difference = 0;
 uint8_t Is_First_Captured = 0;  // is the first value captured ?
-uint8_t Distance  = 0;
+float Distance  = 0;
 
 
 #define ECO_TIM htim3
@@ -24,7 +24,7 @@ void vUltrassonicDistanceSystemInit(float pDistanceMeasurement){
 	HAL_TIM_IC_Start_IT(&ECO_TIM, ULTRASSONIC_CHANNEL);
 }
 
-void vUltrassonicDistanceSystemExecuteMeasurement(){
+void vUltrassonicDistanceSystemExecuteMeasurement(TIM_HandleTypeDef *htim){
 	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)  // if the interrupt source is channel1
 		{
 			if (Is_First_Captured==0) // if the first value is not captured
@@ -55,7 +55,7 @@ void vUltrassonicDistanceSystemExecuteMeasurement(){
 
 				// set polarity to rising edge
 				__HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_1, TIM_INPUTCHANNELPOLARITY_RISING);
-				__HAL_TIM_DISABLE_IT(&htim1, TIM_IT_CC1);
+				__HAL_TIM_DISABLE_IT(&htim3, TIM_IT_CC1);
 			}
 		}
 }

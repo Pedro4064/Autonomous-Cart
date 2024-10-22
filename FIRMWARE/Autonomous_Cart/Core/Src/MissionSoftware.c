@@ -29,7 +29,7 @@ void vMissionSoftwareMain(void){
     while (1)
     {
     	vUltrassonicDistanceSystemPulseHandler();
-
+    	HAL_Delay(1);
 
     }
     
