@@ -4,36 +4,42 @@
 #include "TelemetryProcessingSystem.h"
 #include "pid.h"
 
-#define KP_LEFT_MOTOR 0.0137
-#define KI_LEFT_MOTOR 5.7902
+#define MIN(x, y) (x<y)? x : y
+#define MAX(x, y) (x<y)? y : x
+
+#define KP_LEFT_MOTOR 2.2392
+#define KI_LEFT_MOTOR 1.0543
 #define KD_LEF_MOTOR 0
 
-#define KP_RIGHT_MOTOR 0.01234
-#define KI_RIGHT_MOTOR 891.0069
+#define KP_RIGHT_MOTOR 4.5774
+#define KI_RIGHT_MOTOR 1.2610
 #define KD_RIGHT_MOTOR 0
 
+#define THETA_ERROR_4 -0.66597
+#define THETA_ERROR_3 -0.40489
+#define THETA_ERROR_1 0.40489
+#define THETA_ERROR_0 0.66597
 
-MotorCommands* pTargetMotorValues;
-MotorCommands* pMotorCmds;
+MotorCommands pTargetMotorValues;
 TelemetryData* pTelemetryValues;
-pid_data_type* pPid;
+pid_data_type* pLeftPid;
+pid_data_type* pRightPid;
 
-//TelemetryData -> Mensurado
-//MotorCommands -> Enviado (entre PID e Modelo)
-//TargetValues  -> Desejado 
-vControlSystemInit(MotorCommands* pTargetValues, MotorCommands* pMotorCommands, TelemetryData* pTelemetryData){
+void vControlSystemInit(TelemetryData* pTelemetryData){
     
-    pTargetMotorValues = pTargetValues;
-    pMotorCmds = pMotorCommands;
     pTelemetryValues = pTelemetryData;
 
-    //Motor esquerdo
-    vPidInit(pPid, KP_LEFT_MOTOR, KI_LEFT_MOTOR, KD_LEF_MOTOR, 0.01, 100.0)
-    vPidInit(pPid, KP_RIGHT_MOTOR, KI_RIGHT_MOTOR, KD_RIGHT_MOTOR, 0.01, 100.0)
+    vPidInit(pLeftPid, KP_LEFT_MOTOR, KI_LEFT_MOTOR, KD_LEF_MOTOR, 0.01, 100.0);
+    vPidInit(pRightPid, KP_RIGHT_MOTOR, KI_RIGHT_MOTOR, KD_RIGHT_MOTOR, 0.01, 100.0);
+}
 
+MotorCommands* pControlSystemUpdateMotorCommands(){
 
+    float fLeftMotorThetaError = MIN(THETA_ERROR_4 * pTelemetryValues->uiLineSensorData[4], THETA_ERROR_3 * pTelemetryValues->uiLineSensorData[3]);
+    float fRightMotorThetaError = MAX(THETA_ERROR_1 * pTelemetryValues->uiLineSensorData[1], THETA_ERROR_0 * pTelemetryValues->uiLineSensorData[0]);
 
-    
-    vPidInit()
+    pTargetMotorValues.fLeftMotorSpeed = 5 - (-1)*fPidUpdateData(pLeftPid, 0, fLeftMotorThetaError);
+    pTargetMotorValues.fRightMotorSpeed = 5 - fPidUpdateData(pRightPid, 0, fRightMotorThetaError);
 
+    return &pTargetMotorValues;
 }

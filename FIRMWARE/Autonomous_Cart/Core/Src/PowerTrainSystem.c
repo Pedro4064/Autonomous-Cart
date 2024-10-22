@@ -6,8 +6,8 @@
  */
 
 
-#include <PowerTrainSystem.h>
 #include <tim.h>
+#include <PowerTrainSystem.h>
 
 #define MOTOR_TIM htim1
 #define MOTOR_RIGHT_CHANNEL TIM_CHANNEL_2
@@ -16,8 +16,9 @@
 MotorCommands xMotorCommands;
 pid_data_type xLeftMotorPid;
 pid_data_type xRightMotorPid;
+TelemetryData *pTelemetryData;
 
-void vPowerTrainSystemInit(){
+void vPowerTrainSystemInit(TelemetryData *pTelData){
 	HAL_TIM_Base_Start(&MOTOR_TIM);
 
 	HAL_TIM_PWM_Start(&MOTOR_TIM, MOTOR_LEFT_CHANNEL);
@@ -25,6 +26,8 @@ void vPowerTrainSystemInit(){
 
 	vPidInit(&xLeftMotorPid, 0, 0, 0, 100, 1);
 	vPidInit(&xRightMotorPid, 0, 0, 0, 100, 1);
+
+	pTelemetryData = pTelData;
 }
 void vPowerTrainSystemSetMotorDirection(Motor xMotor, MotorSpin xDirection){
 	switch (xMotor){
@@ -64,10 +67,10 @@ void vPowerTrainSystemSetMotorSpeed(Motor xMotor,double fSpeed){
 	}
 }
 
-void vPowerTrainSystemRpmControlUpdate(float fLeftRpmReading, float fRightRpmReading){
+void vPowerTrainSystemRpmControlUpdate(){
 
-	float fLeftActuatorEffort = fPidUpdateData(&xLeftMotorPid, fLeftRpmReading, xMotorCommands.fLeftMotorSpeed);
-	float fRightActuatorEffort = fPidUpdateData(&xRightMotorPid, fRightRpmReading, xMotorCommands.fRightMotorSpeed);
+	float fLeftActuatorEffort = fPidUpdateData(&xLeftMotorPid, pTelemetryData->fLeftMotorRPM, xMotorCommands.fLeftMotorSpeed);
+	float fRightActuatorEffort = fPidUpdateData(&xRightMotorPid, pTelemetryData->fRightMotorRPM, xMotorCommands.fRightMotorSpeed);
 
 	__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_LEFT_CHANNEL,fLeftActuatorEffort);
 	__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_RIGHT_CHANNEL,fRightActuatorEffort);

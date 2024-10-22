@@ -9,6 +9,7 @@
 #define INC_POWERTRAINSYSTEM_H_
 
 #include "pid.h"
+#include "TelemetryProcessingSystem.h"
 
 typedef enum {
 	RIGHT_MOTOR = 1,
@@ -27,9 +28,9 @@ typedef struct{
 	float fRightMotorSpeed;
 } MotorCommands;
 
-void vPowerTrainSystemInit();
+void vPowerTrainSystemInit(TelemetryData *pTelData);
 void vPowerTrainSystemSetMotorDirection(Motor xMotor, MotorSpin xDirection);
 void vPowerTrainSystemSetMotorSpeed(Motor xMotor,double fSpeed);
-void vPowerTrainSystemRpmControlUpdate(float fLeftRpmReading, float fRightRpmReading);
+void vPowerTrainSystemRpmControlUpdate();
 
 #endif /* INC_POWERTRAINSYSTEM_H_ */

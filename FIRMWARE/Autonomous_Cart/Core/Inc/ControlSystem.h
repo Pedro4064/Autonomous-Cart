@@ -3,13 +3,8 @@
 
 #include "PowerTrainSystem.h"
 
-typedef struct{
-    MotorSpin xLeftMotorSpinDirection;
-    MotorSpin xRightMotorSpinDirection;
-
-    float fLeftMotorSpeed;
-    float fRightMotorSpeed;
-}MotorCommands
+void vControlSystemInit(TelemetryData* pTelemetryData);
+MotorCommands* pControlSystemUpdateMotorCommands();
 
 
 #endif 
