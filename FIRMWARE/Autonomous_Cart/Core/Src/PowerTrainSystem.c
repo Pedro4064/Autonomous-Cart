@@ -13,11 +13,18 @@
 #define MOTOR_RIGHT_CHANNEL TIM_CHANNEL_2
 #define MOTOR_LEFT_CHANNEL TIM_CHANNEL_1
 
+MotorCommands xMotorCommands;
+pid_data_type xLeftMotorPid;
+pid_data_type xRightMotorPid;
+
 void vPowerTrainSystemInit(){
 	HAL_TIM_Base_Start(&MOTOR_TIM);
 
 	HAL_TIM_PWM_Start(&MOTOR_TIM, MOTOR_LEFT_CHANNEL);
 	HAL_TIM_PWM_Start(&MOTOR_TIM, MOTOR_RIGHT_CHANNEL);
+
+	vPidInit(&xLeftMotorPid, 0, 0, 0, 100, 1);
+	vPidInit(&xRightMotorPid, 0, 0, 0, 100, 1);
 }
 void vPowerTrainSystemSetMotorDirection(Motor xMotor, MotorSpin xDirection){
 	switch (xMotor){
@@ -45,16 +52,24 @@ void vPowerTrainSystemSetMotorDirection(Motor xMotor, MotorSpin xDirection){
 			} break;
 	}
 }
-
 void vPowerTrainSystemSetMotorSpeed(Motor xMotor,double fSpeed){
 	switch (xMotor){
 		case LEFT_MOTOR:
-			__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_LEFT_CHANNEL,fSpeed);
+		 	xMotorCommands.fLeftMotorSpeed = fSpeed;
 			break;
 
 		case RIGHT_MOTOR:
-			__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_RIGHT_CHANNEL,fSpeed);
+		 	xMotorCommands.fRightMotorSpeed = fSpeed;
 			break;
 	}
+}
+
+void vPowerTrainSystemRpmControlUpdate(float fLeftRpmReading, float fRightRpmReading){
+
+	float fLeftActuatorEffort = fPidUpdateData(&xLeftMotorPid, fLeftRpmReading, xMotorCommands.fLeftMotorSpeed);
+	float fRightActuatorEffort = fPidUpdateData(&xRightMotorPid, fRightRpmReading, xMotorCommands.fRightMotorSpeed);
+
+	__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_LEFT_CHANNEL,fLeftActuatorEffort);
+	__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_RIGHT_CHANNEL,fRightActuatorEffort);
 }
 
