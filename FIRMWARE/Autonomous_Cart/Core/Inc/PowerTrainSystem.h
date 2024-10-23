@@ -8,6 +8,9 @@
 #ifndef INC_POWERTRAINSYSTEM_H_
 #define INC_POWERTRAINSYSTEM_H_
 
+#include "pid.h"
+#include "TelemetryProcessingSystem.h"
+
 typedef enum {
 	RIGHT_MOTOR = 1,
 	LEFT_MOTOR = 0
@@ -18,8 +21,16 @@ typedef enum {
 	COUNTER_CLOCKWISE = 1
 } MotorSpin;
 
-void vPowerTrainSystemInit();
+typedef struct{
+	MotorSpin xLeftMotorSpinDirection;
+	MotorSpin xRightMotorSpinDirection;
+	float fLeftMotorSpeed;
+	float fRightMotorSpeed;
+} MotorCommands;
+
+void vPowerTrainSystemInit(TelemetryData *pTelData);
 void vPowerTrainSystemSetMotorDirection(Motor xMotor, MotorSpin xDirection);
 void vPowerTrainSystemSetMotorSpeed(Motor xMotor,double fSpeed);
+void vPowerTrainSystemRpmControlUpdate();
 
 #endif /* INC_POWERTRAINSYSTEM_H_ */
