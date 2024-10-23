@@ -13,18 +13,20 @@
 #define MOTOR_RIGHT_CHANNEL TIM_CHANNEL_2
 #define MOTOR_LEFT_CHANNEL TIM_CHANNEL_1
 
-#define KP_LEFT_MOTOR 0.0137
-#define KI_LEFT_MOTOR 5.7902
+#define KP_LEFT_MOTOR 0.01
+#define KI_LEFT_MOTOR 0
 #define KD_LEF_MOTOR 0
 
-#define KP_RIGHT_MOTOR 0.01234
-#define KI_RIGHT_MOTOR 891.0069
+#define KP_RIGHT_MOTOR 0.01
+#define KI_RIGHT_MOTOR 0
 #define KD_RIGHT_MOTOR 0
 
 MotorCommands xMotorCommands;
 pid_data_type xLeftMotorPid;
 pid_data_type xRightMotorPid;
 static TelemetryData *pTelemetryData;
+static float fLeftActuatorEffort;
+static float fRightActuatorEffort;
 
 void vPowerTrainSystemInit(TelemetryData *pTelData){
 	HAL_TIM_Base_Start(&MOTOR_TIM);
@@ -32,10 +34,16 @@ void vPowerTrainSystemInit(TelemetryData *pTelData){
 	HAL_TIM_PWM_Start(&MOTOR_TIM, MOTOR_LEFT_CHANNEL);
 	HAL_TIM_PWM_Start(&MOTOR_TIM, MOTOR_RIGHT_CHANNEL);
 
+
+
 	vPidInit(&xLeftMotorPid, KP_LEFT_MOTOR, KI_LEFT_MOTOR, KD_LEF_MOTOR, 38.65, 1);
 	vPidInit(&xRightMotorPid, KP_RIGHT_MOTOR, KI_RIGHT_MOTOR, KD_RIGHT_MOTOR, 38.65, 1);
 
 	pTelemetryData = pTelData;
+
+	vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+	vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
+
 }
 void vPowerTrainSystemSetMotorDirection(Motor xMotor, MotorSpin xDirection){
 	switch (xMotor){
@@ -77,10 +85,10 @@ void vPowerTrainSystemSetMotorSpeed(Motor xMotor,double fSpeed){
 
 void vPowerTrainSystemRpmControlUpdate(){
 
-	float fLeftActuatorEffort = fPidUpdateData(&xLeftMotorPid, pTelemetryData->fLeftMotorRPM, xMotorCommands.fLeftMotorSpeed);
-	float fRightActuatorEffort = fPidUpdateData(&xRightMotorPid, pTelemetryData->fRightMotorRPM, xMotorCommands.fRightMotorSpeed);
+	fLeftActuatorEffort = fPidUpdateData(&xLeftMotorPid, pTelemetryData->fLeftMotorRPM, xMotorCommands.fLeftMotorSpeed);
+	fRightActuatorEffort = fPidUpdateData(&xRightMotorPid, pTelemetryData->fRightMotorRPM, xMotorCommands.fRightMotorSpeed);
 
-	__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_LEFT_CHANNEL,fLeftActuatorEffort*1000);
-	__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_RIGHT_CHANNEL,fRightActuatorEffort*1000);
+	__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_LEFT_CHANNEL,(fLeftActuatorEffort)*1000);
+	__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_RIGHT_CHANNEL,(fRightActuatorEffort)*1000);
 }
 

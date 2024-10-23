@@ -6,8 +6,8 @@
 
 TelemetryData* pTelemetryData;
 TelemetryCallbackOrchestration xCallbackOrchestration = {.TimerInterruptLookup = {
-                                                                                    {.htim = &htim4, .xRegisteredCallbacks = {vEncoderSystemExecuteMeasurement}},
-																					{.htim = &htim3, .xRegisteredCallbacks = {vUltrassonicDistanceSystemExecuteMeasurement}},
+                                                                                    {.htim = &htim2, .xRegisteredCallbacks = {vEncoderSystemExecuteMeasurement}},
+//																					{.htim = &htim3, .xRegisteredCallbacks = {vUltrassonicDistanceSystemExecuteMeasurement}},
                                                                                     {.htim = &htim4, .xRegisteredCallbacks = {vBatterySystemComputeMeasurement}}, 
                                                                                     {.htim = &htim4, .xRegisteredCallbacks = {vImuComputeMeasurements}}, 
                                                                                     {.htim = &htim4, .xRegisteredCallbacks = {vLineSensorSystemProcessMeasurements}}, 
@@ -20,7 +20,7 @@ TelemetryCallbackOrchestration xCallbackOrchestration = {.TimerInterruptLookup =
 
 void vTelemetrySystemInit(TelemetryData* pTelemetryData){
     vEncoderSystemInit(&(pTelemetryData->fLeftMotorRPM), &(pTelemetryData->fRightMotorRPM));
-    vLineSensorSystemInit(pTelemetryData->uiLineSensorData);
+    //vLineSensorSystemInit(pTelemetryData->uiLineSensorData);
     vBatterySystemInit(&(pTelemetryData->fBatteryChargeData));
     vImuInit(&(pTelemetryData->xImuReadings));
 }

@@ -13,13 +13,13 @@
 
 //volatile uint32_t contador_encoder = 0;  // Variável global para contar pulsos
 
-static float fTimeSample = 0.08;
+static float fTimeSample = 0.03865;
 
 
 static float* pLeftMotorRPM;
 static float* pRightMotorRPM;
 
-static unsigned long int uiRightMotorPulseCounter, uiLeftMotorPulseCounter;
+static unsigned long int uiRightMotorPulseCounter, uiLeftMotorPulseCounter, potato;
 
 
 void vEncoderSystemInit(float *leftMotorCount, float *rightMotorCount) {
@@ -37,6 +37,7 @@ void vEncoderSystemCounterUpdate(TIM_HandleTypeDef *htim){
     if (htim->Instance == TIM17) {
 
     	uiRightMotorPulseCounter++;
+    	potato++;
 
     }else if (htim->Instance == TIM16) {
 
@@ -45,10 +46,26 @@ void vEncoderSystemCounterUpdate(TIM_HandleTypeDef *htim){
 }
 
 void vEncoderSystemExecuteMeasurement(){
+	static unsigned long uiPreviousRightCount;
+	static unsigned long uiPreviousLeftCount;
+
+	static unsigned long uiPreviousPulseRightCount;
+	static unsigned long uiPreviousPulseLeftCount;
+
+	unsigned long uiRightCount = (uiPreviousPulseRightCount == uiRightMotorPulseCounter)? (RIGHT_ENCODER_TIM.Instance->CNT - uiPreviousRightCount):(RIGHT_ENCODER_TIM.Instance->CNT);
+	unsigned long uiLeftCount = (uiPreviousPulseLeftCount == uiLeftMotorPulseCounter)? (LEFT_ENCODER_TIM.Instance->CNT - uiPreviousLeftCount):(LEFT_ENCODER_TIM.Instance->CNT);
+
 	    // Calcula o RPM
-		*pRightMotorRPM = (uiRightMotorPulseCounter * 60.0) / (160.0 * fTimeSample);
-	    *pLeftMotorRPM = (uiLeftMotorPulseCounter * 60.0) / (160.0 * fTimeSample);
+		//subtrair valor do anterior
+		*pRightMotorRPM = ((uiRightMotorPulseCounter*10000 + uiRightCount) * 60.0) / (160.0 * fTimeSample);
+	    *pLeftMotorRPM = ((uiLeftMotorPulseCounter*10000 + uiLeftCount) * 60.0) / (160.0 * fTimeSample);
 	    // Resetar o contador para a próxima amostragem
 	    uiRightMotorPulseCounter = 0;
 	    uiLeftMotorPulseCounter = 0;
+
+	    uiPreviousRightCount = RIGHT_ENCODER_TIM.Instance->CNT;
+	    uiPreviousLeftCount = LEFT_ENCODER_TIM.Instance->CNT;
+
+	    uiPreviousPulseRightCount = uiRightMotorPulseCounter;
+	    uiPreviousPulseLeftCount = uiLeftMotorPulseCounter;
 }

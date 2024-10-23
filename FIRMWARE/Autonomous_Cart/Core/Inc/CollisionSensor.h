@@ -8,7 +8,7 @@
 #ifndef COLLISIONSENSOR_H_
 #define COLLISIONSENSOR_H_
 
-void vCollisionSensorInit();
+void vCollisionSensorInit(pCollisionCallBack);
 void vCollisionSensorDetectionHandler();
 
 #endif /* COLLISIONSENSOR_H_ */
