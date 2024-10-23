@@ -15,6 +15,7 @@
 //void vEncoderSystemInit(int pLeftMotorCount, int pRightMotorCount);
 void vEncoderSystemInit(float *pLeftMotorCount, float *pRightMotorCount);
 void vEncoderSystemCounterUpdate(TIM_HandleTypeDef *htim);
+void vEncoderSystemHandleCounterOverflow(TIM_HandleTypeDef *htim);
 void vEncoderSystemExecuteMeasurement();
 
 #endif /* INC_ENCODERSYSTEM_H_ */
