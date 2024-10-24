@@ -12,15 +12,104 @@
 // ********************************************** //
 #include "stm32g4xx_hal.h"
 #include "stdlib.h"
+#include "stdio.h"
 #include "ComSystem.h"
+#include "light_printf.h"
+#include <string.h>
+#include "TelemetryProcessingSystem.h"
+
 
 extern UART_HandleTypeDef hlpuart1;
 extern unsigned char c;
 
-char cInputArray[100];
-unsigned char cOutputArray[10];
-int iCounterPosition;
+#define IDDLE '0'
+#define GET '2'
+#define READY '1'
+#define SET '3'
+#define PARAM '4'
+#define VALUE '5'
 
+#define MAX_VALUE_LENGHT 249
+
+unsigned char ucUARTState = IDDLE;
+unsigned char ucValueCount;
+unsigned char cOutput[249],ucC;
+extern UART_HandleTypeDef usart3;
+extern TelemetryData xTelemetryData;
+
+
+void vCommunicationSMProcessByteCommunication(unsigned char ucByte){
+	static unsigned char ucParam;
+	static unsigned char ucValue[MAX_VALUE_LENGHT+1];
+	if('#' == ucByte){
+		ucUARTState = READY;
+	}
+	else{
+		if(IDDLE != ucUARTState){
+			switch(ucUARTState){
+				case READY:
+					switch(ucByte){
+						case 'g':
+							ucUARTState = GET;
+							break;
+						case 's':
+							ucUARTState = SET;
+							break;
+						default:
+							ucUARTState = IDDLE;
+					}
+					for(int i = 0; i<MAX_VALUE_LENGHT; i++){
+						ucValue[i] = '\0';
+					}
+					break;
+				case GET:
+					if('u'==ucByte ||'b' == ucByte ||'a' == ucByte ||'g' == ucByte ||'l' == ucByte||'v' == ucByte||'d' == ucByte||'s' == ucByte||'j' == ucByte){
+						ucParam = ucByte;
+						ucUARTState = PARAM;
+					}
+					else{
+						ucUARTState = IDDLE;
+					}
+					break;
+				case SET:
+					if('v' == ucByte || 'g' == ucByte || 'm'==ucByte || 'a' == ucByte ||'j' == ucByte){
+						ucParam = ucByte;
+						ucValueCount = 0;
+						ucUARTState = VALUE;
+					}
+					else{
+						ucUARTState = IDDLE;
+
+					}
+					break;
+				case PARAM:
+					if(';' == ucByte){
+						vCommunicationSMReturnParam(ucParam);
+					}
+					else if('x' == ucByte|| 'y' == ucByte|| 'z' == ucByte|| 's' == ucByte || 'a' == ucByte || 'm' == ucByte){
+						ucParam = ucByte+ucParam;
+						break;
+					}
+					ucUARTState = IDDLE;
+					break;
+				case VALUE:
+					if((ucByte>='0' && ucByte<='9') || '.'==ucByte){
+						if(ucValueCount<MAX_VALUE_LENGHT){
+							ucValue[ucValueCount++] = ucByte;
+						}
+					}
+					else{
+						if(';'==ucByte){
+							ucValue[ucValueCount] = '\0';
+							vCommunicationSMSetParam(ucParam, ucValue);
+						}
+						ucUARTState = IDDLE;
+					}
+					break;
+			}
+		}
+	}
+}
 
 
 // ***************************************************** //
@@ -35,7 +124,7 @@ int iCounterPosition;
 // Input params: n/a                                     //
 // Output params: n/a                                    //
 // ***************************************************** //
-void vCommunicationAppendCharacter() {
+/*void vCommunicationAppendCharacter() {
 	if (c != 13) {
 		cInputArray[iCounterPosition] = c;
 		iCounterPosition ++;
@@ -45,7 +134,7 @@ void vCommunicationAppendCharacter() {
 		iCounterPosition = 0;
 		vCommunicationSentToFloat();
 	}
-}
+}*/
 
 
 
@@ -58,10 +147,10 @@ void vCommunicationAppendCharacter() {
 // Input params: n/a                                     //
 // Output params: n/a                                    //
 // ***************************************************** //
-void vCommunicationSentToFloat(){
+/*void vCommunicationSentToFloat(){
 	double dResult = atof(cInputArray);
 	HAL_UART_Transmit_IT(&hlpuart1,  cInputArray, strlen(cInputArray));
-}
+}*/
 
 void vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands){
 	HAL_UART_Receive_IT(&hlpuart1, &c, 1);
@@ -80,5 +169,69 @@ void vComSystemParseIncomingData(){
 	// aqui precisamos receber as informações modificadas em uma codificação especifica
 	// ver parametro de comunicação bluetooth.
 
+}
+
+void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetryData){
+	switch(ucParam){
+	        case 'u': // #gu;
+	            snprintf(cOutput, sizeof(cOutput), "%.3f\r\n", xTelemetryData->fUltrasonicDistanceData);
+	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            break;
+	        case 'b': // #gb;
+	            snprintf(cOutput, sizeof(cOutput), "%.0f\r\n", xTelemetryData->fBatteryChargeData);
+	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            break;
+	        case ('a' + 'x'): // #gax;
+	            snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fAccelX);
+	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            break;
+	        case ('a' + 'y'): // #gay;
+	            snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fAccelY);
+	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            break;
+	        case ('a' + 'z'): // #gaz;
+	            snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fAccelZ);
+	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            break;
+	        case ('g' + 'x'): // #ggx;
+	            snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fGyroX);
+	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            break;
+	        case ('g' + 'y'): // #ggy;
+	            snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fGyroY);
+	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            break;
+	        case 'v': // #gva;
+	            snprintf(cOutput, sizeof(cOutput), "%.3f\r\n", xTelemetryData->fLeftMotorRPM);
+	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            break;
+	        case 'l': // #gls;
+	            snprintf(cOutput, sizeof(cOutput), "%lu,%lu,%lu,%lu,%lu\r\n",
+	                xTelemetryData->uiLineSensorData[0], xTelemetryData->uiLineSensorData[1],
+	                xTelemetryData->uiLineSensorData[2], xTelemetryData->uiLineSensorData[3],
+	                xTelemetryData->uiLineSensorData[4]);
+	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            break;
+	        // Caso para JSON #gj
+	        case 'j': {
+	            snprintf(cOutput, sizeof(cOutput),
+	                     "{\"ultrasonicDistance\": %.3f, \"batteryCharge\": %.0f, "
+	                     "\"acceleration\": {\"x\": %.2f, \"y\": %.2f, \"z\": %.2f}, "
+	                     "\"gyro\": {\"x\": %.2f, \"y\": %.2f}, "
+	                     "\"lineSensorData\": [%lu,%lu,%lu,%lu,%lu]}\r\n",
+	                     xTelemetryData->fUltrasonicDistanceData,
+	                     xTelemetryData->fBatteryChargeData,
+	                     xTelemetryData->xImuReadings.fAccelX, xTelemetryData->xImuReadings.fAccelY,
+	                     xTelemetryData->xImuReadings.fAccelZ, xTelemetryData->xImuReadings.fGyroX,
+	                     xTelemetryData->xImuReadings.fGyroY,
+	                     xTelemetryData->uiLineSensorData[0], xTelemetryData->uiLineSensorData[1],
+	                     xTelemetryData->uiLineSensorData[2], xTelemetryData->uiLineSensorData[3],
+	                     xTelemetryData->uiLineSensorData[4]);
+	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            break;
+	        }
+	        default:
+	            break;
+	    }
 }
 
