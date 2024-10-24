@@ -13,8 +13,5 @@ void vUltrassonicDistanceSystemInit(float pDistanceMeasurement);
 
 void vUltrassonicDistanceSystemExecuteMeasurement(TIM_HandleTypeDef *htim);
 
-void delayMicroseconds(uint16_t us);
-
-void vUltrassonicDistanceSystemPulseHandler();
 
 #endif /* ULTRASSONICDISTANCESYSTEM_H_ */

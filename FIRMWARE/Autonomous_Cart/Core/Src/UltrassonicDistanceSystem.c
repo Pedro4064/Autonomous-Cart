@@ -21,6 +21,7 @@ float Distance  = 0;
 
 
 void vUltrassonicDistanceSystemInit(float pDistanceMeasurement){
+	htim20.Instance->CCR1 = 8;
 	HAL_TIM_IC_Start_IT(&ECO_TIM, ULTRASSONIC_CHANNEL);
 }
 
@@ -50,7 +51,7 @@ void vUltrassonicDistanceSystemExecuteMeasurement(TIM_HandleTypeDef *htim){
 					Difference = (0xffff - IC_Val1) + IC_Val2;
 				}
 
-				Distance = Difference * .034/2;
+				Distance = Difference * 1.5/(58.772);
 				Is_First_Captured = 0; // set it back to false
 
 				// set polarity to rising edge
@@ -60,10 +61,3 @@ void vUltrassonicDistanceSystemExecuteMeasurement(TIM_HandleTypeDef *htim){
 		}
 }
 
-void vUltrassonicDistanceSystemPulseHandler(){
-	HAL_GPIO_WritePin(ULTRASSONIC_TRIGGER_GPIO_Port, ULTRASSONIC_TRIGGER_Pin, GPIO_PIN_SET);  // pull the TRIG pin HIGH
-	HAL_Delay(10);  // wait for 10 us
-	HAL_GPIO_WritePin(ULTRASSONIC_TRIGGER_GPIO_Port, ULTRASSONIC_TRIGGER_Pin, GPIO_PIN_RESET);  // pull the TRIG pin low
-
-	__HAL_TIM_ENABLE_IT(&ECO_TIM, TIM_IT_CC1);
-}

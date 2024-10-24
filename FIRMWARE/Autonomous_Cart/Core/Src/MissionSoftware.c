@@ -64,7 +64,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
     // After All mission critical interrupts were handled, package the telemetry data and send it over uart
     xTelemetryDataPackage.xTelemetryDataTable = xTelemetryData;
-	HAL_UART_Transmit(&hlpuart1,  &(xTelemetryDataPackage.uiTelemetryDataBuffer), sizeof(xTelemetryDataPackage.uiTelemetryDataBuffer), 1000);
+	HAL_UART_Transmit(&huart3,  &(xTelemetryDataPackage.uiTelemetryDataBuffer), sizeof(xTelemetryDataPackage.uiTelemetryDataBuffer), 1000);
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
