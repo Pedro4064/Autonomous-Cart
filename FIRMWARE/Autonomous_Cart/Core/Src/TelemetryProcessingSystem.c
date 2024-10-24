@@ -7,9 +7,11 @@
 
 TelemetryData* pTelemetryData;
 TelemetryCallbackOrchestration xCallbackOrchestration = {.TimerInterruptLookup = {
-                                                                                    {.htim = &htim4, .xRegisteredCallbacks = {vEncoderSystemExecuteMeasurement}},
-																					{.htim = &htim4, .xRegisteredCallbacks = {vBatterySystemComputeMeasurement}},
-                                                                                    {.htim = &htim4, .xRegisteredCallbacks = {vImuComputeMeasurements}}, 
+                                                                                    {.htim = &htim17, .xRegisteredCallbacks = {vEncoderSystemHandleCounterOverflow}},
+                                                                                    {.htim = &htim16, .xRegisteredCallbacks = {vEncoderSystemHandleCounterOverflow}},
+//																					{.htim = &htim3, .xRegisteredCallbacks = {vUltrassonicDistanceSystemExecuteMeasurement}},
+                                                                                    {.htim = &htim4, .xRegisteredCallbacks = {vBatterySystemComputeMeasurement}}, 
+                                                                                    // {.htim = &htim4, .xRegisteredCallbacks = {vImuComputeMeasurements}}, 
                                                                                     {.htim = &htim4, .xRegisteredCallbacks = {vLineSensorSystemProcessMeasurements}}, 
                                                                                 },
                                                           .InputCaptureLookup = {
@@ -21,9 +23,9 @@ TelemetryCallbackOrchestration xCallbackOrchestration = {.TimerInterruptLookup =
 
 void vTelemetrySystemInit(TelemetryData* pTelemetryData){
     vEncoderSystemInit(&(pTelemetryData->fLeftMotorRPM), &(pTelemetryData->fRightMotorRPM));
-    vLineSensorSystemInit(pTelemetryData->uiLineSensorData);
+    //vLineSensorSystemInit(pTelemetryData->uiLineSensorData);
     vBatterySystemInit(&(pTelemetryData->fBatteryChargeData));
-    vImuInit(&(pTelemetryData->xImuReadings));
+    // vImuInit(&(pTelemetryData->xImuReadings));
 }
 
 void vTelemetrySystemSchedulingHandler(TIM_HandleTypeDef* pTIM){
