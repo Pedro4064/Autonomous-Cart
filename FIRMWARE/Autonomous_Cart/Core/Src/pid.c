@@ -24,7 +24,6 @@ void vPidInit(pid_data_type *pPid, float fKp, float fKi, float fKd, unsigned sho
     pPid->fKd = fKd;
     pPid->fError_previous = 0;
     pPid->fError_sum = 0.0;
-    pPid->fIntegratorBuffer[INTEGRATOR_MAX_SIZE] = {0};
     pPid->usIntegratorCount = 0;
 
     // Saturates Integrator size (up to 10 s)
