@@ -19,3 +19,23 @@
 2024-10-24 17:46:43,366 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] If you do not have a my.st.com account, please visit https://st.com website to create one.
 2024-10-24 17:55:24,707 [INFO] WebApp:189 - Connection lost
 2024-10-24 17:55:24,867 [INFO] WebApp:186 - Connection restablished
+2024-10-24 18:41:53,674 [INFO] WebApp:189 - Connection lost
+2024-10-24 18:41:53,852 [INFO] WebApp:186 - Connection restablished
+2024-10-24 18:42:54,698 [INFO] WebApp:189 - Connection lost
+2024-10-24 18:43:01,186 [INFO] WebApp:186 - Connection restablished
+2024-10-24 18:43:01,201 [INFO] WebApp:189 - Connection lost
+2024-10-24 18:43:02,154 [INFO] WebApp:186 - Connection restablished
+2024-10-24 18:43:13,700 [INFO] WebApp:189 - Connection lost
+2024-10-24 18:43:13,894 [INFO] WebApp:186 - Connection restablished
+2024-10-24 18:45:56,700 [INFO] WebApp:189 - Connection lost
+2024-10-24 18:45:56,958 [INFO] WebApp:186 - Connection restablished
+2024-10-24 18:46:23,715 [INFO] WebApp:189 - Connection lost
+2024-10-24 18:46:24,443 [INFO] WebApp:186 - Connection restablished
+2024-10-24 18:46:31,701 [INFO] WebApp:189 - Connection lost
+2024-10-24 18:46:31,925 [INFO] WebApp:186 - Connection restablished
+2024-10-24 18:49:28,696 [INFO] WebApp:189 - Connection lost
+2024-10-24 18:49:41,748 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 18:49:41.745 ERROR Chromium process exit code: -2,147,483,645
+2024-10-24 18:49:41,749 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 
+2024-10-24 18:49:41,750 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 18:49:41.749 ERROR Crash dump dir: C:\Users\njsne\AppData\Local\JxBrowser\7.38.2\CrashReports
+2024-10-24 18:49:41,750 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 
+2024-10-24 18:49:41,752 [ERROR] WebApp:397 - JxBrowser engine crashed! Exit code: -2147483645

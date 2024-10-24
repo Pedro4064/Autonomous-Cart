@@ -176,7 +176,7 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 	switch(ucParam){
 	        case 'u': // #gu;
 	            snprintf(cOutput, sizeof(cOutput), "%.3f\r\n", xTelemetryData->fUltrasonicDistanceData);
-	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, 8);
+	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
 	        case 'b': // #gb;
 	            snprintf(cOutput, sizeof(cOutput), "%.0f\r\n", xTelemetryData->fBatteryChargeData);
