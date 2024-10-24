@@ -9,7 +9,7 @@
 #define ULTRASSONICDISTANCESYSTEM_H_
 #include "tim.h"
 
-void vUltrassonicDistanceSystemInit(float pDistanceMeasurement);
+void vUltrassonicDistanceSystemInit();
 
 void vUltrassonicDistanceSystemExecuteMeasurement(TIM_HandleTypeDef *htim);
 

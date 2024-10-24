@@ -26,6 +26,7 @@ void vTelemetrySystemInit(TelemetryData* pTelemetryData){
     //vLineSensorSystemInit(pTelemetryData->uiLineSensorData);
     vBatterySystemInit(&(pTelemetryData->fBatteryChargeData));
     // vImuInit(&(pTelemetryData->xImuReadings));
+
 }
 
 void vTelemetrySystemSchedulingHandler(TIM_HandleTypeDef* pTIM){

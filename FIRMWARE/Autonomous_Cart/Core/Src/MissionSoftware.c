@@ -22,6 +22,7 @@ void vMissionSoftwareMain(void){
     vTelemetrySystemInit(&xTelemetryData);
     vPowerTrainSystemInit(&xTelemetryData);
     vControlSystemInit(&xTelemetryData);
+    vUltrassonicDistanceSystemInit();
 
     // Initialize all necessary Mission General Timers
     HAL_TIM_Base_Start_IT(&TASK_SCHEDULER_CLOCK);
@@ -31,15 +32,15 @@ void vMissionSoftwareMain(void){
     // Main Application Loop
     while (1)
     {
-//    	if(flag == 0){
-//       vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
-//       vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR,CLOCKWISE);
-//
-//        vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 1000);
-//        vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 1000);
-//        HAL_Delay(600000);
-//
-//    	}
+
+       vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+       vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR,CLOCKWISE);
+
+        vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 1000);
+        vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 1000);
+        HAL_Delay(600000);
+
+
 
     }
     
