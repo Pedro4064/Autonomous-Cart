@@ -1,22 +1,21 @@
-2024-10-23 07:06:31,942 [INFO] WebApp:189 - Connection lost
-2024-10-23 07:06:32,324 [INFO] WebApp:186 - Connection restablished
-2024-10-23 17:02:44,818 [INFO] WebApp:189 - Connection lost
-2024-10-23 17:02:53,395 [INFO] WebApp:186 - Connection restablished
-2024-10-23 18:18:56,982 [INFO] WebApp:189 - Connection lost
-2024-10-23 18:18:57,421 [INFO] WebApp:186 - Connection restablished
-2024-10-23 18:19:42,967 [INFO] WebApp:189 - Connection lost
-2024-10-23 18:19:49,300 [INFO] WebApp:186 - Connection restablished
-2024-10-23 19:10:06,455 [INFO] WebApp:189 - Connection lost
-2024-10-23 19:10:14,304 [INFO] WebApp:186 - Connection restablished
-2024-10-23 19:10:38,958 [INFO] WebApp:189 - Connection lost
-2024-10-23 19:10:39,134 [INFO] WebApp:186 - Connection restablished
-2024-10-23 19:10:49,713 [INFO] WebApp:189 - Connection lost
-2024-10-23 19:10:50,591 [INFO] WebApp:186 - Connection restablished
-2024-10-23 19:10:57,716 [INFO] WebApp:189 - Connection lost
-2024-10-23 19:10:57,875 [INFO] WebApp:186 - Connection restablished
-2024-10-23 19:11:15,189 [INFO] WebApp:189 - Connection lost
-2024-10-23 19:11:15,441 [INFO] WebApp:186 - Connection restablished
-2024-10-23 20:51:43,179 [INFO] WebApp:189 - Connection lost
-2024-10-23 20:51:43,582 [INFO] WebApp:186 - Connection restablished
-2024-10-23 21:03:19,694 [INFO] WebApp:189 - Connection lost
-2024-10-23 21:03:20,087 [INFO] WebApp:186 - Connection restablished
+2024-10-24 17:33:46,686 [ERROR] ConfigurationRetriever:142 - IOException on connection: Read timed out
+2024-10-24 17:42:42,521 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] This download action requires prior login. To proceed, please use the 'login' command with your my.st.com account email and password.
+2024-10-24 17:42:42,523 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] Run 'login <email> <password> <remember_me>' for example 'login john.smith@st.com mypassword y'.
+2024-10-24 17:42:42,524 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] If you do not have a my.st.com account, please visit https://st.com website to create one.
+2024-10-24 17:42:46,034 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] This download action requires prior login. To proceed, please use the 'login' command with your my.st.com account email and password.
+2024-10-24 17:42:46,036 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] Run 'login <email> <password> <remember_me>' for example 'login john.smith@st.com mypassword y'.
+2024-10-24 17:42:46,037 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] If you do not have a my.st.com account, please visit https://st.com website to create one.
+2024-10-24 17:43:23,445 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] This download action requires prior login. To proceed, please use the 'login' command with your my.st.com account email and password.
+2024-10-24 17:43:23,446 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] Run 'login <email> <password> <remember_me>' for example 'login john.smith@st.com mypassword y'.
+2024-10-24 17:43:23,449 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] If you do not have a my.st.com account, please visit https://st.com website to create one.
+2024-10-24 17:43:39,136 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] This download action requires prior login. To proceed, please use the 'login' command with your my.st.com account email and password.
+2024-10-24 17:43:39,138 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] Run 'login <email> <password> <remember_me>' for example 'login john.smith@st.com mypassword y'.
+2024-10-24 17:43:39,140 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] If you do not have a my.st.com account, please visit https://st.com website to create one.
+2024-10-24 17:46:42,002 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] This download action requires prior login. To proceed, please use the 'login' command with your my.st.com account email and password.
+2024-10-24 17:46:42,003 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] Run 'login <email> <password> <remember_me>' for example 'login john.smith@st.com mypassword y'.
+2024-10-24 17:46:42,004 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] If you do not have a my.st.com account, please visit https://st.com website to create one.
+2024-10-24 17:46:43,365 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] This download action requires prior login. To proceed, please use the 'login' command with your my.st.com account email and password.
+2024-10-24 17:46:43,365 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] Run 'login <email> <password> <remember_me>' for example 'login john.smith@st.com mypassword y'.
+2024-10-24 17:46:43,366 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] If you do not have a my.st.com account, please visit https://st.com website to create one.
+2024-10-24 17:55:24,707 [INFO] WebApp:189 - Connection lost
+2024-10-24 17:55:24,867 [INFO] WebApp:186 - Connection restablished

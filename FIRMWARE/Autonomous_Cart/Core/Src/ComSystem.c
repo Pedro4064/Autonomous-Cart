@@ -34,7 +34,7 @@ extern unsigned char c;
 unsigned char ucUARTState = IDDLE;
 unsigned char ucValueCount;
 unsigned char cOutput[249],ucC;
-extern UART_HandleTypeDef usart3;
+extern UART_HandleTypeDef huart3;
 extern TelemetryData xTelemetryData;
 
 
@@ -84,7 +84,7 @@ void vCommunicationSMProcessByteCommunication(unsigned char ucByte){
 					break;
 				case PARAM:
 					if(';' == ucByte){
-						vCommunicationSMReturnParam(ucParam);
+						vCommunicationSMReturnParam(ucParam, &xTelemetryData);
 					}
 					else if('x' == ucByte|| 'y' == ucByte|| 'z' == ucByte|| 's' == ucByte || 'a' == ucByte || 'm' == ucByte){
 						ucParam = ucByte+ucParam;
@@ -152,8 +152,9 @@ void vCommunicationSMProcessByteCommunication(unsigned char ucByte){
 	HAL_UART_Transmit_IT(&huart3,  cInputArray, strlen(cInputArray));
 }*/
 
-void vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands){
+void vComSystemInit(){
 	HAL_UART_Receive_IT(&huart3, &c, 1);
+	//HAL_UART_Transmit_IT(&huart3, &c, 1);
 	// precisamos atribuir uma variavel ponteiro para telemetry data, state estimate
 	// e pMotorCommands. Em linhas gerais toda base é de recebimento e envio.
 }
@@ -175,7 +176,7 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 	switch(ucParam){
 	        case 'u': // #gu;
 	            snprintf(cOutput, sizeof(cOutput), "%.3f\r\n", xTelemetryData->fUltrasonicDistanceData);
-	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
+	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, 8);
 	            break;
 	        case 'b': // #gb;
 	            snprintf(cOutput, sizeof(cOutput), "%.0f\r\n", xTelemetryData->fBatteryChargeData);
@@ -253,3 +254,6 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 	    }
 }
 
+void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue){
+
+}

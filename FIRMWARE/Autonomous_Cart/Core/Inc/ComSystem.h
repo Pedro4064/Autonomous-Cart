@@ -8,7 +8,7 @@
 #ifndef INC_COMMUNICATION_H_
 #define INC_COMMUNICATION_H_
 
-
+#include "TelemetryProcessingSystem.h"
 
 
 // ***************************************************** //
@@ -49,10 +49,16 @@ void vCommunicationAppendCharacter();
 void vCommunicationSentToFloat();
 
 
-void vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands);
+void vComSystemInit();
 
 void vComSystemSendRobotData();
 
 void vComSystemParseIncomingData();
+
+void vCommunicationSMProcessByteCommunication(unsigned char ucByte);
+
+void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetryData);
+
+void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue);
 
 #endif /* INC_COMMUNICATION_H_ */
