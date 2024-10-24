@@ -31,16 +31,15 @@ void vMissionSoftwareMain(void){
     while (1)
     {
 //    	if(flag == 0){
-//        vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
-//        vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR,CLOCKWISE);
+//       vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+//       vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR,CLOCKWISE);
 //
 //        vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 1000);
 //        vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 1000);
 //        HAL_Delay(600000);
 //
 //    	}
-    	vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 10);
-    	vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 80);
+
     }
     
 }

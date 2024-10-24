@@ -50,6 +50,10 @@ void vEncoderSystemCounterUpdate(TIM_HandleTypeDef *htim){
     static uint32_t uiRightCounterRisingEdge;
     static uint32_t uiRightCounterFallingEdge;
     static uint32_t uiRightGap;
+    static uint8_t cFirstCaptureLeft = 1;
+    static uint32_t uiLeftCounterRisingEdge;
+    static uint32_t uiLeftCounterFallingEdge;
+    static uint32_t uiLeftGap;
     
     // Constants for RPM calculation
     const uint32_t PPR = 160;    // Pulses per Revolution
@@ -93,6 +97,45 @@ void vEncoderSystemCounterUpdate(TIM_HandleTypeDef *htim){
 			uiRightEncoderOverflowCount = 0;
         }
     }
+    if (htim->Instance == LEFT_ENCODER_TIM.Instance) {  // Check if it's the Left encoder timer
+
+            if (cFirstCaptureLeft) {
+                // First capture (rising edge)
+                // uiRightCounterRisingEdge = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
+                uiLeftCounterRisingEdge = 0;
+                __HAL_TIM_SET_COUNTER(htim, 0);
+                cFirstCaptureLeft=0;
+            } else {
+                // Second capture (falling edge or next rising edge)
+                uiLeftCounterFallingEdge = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
+
+                // Calculate the time difference between two captures (in timer ticks)
+                if (uiLeftCounterFallingEdge >= uiLeftCounterRisingEdge) {
+                    uiLeftGap = (uiLeftCounterFallingEdge - uiLeftCounterRisingEdge) + 10000*uiLeftEncoderOverflowCount;
+                } else {
+                    // Timer overflow scenario
+                    uiLeftGap = (htim->Init.Period - uiLeftCounterRisingEdge) + uiLeftCounterFallingEdge + 10000*uiLeftEncoderOverflowCount;
+                }
+
+                // Reset the counter for the next measurement
+                __HAL_TIM_SET_COUNTER(htim, 0);
+
+                // Calculate time difference in microseconds (us)
+                float timeInSeconds = ((float)uiLeftGap / (TIMER_CLOCK / (htim->Init.Prescaler + 1)));
+
+                // Calculate RPM: (1 / time per pulse) * 60 (for minutes) / PPR (pulses per revolution)
+                if (timeInSeconds > 0) {
+                    *pLeftMotorRPM = (1.0f / (timeInSeconds * PPR)) * 60.0f;
+                } else {
+                    *pLeftMotorRPM = 0; // Avoid division by zero
+                }
+
+                // Set flag back to indicate next capture is the first one
+                cFirstCaptureLeft = 1;
+    			uiLeftEncoderOverflowCount = 0;
+            }
+        }
+
 }
 
 
