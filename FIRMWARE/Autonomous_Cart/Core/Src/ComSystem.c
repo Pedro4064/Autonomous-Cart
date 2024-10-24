@@ -19,7 +19,7 @@
 #include "TelemetryProcessingSystem.h"
 
 
-extern UART_HandleTypeDef hlpuart1;
+extern UART_HandleTypeDef huart3;
 extern unsigned char c;
 
 #define IDDLE '0'
@@ -149,11 +149,11 @@ void vCommunicationSMProcessByteCommunication(unsigned char ucByte){
 // ***************************************************** //
 /*void vCommunicationSentToFloat(){
 	double dResult = atof(cInputArray);
-	HAL_UART_Transmit_IT(&hlpuart1,  cInputArray, strlen(cInputArray));
+	HAL_UART_Transmit_IT(&huart3,  cInputArray, strlen(cInputArray));
 }*/
 
 void vComSystemInit(pTelemetryData,pStateEstimate,pMotorCommands){
-	HAL_UART_Receive_IT(&hlpuart1, &c, 1);
+	HAL_UART_Receive_IT(&huart3, &c, 1);
 	// precisamos atribuir uma variavel ponteiro para telemetry data, state estimate
 	// e pMotorCommands. Em linhas gerais toda base é de recebimento e envio.
 }
@@ -175,50 +175,64 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 	switch(ucParam){
 	        case 'u': // #gu;
 	            snprintf(cOutput, sizeof(cOutput), "%.3f\r\n", xTelemetryData->fUltrasonicDistanceData);
-	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
 	        case 'b': // #gb;
 	            snprintf(cOutput, sizeof(cOutput), "%.0f\r\n", xTelemetryData->fBatteryChargeData);
-	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
 	        case ('a' + 'x'): // #gax;
 	            snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fAccelX);
-	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
 	        case ('a' + 'y'): // #gay;
 	            snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fAccelY);
-	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
 	        case ('a' + 'z'): // #gaz;
 	            snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fAccelZ);
-	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
 	        case ('g' + 'x'): // #ggx;
 	            snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fGyroX);
-	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
 	        case ('g' + 'y'): // #ggy;
 	            snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fGyroY);
-	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
-	        case 'v': // #gva;
-	            snprintf(cOutput, sizeof(cOutput), "%.3f\r\n", xTelemetryData->fLeftMotorRPM);
-	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
-	            break;
+	        case ('v' + 'a'): // #gva (Velocidade atual)
+				snprintf(cOutput, sizeof(cOutput), "%.3f\r\n", xTelemetryData->fLeftMotorRPM); // Substitua fLeftMotorRPM por fVelocityActual quando o valor for atualizado
+				HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
+				break;
+			case ('v' + 'm'): // #gvm (Velocidade média)
+				snprintf(cOutput, sizeof(cOutput), "%.3f\r\n", xTelemetryData->fRightMotorRPM); // Substitua fRightMotorRPM por fVelocityAverage quando o valor for atualizado
+				HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
+				break;
+			case ('g' + 'd'): // #gd (Distância percorrida)
+				snprintf(cOutput, sizeof(cOutput), "%.3f\r\n", xTelemetryData->fLineSensorData); // Substitua fLineSensorData por fDistanceCovered quando o valor for atualizado
+				HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
+				break;
+			case 's': // #gs (Modo do robô)
+				snprintf(cOutput, sizeof(cOutput), "%u\r\n", xTelemetryData->ucCollisionStatus); // Substitua ucCollisionStatus por ucRobotState quando o valor for atualizado
+				HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
+				break;
 	        case 'l': // #gls;
 	            snprintf(cOutput, sizeof(cOutput), "%lu,%lu,%lu,%lu,%lu\r\n",
 	                xTelemetryData->uiLineSensorData[0], xTelemetryData->uiLineSensorData[1],
 	                xTelemetryData->uiLineSensorData[2], xTelemetryData->uiLineSensorData[3],
 	                xTelemetryData->uiLineSensorData[4]);
-	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
 	        // Caso para JSON #gj
-	        case 'j': {
+	        case 'j': { // #gj (JSON com todos os dados)
 	            snprintf(cOutput, sizeof(cOutput),
 	                     "{\"ultrasonicDistance\": %.3f, \"batteryCharge\": %.0f, "
 	                     "\"acceleration\": {\"x\": %.2f, \"y\": %.2f, \"z\": %.2f}, "
 	                     "\"gyro\": {\"x\": %.2f, \"y\": %.2f}, "
-	                     "\"lineSensorData\": [%lu,%lu,%lu,%lu,%lu]}\r\n",
+	                     "\"lineSensorData\": [%lu,%lu,%lu,%lu,%lu], "
+	                     "\"velocity\": {\"actual\": %.3f, \"average\": %.3f}, "
+	                     "\"distanceCovered\": %.3f, \"robotState\": %u}\r\n",
 	                     xTelemetryData->fUltrasonicDistanceData,
 	                     xTelemetryData->fBatteryChargeData,
 	                     xTelemetryData->xImuReadings.fAccelX, xTelemetryData->xImuReadings.fAccelY,
@@ -226,8 +240,12 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 	                     xTelemetryData->xImuReadings.fGyroY,
 	                     xTelemetryData->uiLineSensorData[0], xTelemetryData->uiLineSensorData[1],
 	                     xTelemetryData->uiLineSensorData[2], xTelemetryData->uiLineSensorData[3],
-	                     xTelemetryData->uiLineSensorData[4]);
-	            HAL_UART_Transmit_IT(&hlpuart1, (uint8_t*)cOutput, strlen(cOutput));
+	                     xTelemetryData->uiLineSensorData[4],
+	                     xTelemetryData->fLeftMotorRPM, // Substitua por fVelocityActual
+	                     xTelemetryData->fRightMotorRPM, // Substitua por fVelocityAverage
+	                     xTelemetryData->fLineSensorData, // Substitua por fDistanceCovered
+	                     xTelemetryData->ucCollisionStatus); // Substitua por bRobotMode
+	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
 	        }
 	        default:

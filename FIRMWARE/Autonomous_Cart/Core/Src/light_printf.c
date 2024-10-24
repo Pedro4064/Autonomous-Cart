@@ -17,7 +17,7 @@ static void printchar_(char **str, int c)
 	else
 	{
 		//(void)putchar_(c);
-		HAL_UART_Transmit(&hlpuart1,(uint8_t *)&c, 1, 10);
+		HAL_UART_Transmit(&huart3,(uint8_t *)&c, 1, 10);
 	}
 }
 
