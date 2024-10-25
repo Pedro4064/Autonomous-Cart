@@ -13,6 +13,7 @@
 #include "stm32g4xx_hal.h"
 #include "stdlib.h"
 #include "stdio.h"
+#include "string.h"
 #include "ComSystem.h"
 #include "light_printf.h"
 #include <string.h>
@@ -264,12 +265,12 @@ void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue){
 
         case 'l':  // Define o valor de fLeftMotorSpeed (rotação do motor esquerdo)
         	if(atof(ucValue) >= 0 && bRobotMode == 1){
-        		vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
-        		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, atof(ucValue));
+        		//vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+        		//vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(atof(ucValue)));
         	}
         	else if(bRobotMode ==1){
-        		vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
-				vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, atof(ucValue));
+        		//vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
+				//vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(atof(ucValue)));
         	}
             break;
 
@@ -284,12 +285,12 @@ void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue){
 
         case 'r':  // Define o valor de fRightMotorSpeed (rotação do motor direito)
         	if(atof(ucValue) >= 0 && bRobotMode ==1){
-				vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
-				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, atof(ucValue));
+				//vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
+				//vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(atof(ucValue)));
 			}
 			else if(bRobotMode == 1){
-				vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
-				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, atof(ucValue));
+				//vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
+				//vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(atof(ucValue)));
 			}
             break;
 
@@ -300,5 +301,53 @@ void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue){
         default:
             // Caso o parâmetro não seja reconhecido, pode-se tratar o erro aqui
             break;
+    }
+}
+
+void vParseJsonSetValues(unsigned char *ucJsonString) {
+    // Variáveis temporárias para armazenar valores intermediários
+    char buffer[16];  // Buffer para armazenar valores temporários como strings
+    float value;      // Variável para armazenar valores numéricos
+    int mode;         // Variável para armazenar o valor do modo do robô
+
+    // Procurar e processar o valor de "velocityTarget"
+    char *ptr = strstr((const char*)ucJsonString, "\"velocityTarget\":");
+    if (ptr != NULL) {
+        sscanf(ptr, "\"velocityTarget\":%[^,}]", buffer);
+        value = atof(buffer);
+        fVelocityTarget = value;  // Atribui o valor à variável correspondente
+    }
+
+    // Procurar e processar o valor de "rightMotorSpeed"
+    ptr = strstr((const char*)ucJsonString, "\"rightMotorSpeed\":");
+    if (ptr != NULL) {
+        sscanf(ptr, "\"rightMotorSpeed\":%[^,}]", buffer);
+        value = atof(buffer);
+        if (value >= 0) {
+            vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
+        } else {
+            vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
+        }
+        vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(value));
+    }
+
+    // Procurar e processar o valor de "leftMotorSpeed"
+    ptr = strstr((const char*)ucJsonString, "\"leftMotorSpeed\":");
+    if (ptr != NULL) {
+        sscanf(ptr, "\"leftMotorSpeed\":%[^,}]", buffer);
+        value = atof(buffer);
+        if (value >= 0) {
+            vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+        } else {
+            vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
+        }
+        vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(value));
+    }
+
+    // Procurar e processar o valor de "robotMode"
+    ptr = strstr((const char*)ucJsonString, "\"robotMode\":");
+    if (ptr != NULL) {
+        sscanf(ptr, "\"robotMode\":%d", &mode);
+        bRobotMode = mode;  // Atribui o valor do modo à variável correspondente
     }
 }

@@ -61,4 +61,6 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 
 void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue);
 
+void vParseJsonSetValues(unsigned char *ucJsonString);
+
 #endif /* INC_COMMUNICATION_H_ */
