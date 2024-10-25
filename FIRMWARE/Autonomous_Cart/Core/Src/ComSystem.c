@@ -17,6 +17,7 @@
 #include "light_printf.h"
 #include <string.h>
 #include "TelemetryProcessingSystem.h"
+#include "PowerTrainSystem.h"
 
 
 extern UART_HandleTypeDef huart3;
@@ -32,10 +33,11 @@ extern unsigned char c;
 #define MAX_VALUE_LENGHT 249
 
 unsigned char ucUARTState = IDDLE;
-unsigned char ucValueCount;
-unsigned char cOutput[249],ucC;
+unsigned char ucValueCount, bRobotMode;
+unsigned char cOutput[MAX_VALUE_LENGHT],ucC;
 extern UART_HandleTypeDef huart3;
 extern TelemetryData xTelemetryData;
+float fVelocityTarget;
 
 
 void vCommunicationSMProcessByteCommunication(unsigned char ucByte){
@@ -72,7 +74,7 @@ void vCommunicationSMProcessByteCommunication(unsigned char ucByte){
 					}
 					break;
 				case SET:
-					if('v' == ucByte || 'g' == ucByte || 'm'==ucByte || 'a' == ucByte ||'j' == ucByte){
+					if('v' == ucByte || 'r' == ucByte || 'm'==ucByte || 'l' == ucByte ||'j' == ucByte){
 						ucParam = ucByte;
 						ucValueCount = 0;
 						ucUARTState = VALUE;
@@ -93,7 +95,7 @@ void vCommunicationSMProcessByteCommunication(unsigned char ucByte){
 					ucUARTState = IDDLE;
 					break;
 				case VALUE:
-					if((ucByte>='0' && ucByte<='9') || '.'==ucByte){
+					if(ucByte!=';'){
 						if(ucValueCount<MAX_VALUE_LENGHT){
 							ucValue[ucValueCount++] = ucByte;
 						}
@@ -255,5 +257,48 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 }
 
 void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue){
+    switch(ucParam){
+        case 'v':  // Define o valor de fVelocityTarget (velocidade alvo)
+            fVelocityTarget = atof(ucValue); // Converte string para float
+            break;
 
+        case 'l':  // Define o valor de fLeftMotorSpeed (rotação do motor esquerdo)
+        	if(atof(ucValue) >= 0 && bRobotMode == 1){
+        		vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+        		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, atof(ucValue));
+        	}
+        	else if(bRobotMode ==1){
+        		vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
+				vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, atof(ucValue));
+        	}
+            break;
+
+        case 'm':  // Define o valor de bRobotMode (modo do robô)
+            if(ucValue[0] == '0'){
+                bRobotMode = 0; // Modo automático
+            }
+            else if(ucValue[0] == '1'){
+                bRobotMode = 1; // Modo manual
+            }
+            break;
+
+        case 'r':  // Define o valor de fRightMotorSpeed (rotação do motor direito)
+        	if(atof(ucValue) >= 0 && bRobotMode ==1){
+				vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
+				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, atof(ucValue));
+			}
+			else if(bRobotMode == 1){
+				vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
+				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, atof(ucValue));
+			}
+            break;
+
+        case 'j':  // Processa o JSON
+            // Função para processar a string JSON recebida
+            //vParseJsonSetValues(ucValue); //
+            break;
+        default:
+            // Caso o parâmetro não seja reconhecido, pode-se tratar o erro aqui
+            break;
+    }
 }
