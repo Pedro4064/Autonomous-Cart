@@ -36,8 +36,8 @@ void vPowerTrainSystemInit(TelemetryData *pTelData){
 
 
 
-	vPidInit(&xLeftMotorPid, KP_LEFT_MOTOR, KI_LEFT_MOTOR, KD_LEF_MOTOR, 1000, 1);
-	vPidInit(&xRightMotorPid, KP_RIGHT_MOTOR, KI_RIGHT_MOTOR, KD_RIGHT_MOTOR, 1000, 1);
+	vPidInit(&xLeftMotorPid, KP_LEFT_MOTOR, KI_LEFT_MOTOR, KD_LEF_MOTOR, 1000, 1, 38.65);
+	vPidInit(&xRightMotorPid, KP_RIGHT_MOTOR, KI_RIGHT_MOTOR, KD_RIGHT_MOTOR, 1000, 1, 38.65);
 
 	pTelemetryData = pTelData;
 

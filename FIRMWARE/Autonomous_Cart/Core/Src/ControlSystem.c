@@ -38,8 +38,8 @@ void vControlSystemInit(TelemetryData* pTelemetryData){
     
     pTelemetryValues = pTelemetryData;
 
-    vPidInit(&xLeftPid, KP_LEFT_MOTOR, KI_LEFT_MOTOR, KD_LEF_MOTOR, 1000, 20.0);
-    vPidInit(&xRightPid, KP_RIGHT_MOTOR, KI_RIGHT_MOTOR, KD_RIGHT_MOTOR, 1000, 20.0);
+    vPidInit(&xLeftPid, KP_LEFT_MOTOR, KI_LEFT_MOTOR, KD_LEF_MOTOR, 1000, 20.0, 77.3);
+    vPidInit(&xRightPid, KP_RIGHT_MOTOR, KI_RIGHT_MOTOR, KD_RIGHT_MOTOR, 1000, 20.0, 77.3);
 }
 
 MotorCommands* pControlSystemUpdateMotorCommands(){

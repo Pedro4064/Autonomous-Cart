@@ -21,6 +21,8 @@ typedef struct pid_data_type {
     unsigned short usIntegratorSize; // Integrator window size
     float fOutputSaturation;        // Output saturation
     unsigned short usIntegratorCount; // Counter used to control the integration error window
+    float fUpdateRateMs;
+    float fUpdateRate;
     float fIntegratorBuffer[INTEGRATOR_MAX_SIZE]; // Buffer used to store the errors to generate the integral error
 
 } pid_data_type;
@@ -34,7 +36,7 @@ typedef struct pid_data_type {
                        fOutputSaturation: Saturation value for output */
 /* Output params:      n/a                          */
 /* ************************************************ */
-void vPidInit(pid_data_type *pPid, float fKp, float fKi, float fKd, unsigned short usIntSizeMs, float fOutputSaturation);
+void vPidInit(pid_data_type *pPid, float fKp, float fKi, float fKd, unsigned short usIntSizeMs, float fOutputSaturation, float fUpdateRateMs);
 
 /* ************************************************** */
 /* Method name:        vPidSetIntegratorWindow        */
