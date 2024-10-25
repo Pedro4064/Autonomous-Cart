@@ -45,6 +45,8 @@ void vEncoderSystemHandleCounterOverflow(TIM_HandleTypeDef *htim){
 }
 
 void vEncoderSystemCounterUpdate(TIM_HandleTypeDef *htim){
+	// __disable_irq();
+
 
     static uint8_t cFirstCaptureRight = 1; // Flag to track first capture
     static uint32_t uiRightCounterRisingEdge;
@@ -135,6 +137,9 @@ void vEncoderSystemCounterUpdate(TIM_HandleTypeDef *htim){
     			uiLeftEncoderOverflowCount = 0;
             }
         }
+
+    // __enable_irq();
+
 
 }
 

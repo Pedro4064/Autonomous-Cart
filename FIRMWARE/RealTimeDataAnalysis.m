@@ -51,5 +51,5 @@ title('IMU - MPU6050');
 
 
 
-serial_connection = serialport("/dev/tty.usbmodem14303", 115200);
-configureCallback(serial_connection,"byte",64,@(src, event) callbackFcn(src, event, motors_plots, line_plots, battery_plots, imu_plots));
+serial_connection = serialport("COM3", 115200);
+configureCallback(serial_connection,"byte",84,@(src, event) callbackFcn(src, event, motors_plots, line_plots, battery_plots, imu_plots));

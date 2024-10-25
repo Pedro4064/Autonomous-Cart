@@ -13,12 +13,12 @@
 #define MOTOR_RIGHT_CHANNEL TIM_CHANNEL_2
 #define MOTOR_LEFT_CHANNEL TIM_CHANNEL_1
 
-#define KP_LEFT_MOTOR 0.01
-#define KI_LEFT_MOTOR 0
-#define KD_LEF_MOTOR 0
+#define KP_LEFT_MOTOR 0.01941
+#define KI_LEFT_MOTOR 0.1059
+#define KD_LEF_MOTOR 0.0
 
-#define KP_RIGHT_MOTOR 0.01
-#define KI_RIGHT_MOTOR 0
+#define KP_RIGHT_MOTOR 0.0219
+#define KI_RIGHT_MOTOR 0.145
 #define KD_RIGHT_MOTOR 0
 
 MotorCommands xMotorCommands;
@@ -36,8 +36,8 @@ void vPowerTrainSystemInit(TelemetryData *pTelData){
 
 
 
-	vPidInit(&xLeftMotorPid, KP_LEFT_MOTOR, KI_LEFT_MOTOR, KD_LEF_MOTOR, 38.65, 1);
-	vPidInit(&xRightMotorPid, KP_RIGHT_MOTOR, KI_RIGHT_MOTOR, KD_RIGHT_MOTOR, 38.65, 1);
+	vPidInit(&xLeftMotorPid, KP_LEFT_MOTOR, KI_LEFT_MOTOR, KD_LEF_MOTOR, 1000, 1);
+	vPidInit(&xRightMotorPid, KP_RIGHT_MOTOR, KI_RIGHT_MOTOR, KD_RIGHT_MOTOR, 1000, 1);
 
 	pTelemetryData = pTelData;
 
@@ -85,12 +85,13 @@ void vPowerTrainSystemSetMotorSpeed(Motor xMotor,double fSpeed){
 
 void vPowerTrainSystemRpmControlUpdate(){
 
-	// fLeftActuatorEffort = fPidUpdateData(&xLeftMotorPid, pTelemetryData->fLeftMotorRPM, xMotorCommands.fLeftMotorSpeed);
-	// fRightActuatorEffort = fPidUpdateData(&xRightMotorPid, pTelemetryData->fRightMotorRPM, xMotorCommands.fRightMotorSpeed);
+	fLeftActuatorEffort = fPidUpdateData(&xLeftMotorPid, pTelemetryData->fLeftMotorRPM, xMotorCommands.fLeftMotorSpeed);
+	fRightActuatorEffort = fPidUpdateData(&xRightMotorPid, pTelemetryData->fRightMotorRPM, xMotorCommands.fRightMotorSpeed);
 
-	//__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_LEFT_CHANNEL,(fLeftActuatorEffort)*1000);
-	__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_LEFT_CHANNEL,50);
-	// __HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_RIGHT_CHANNEL,(fRightActuatorEffort)*1000);
-	__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_RIGHT_CHANNEL,50);
+	__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_LEFT_CHANNEL,(fLeftActuatorEffort)*1000);
+	// __HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_LEFT_CHANNEL,xMotorCommands.fLeftMotorSpeed);
+	__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_RIGHT_CHANNEL,(fRightActuatorEffort)*1000);
+	// __HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_RIGHT_CHANNEL,xMotorCommands.fRightMotorSpeed);
+
 }
 
