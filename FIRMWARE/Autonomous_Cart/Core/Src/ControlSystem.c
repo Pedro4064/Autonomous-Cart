@@ -32,6 +32,8 @@ TelemetryData* pTelemetryValues;
 pid_data_type xLeftPid;
 pid_data_type xRightPid;
 
+float fLeftMotorThetaError;
+float fRightMotorThetaError;
 void vControlSystemInit(TelemetryData* pTelemetryData){
     
     pTelemetryValues = pTelemetryData;
@@ -42,11 +44,23 @@ void vControlSystemInit(TelemetryData* pTelemetryData){
 
 MotorCommands* pControlSystemUpdateMotorCommands(){
 
-    float fLeftMotorThetaError = MIN(THETA_ERROR_4 * pTelemetryValues->uiLineSensorData[4], THETA_ERROR_3 * pTelemetryValues->uiLineSensorData[3]);
-    float fRightMotorThetaError = MAX(THETA_ERROR_1 * pTelemetryValues->uiLineSensorData[1], THETA_ERROR_0 * pTelemetryValues->uiLineSensorData[0]);
+    static float fLeftMotorPreviousThetaError;
+    static float fRightMotorPreviousThetaError;
 
-    xTargetMotorValues.fRightMotorSpeed = 5 - (-1)*fPidUpdateData(&xLeftPid, 0, fLeftMotorThetaError);
-    xTargetMotorValues.fLeftMotorSpeed = 5 - fPidUpdateData(&xRightPid, 0, fRightMotorThetaError);
+    float fRightPidErrorInput;
+    float fLeftPidErrorInput;
+
+    fLeftMotorThetaError = MIN(THETA_ERROR_4 * pTelemetryValues->uiLineSensorData[4], THETA_ERROR_3 * pTelemetryValues->uiLineSensorData[3]);
+    fRightMotorThetaError = MAX(THETA_ERROR_1 * pTelemetryValues->uiLineSensorData[1], THETA_ERROR_0 * pTelemetryValues->uiLineSensorData[0]);
+
+    fRightPidErrorInput = (fLeftMotorThetaError + fRightMotorThetaError + pTelemetryValues->uiLineSensorData[2] == 0)? fRightMotorPreviousThetaError:fRightMotorThetaError;
+    fLeftPidErrorInput = (fLeftMotorThetaError + fRightMotorThetaError + pTelemetryValues->uiLineSensorData[2] == 0)? fLeftMotorPreviousThetaError:fLeftMotorThetaError;
+
+    xTargetMotorValues.fLeftMotorSpeed = 6 - fPidUpdateData(&xRightPid, 0, fRightPidErrorInput);
+    xTargetMotorValues.fRightMotorSpeed = 6 - fPidUpdateData(&xLeftPid, 0, (-1)*fLeftPidErrorInput);
+
+    fLeftMotorPreviousThetaError = fLeftPidErrorInput;
+    fRightMotorPreviousThetaError= fRightPidErrorInput;
 
     return &xTargetMotorValues;
 }
