@@ -78,8 +78,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 	if(huart-> Instance == USART3){
 		HAL_UART_Receive_IT(&huart3, &c, 1);
-		HAL_UART_Transmit_IT(&huart3, &c, 1);
-		//vCommunicationSMProcessByteCommunication(c);
+		//HAL_UART_Transmit_IT(&huart3, &c, 1);
+		vCommunicationSMProcessByteCommunication(c);
 	}
 }
 

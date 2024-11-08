@@ -31,7 +31,7 @@ extern unsigned char c;
 #define PARAM '4'
 #define VALUE '5'
 
-#define MAX_VALUE_LENGHT 249
+#define MAX_VALUE_LENGHT 300
 
 unsigned char ucUARTState = IDDLE;
 unsigned char ucValueCount, bRobotMode;
@@ -236,7 +236,7 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 	                     "\"gyro\": {\"x\": %.2f, \"y\": %.2f}, "
 	                     "\"lineSensorData\": [%lu,%lu,%lu,%lu,%lu], "
 	                     "\"velocity\": {\"actual\": %.3f, \"average\": %.3f}, "
-	                     "\"distanceCovered\": %.3f, \"robotState\": %u}\r\n",
+	                     "\"distanceCovered\": %.3f, \"robotState\": %u};",
 	                     xTelemetryData->fUltrasonicDistanceData,
 	                     xTelemetryData->fBatteryChargeData,
 	                     xTelemetryData->xImuReadings.fAccelX, xTelemetryData->xImuReadings.fAccelY,
@@ -248,7 +248,7 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 	                     xTelemetryData->fLeftMotorRPM, // Substitua por fVelocityActual
 	                     xTelemetryData->fRightMotorRPM, // Substitua por fVelocityAverage
 	                     xTelemetryData->fLineSensorData, // Substitua por fDistanceCovered
-	                     xTelemetryData->ucCollisionStatus); // Substitua por bRobotMode
+	                     bRobotMode); // Substitua por bRobotMode
 	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
 	        }
@@ -324,11 +324,11 @@ void vParseJsonSetValues(unsigned char *ucJsonString) {
         sscanf(ptr, "\"rightMotorSpeed\":%[^,}]", buffer);
         value = atof(buffer);
         if (value >= 0) {
-            vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
+            //vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
         } else {
-            vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
+            //vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
         }
-        vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(value));
+        //vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(value));
     }
 
     // Procurar e processar o valor de "leftMotorSpeed"
@@ -337,11 +337,11 @@ void vParseJsonSetValues(unsigned char *ucJsonString) {
         sscanf(ptr, "\"leftMotorSpeed\":%[^,}]", buffer);
         value = atof(buffer);
         if (value >= 0) {
-            vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
+            //vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
         } else {
-            vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
+            //vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
         }
-        vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(value));
+        //vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(value));
     }
 
     // Procurar e processar o valor de "robotMode"
