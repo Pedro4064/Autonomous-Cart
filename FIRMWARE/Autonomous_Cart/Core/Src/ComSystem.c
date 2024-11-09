@@ -104,7 +104,6 @@ void vCommunicationSMProcessByteCommunication(unsigned char ucByte){
 					else{
 						if(';'==ucByte){
 							ucValue[ucValueCount] = '\0';
-							float velocity_teste = atof(ucValue);
 							vCommunicationSMSetParam(ucParam, ucValue);
 						}
 						ucUARTState = IDDLE;
@@ -219,7 +218,7 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 				HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 				break;
 			case 's': // #gs (Modo do robô)
-				snprintf(cOutput, sizeof(cOutput), "%u\r\n", xTelemetryData->ucCollisionStatus); // Substitua ucCollisionStatus por ucRobotState quando o valor for atualizado
+				snprintf(cOutput, sizeof(cOutput), "%u\r\n", xTelemetryData->fBatteryChargeData); // Substitua ucCollisionStatus por ucRobotState quando o valor for atualizado
 				HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 				break;
 	        case 'l': // #gls;
@@ -265,13 +264,15 @@ void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue){
             break;
 
         case 'l':  // Define o valor de fLeftMotorSpeed (rotação do motor esquerdo)
-        	if(atof(ucValue) >= 0 && bRobotMode == 1){
+        	if(atof(ucValue) > 0 && bRobotMode == 1){
         		vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
         		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(atof(ucValue)));
         	}
-        	else if(bRobotMode ==1){
+        	else if(atof(ucValue) < 0 && bRobotMode ==1){
         		vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
 				vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(atof(ucValue)));
+        	}else if(bRobotMode ==1){
+        		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(atof(ucValue)));
         	}
             break;
 
@@ -285,12 +286,14 @@ void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue){
             break;
 
         case 'r':  // Define o valor de fRightMotorSpeed (rotação do motor direito)
-        	if(atof(ucValue) >= 0 && bRobotMode ==1){
+        	if(atof(ucValue) > 0 && bRobotMode ==1){
 				vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
 				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(atof(ucValue)));
 			}
-			else if(bRobotMode == 1){
+			else if(atof(ucValue) < 0 && bRobotMode == 1){
 				vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
+				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(atof(ucValue)));
+			}else if(bRobotMode ==1){
 				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(atof(ucValue)));
 			}
             break;

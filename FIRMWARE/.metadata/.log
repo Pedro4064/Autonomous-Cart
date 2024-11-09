@@ -1885,3 +1885,21 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-11-08 19:15:48.257
 !MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-08 21:05:20.728
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 14 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-08 21:05:20.728
+!MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-08 21:12:22.928
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 18 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-08 21:12:22.929
+!MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-08 21:15:04.519
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 20 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-08 21:15:04.520
+!MESSAGE Existing sessions are:
