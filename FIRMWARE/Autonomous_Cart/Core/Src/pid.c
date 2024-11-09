@@ -18,19 +18,21 @@
                        fOutputSaturation: Saturation value for output */
 /* Output params:      n/a                          */
 /* ************************************************ */
-void vPidInit(pid_data_type *pPid, float fKp, float fKi, float fKd, unsigned short usIntSizeMs, float fOutputSaturation) {
+void vPidInit(pid_data_type *pPid, float fKp, float fKi, float fKd, unsigned short usIntSizeMs, float fOutputSaturation, float fUpdateRateMs) {
     pPid->fKp = fKp;
     pPid->fKi = fKi;
     pPid->fKd = fKd;
+    pPid->fUpdateRateMs = fUpdateRateMs;
+    pPid->fUpdateRate = fUpdateRateMs/1000.0f;
     pPid->fError_previous = 0;
     pPid->fError_sum = 0.0;
     pPid->usIntegratorCount = 0;
 
     // Saturates Integrator size (up to 10 s)
-    if ((usIntSizeMs / UPDATE_RATE_MS) > INTEGRATOR_MAX_SIZE)
-        usIntSizeMs = INTEGRATOR_MAX_SIZE * UPDATE_RATE_MS;
+    if ((usIntSizeMs / pPid->fUpdateRateMs) > INTEGRATOR_MAX_SIZE)
+        usIntSizeMs = INTEGRATOR_MAX_SIZE * pPid->fUpdateRateMs;
 
-    pPid->usIntegratorSize = usIntSizeMs / UPDATE_RATE_MS;
+    pPid->usIntegratorSize = usIntSizeMs / pPid->fUpdateRateMs;
     pPid->fOutputSaturation = fOutputSaturation;
 }
 
@@ -44,10 +46,10 @@ void vPidInit(pid_data_type *pPid, float fKp, float fKi, float fKd, unsigned sho
 /* ************************************************** */
 void vPidSetIntegratorWindow(pid_data_type *pPid, unsigned short usIntSizeMs) {
     // Saturates Integrator size (up to 10 s)
-    if ((usIntSizeMs / UPDATE_RATE_MS) > INTEGRATOR_MAX_SIZE)
-        usIntSizeMs = INTEGRATOR_MAX_SIZE * UPDATE_RATE_MS;
+    if ((usIntSizeMs / pPid->fUpdateRateMs) > INTEGRATOR_MAX_SIZE)
+        usIntSizeMs = INTEGRATOR_MAX_SIZE * pPid->fUpdateRateMs;
 
-    pPid->usIntegratorSize = usIntSizeMs / UPDATE_RATE_MS;
+    pPid->usIntegratorSize = usIntSizeMs / pPid->fUpdateRateMs;
 }
 
 /* ************************************************** */
@@ -58,7 +60,7 @@ void vPidSetIntegratorWindow(pid_data_type *pPid, unsigned short usIntSizeMs) {
 /* Output params:      unsigned short: Value (in ms)  */
 /* ************************************************** */
 unsigned short usPidGetIntegratorWindow(const pid_data_type *pPid) {
-    return (pPid->usIntegratorSize * UPDATE_RATE_MS);
+    return (pPid->usIntegratorSize * pPid->fUpdateRateMs);
 }
 
 /* ************************************************** */
@@ -89,8 +91,8 @@ float fPidUpdateData(pid_data_type *pPid, float fSensorValue, float fSetValue) {
 
     // PID output
     fOut = pPid->fKp * fError
-         + pPid->fKi * pPid->fError_sum * UPDATE_RATE
-         + pPid->fKd * fDifference / UPDATE_RATE;
+         + pPid->fKi * pPid->fError_sum * pPid->fUpdateRate;
+         + pPid->fKd * fDifference / pPid->fUpdateRate;
 
     pPid->fError_previous = fError;
 

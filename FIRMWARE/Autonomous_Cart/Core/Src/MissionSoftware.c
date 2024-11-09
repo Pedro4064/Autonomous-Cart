@@ -33,6 +33,13 @@ void vMissionSoftwareMain(void){
     // Main Application Loop
     while (1)
     {
+        // vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 80);
+        // vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 80);
+        // HAL_Delay(3000);
+        // vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 50);
+        // vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 50);
+        // HAL_Delay(3000);
+
 //    	if(flag == 0){
        vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
        vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR,CLOCKWISE);
@@ -56,9 +63,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     vTelemetrySystemSchedulingHandler(htim);
 
     if(htim->Instance == PATH_PID_SCHEDULER_CLOCK.Instance){
-//        pMotorCommands = pControlSystemUpdateMotorCommands();
-//        vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, pMotorCommands->fLeftMotorSpeed);
-//        vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, pMotorCommands->fRightMotorSpeed);
+      pMotorCommands = pControlSystemUpdateMotorCommands();
+      vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, (pMotorCommands->fLeftMotorSpeed)*(60.0f/(2.0f*3.1415)));
+      vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR,(pMotorCommands->fRightMotorSpeed)*(60.0f/(2.0f*3.1415)));
     }
     if(htim->Instance == MOTOR_PID_SCHEDULER_CLOCK.Instance){
         vPowerTrainSystemRpmControlUpdate();

@@ -22,7 +22,7 @@ ub = ones(1, 6) * 10;    % Upper bounds (for example, you can adjust as needed)
 % Configure to use parallel in multi core
 %systems, and display iterations.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-options = optimoptions('ga', 'Display', 'iter', 'PopulationSize',10, 'PlotFcn','gaplotbestf');%, 'UseParallel', true);
+options = optimoptions('ga', 'Display', 'iter', 'PopulationSize',100, 'PlotFcn','gaplotbestf');%, 'UseParallel', true);
 
 % Run the Genetic Algorithm optimization
 %[x_opt, fval, exit_flag, output, population, cores] = ga(@cost_fun, 9, [], [], [], [], lb, ub, [], options);

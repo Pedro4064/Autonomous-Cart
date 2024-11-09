@@ -11,7 +11,6 @@ typedef TIM_CALLBACK INPUT_CAPTURE_CALLBACK;
 typedef void (*EXTI_CALLBACK)(unsigned int);
 
 typedef struct TELEMETRY_DATA{
-	unsigned char ucCollisionStatus;
     float fLineSensorData;
     float fUltrasonicDistanceData;
     float fLeftMotorRPM;
@@ -20,12 +19,13 @@ typedef struct TELEMETRY_DATA{
     ImuReadings xImuReadings;
     unsigned long uiLineSensorData[5];
     unsigned long uiRawAdcSensorData[5];
+	// unsigned char ucCollisionStatus;
 } TelemetryData;
 
 typedef union TELEMETRY_DATA_PACKAGE
 {
     TelemetryData xTelemetryDataTable;
-    uint8_t uiTelemetryDataBuffer[64];
+    uint8_t uiTelemetryDataBuffer[88];
 
 }TelemetryDataPackage;
 
