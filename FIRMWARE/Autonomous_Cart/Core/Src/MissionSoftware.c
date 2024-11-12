@@ -17,13 +17,13 @@ TelemetryDataPackage xTelemetryDataPackage;
 static MotorCommands* pMotorCommands;
 unsigned char c;
 
-extern flag;
+extern flag, bRobotMode;
 void vMissionSoftwareMain(void){
 
     // Initialize all subsystems
     vTelemetrySystemInit(&xTelemetryData);
     vPowerTrainSystemInit(&xTelemetryData);
-    //vControlSystemInit(&xTelemetryData);
+    vControlSystemInit(&xTelemetryData);
     vComSystemInit();
     // Initialize all necessary Mission General Timers
     HAL_TIM_Base_Start_IT(&TASK_SCHEDULER_CLOCK);
@@ -63,9 +63,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     vTelemetrySystemSchedulingHandler(htim);
 
     if(htim->Instance == PATH_PID_SCHEDULER_CLOCK.Instance){
-      pMotorCommands = pControlSystemUpdateMotorCommands();
-      //vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, (pMotorCommands->fLeftMotorSpeed)*(60.0f/(2.0f*3.1415)));
-      //vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR,(pMotorCommands->fRightMotorSpeed)*(60.0f/(2.0f*3.1415)));
+      if(bRobotMode != 1){
+    	  pMotorCommands = pControlSystemUpdateMotorCommands();
+      	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, (pMotorCommands->fLeftMotorSpeed)*(60.0f/(2.0f*3.1415)));
+      	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR,(pMotorCommands->fRightMotorSpeed)*(60.0f/(2.0f*3.1415)));
+      }else{
+    	  pMotorCommands = pControlSystemUpdateMotorCommands();
+      }
+
     }
     if(htim->Instance == MOTOR_PID_SCHEDULER_CLOCK.Instance){
         vPowerTrainSystemRpmControlUpdate();

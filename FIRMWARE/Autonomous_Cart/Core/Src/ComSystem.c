@@ -19,6 +19,9 @@
 #include <string.h>
 #include "TelemetryProcessingSystem.h"
 #include "PowerTrainSystem.h"
+#include "ControlSystem.h"
+#include "tim.h"
+#include "MissionSoftware.h"
 
 
 extern UART_HandleTypeDef huart3;
@@ -30,16 +33,21 @@ extern unsigned char c;
 #define SET '3'
 #define PARAM '4'
 #define VALUE '5'
+#define MOTOR_PID_SCHEDULER_CLOCK htim2 //! Change. Also remember to change PID library to account for different TS
+#define PATH_PID_SCHEDULER_CLOCK  htim4 //! Change. Also remember to change PID library to account for different TS
+
+
 
 #define MAX_VALUE_LENGHT 300
 
 unsigned char ucUARTState = IDDLE;
-unsigned char ucValueCount, bRobotMode;
+unsigned char ucValueCount ;
+
 unsigned char cOutput[MAX_VALUE_LENGHT],ucC;
 extern UART_HandleTypeDef huart3;
 extern TelemetryData xTelemetryData;
 float fVelocityTarget;
-
+extern bRobotMode;
 
 void vCommunicationSMProcessByteCommunication(unsigned char ucByte){
 	static unsigned char ucParam;
@@ -279,9 +287,13 @@ void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue){
         case 'm':  // Define o valor de bRobotMode (modo do robô)
             if(ucValue[0] == '0'){
                 bRobotMode = 0; // Modo automático
+                //HAL_TIM_Base_Start_IT(&MOTOR_PID_SCHEDULER_CLOCK);
+                //HAL_TIM_Base_Start_IT(&PATH_PID_SCHEDULER_CLOCK);
             }
             else if(ucValue[0] == '1'){
                 bRobotMode = 1; // Modo manual
+                //HAL_TIM_Base_Stop_IT(&MOTOR_PID_SCHEDULER_CLOCK);
+                //HAL_TIM_Base_Stop_IT(&PATH_PID_SCHEDULER_CLOCK);
             }
             break;
 
