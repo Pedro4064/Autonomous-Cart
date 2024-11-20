@@ -50,4 +50,4 @@ scatter(x_points*1e3, y_points*1e3, 100, 'filled');
 
 % And plot theta dot for jitter analysis
 figure;
-plot(out.tout, theta_dot);
+plot(out.tout(1:end-1), diff(theta_dot));

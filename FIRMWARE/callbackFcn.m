@@ -2,15 +2,15 @@ function callbackFcn(src, ~, motors_plots, line_plots, battery_plots, imu_plots)
 
     % persistent iteration_counter
     % if isempty(iteration_counter)
-        % iteration_counter = 0;
+    %     iteration_counter = 0;
     % end
     % iteration_counter = iteration_counter + 1;
 
     % Parse transmitted data
-    transmitted_data = read(src, 16, "single");
+    transmitted_data = read(src, 22, "single");
     
-    left_motor_rpm  = transmitted_data(3);
-    right_motor_rpm = transmitted_data(4);
+    left_motor_rpm  = transmitted_data(3)
+    right_motor_rpm = transmitted_data(4)
     battery_charge  = transmitted_data(5);
     imu_data        = transmitted_data(6:11);
     line_data       = typecast(single(transmitted_data(12:end)), "uint32");
@@ -35,7 +35,7 @@ function callbackFcn(src, ~, motors_plots, line_plots, battery_plots, imu_plots)
     imu_plots{6}.YData = [imu_plots{6}.YData(2:end), imu_data(6)];   
 
     % if mod(iteration_counter, 5) == 0
-        % drawnow;
+    %     drawnow;
     % end
-    % drawnow();
+    drawnow();
 end
