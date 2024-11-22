@@ -7,6 +7,7 @@
 #include "adc.h"
 #include "BatteryVoltageSystem.h"
 #include "MissionSoftware.h"
+#include "profiler.h"
 
 #define BATTERY_AD hadc2
 
@@ -18,7 +19,7 @@ void vBatterySystemInit(float *pBatteryCharge){
 }
 
 void vBatterySystemComputeMeasurement(){
-
+	START_PROFILE_SECTION();
 	*(pBattCharge) = xTelemetryData.uiRawAdcSensorData[1] >> 16;
-
+	END_PROFILE_SECTION();
 }

@@ -6,6 +6,7 @@
  */
 #include "encoderSystem.h"
 #include "tim.h"
+#include "profiler.h"
 
 #define LEFT_ENCODER_TIM htim16
 #define RIGHT_ENCODER_TIM htim17
@@ -40,14 +41,16 @@ void vEncoderSystemInit(float *leftMotorCount, float *rightMotorCount) {
 }
 
 void vEncoderSystemHandleCounterOverflow(TIM_HandleTypeDef *htim){
+    START_PROFILE_SECTION();
 	uiLeftEncoderOverflowCount = (htim->Instance == LEFT_ENCODER_TIM.Instance)? uiLeftEncoderOverflowCount+1 : uiLeftEncoderOverflowCount;
 	uiRightEncoderOverflowCount = (htim->Instance == RIGHT_ENCODER_TIM.Instance)? uiRightEncoderOverflowCount+1 : uiRightEncoderOverflowCount;
+    END_PROFILE_SECTION();
 }
 
 void vEncoderSystemCounterUpdate(TIM_HandleTypeDef *htim){
 	// __disable_irq();
 
-
+    //START_PROFILE_SECTION();
     static uint8_t cFirstCaptureRight = 1; // Flag to track first capture
     static uint32_t uiRightCounterRisingEdge;
     static uint32_t uiRightCounterFallingEdge;
@@ -139,7 +142,7 @@ void vEncoderSystemCounterUpdate(TIM_HandleTypeDef *htim){
         }
 
     // __enable_irq();
-
+    //END_PROFILE_SECTION();
 
 }
 

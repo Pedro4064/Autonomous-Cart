@@ -3,6 +3,7 @@
 #include "ControlSystem.h"
 #include "TelemetryProcessingSystem.h"
 #include "pid.h"
+#include "profiler.h"
 
 #define MIN(x, y) (x<y)? x : y
 #define MAX(x, y) (x<y)? y : x
@@ -43,6 +44,7 @@ void vControlSystemInit(TelemetryData* pTelemetryData){
 }
 
 MotorCommands* pControlSystemUpdateMotorCommands(){
+    START_PROFILE_SECTION();
 
     static float fLeftMotorPreviousThetaError;
     static float fRightMotorPreviousThetaError;
@@ -61,6 +63,7 @@ MotorCommands* pControlSystemUpdateMotorCommands(){
 
     fLeftMotorPreviousThetaError = fLeftPidErrorInput;
     fRightMotorPreviousThetaError= fRightPidErrorInput;
-
+    END_PROFILE_SECTION();
     return &xTargetMotorValues;
+    
 }

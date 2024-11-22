@@ -7,6 +7,7 @@
 #include "tim.h"
 #include "UltrassonicDistanceSystem.h"
 #include "ComSystem.h"
+#include "Profiler.h"
 
 #define TASK_SCHEDULER_CLOCK htim4
 #define MOTOR_PID_SCHEDULER_CLOCK htim2 //! Change. Also remember to change PID library to account for different TS
@@ -19,7 +20,6 @@ unsigned char c;
 
 extern flag, bRobotMode;
 void vMissionSoftwareMain(void){
-
     // Initialize all subsystems
     vTelemetrySystemInit(&xTelemetryData);
     vPowerTrainSystemInit(&xTelemetryData);

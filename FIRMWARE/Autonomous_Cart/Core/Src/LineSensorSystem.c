@@ -9,6 +9,8 @@
 #include "MissionSoftware.h"
 #include "adc.h"
 #include "dma.h"
+#include "profiler.h"
+
 
 #define IR1_AD hadc1
 #define IR2_AD hadc2
@@ -37,10 +39,11 @@ void vLineSensorSystemInit(unsigned long (*pLineSensorsReadings)[5]){
 }
 
 void vLineSensorSystemProcessMeasurements(){
+	START_PROFILE_SECTION();
 	(*pLineSensorData)[0] = (xTelemetryData.uiRawAdcSensorData[0] < 800);
 	(*pLineSensorData)[1] = (xTelemetryData.uiRawAdcSensorData[1] & 0x0000FFFF) < 800;
 	(*pLineSensorData)[2] = (xTelemetryData.uiRawAdcSensorData[2]) < 800;
 	(*pLineSensorData)[3] = xTelemetryData.uiRawAdcSensorData[3] < 800;
 	(*pLineSensorData)[4] = xTelemetryData.uiRawAdcSensorData[4] < 800;
-
+	END_PROFILE_SECTION();
 }
