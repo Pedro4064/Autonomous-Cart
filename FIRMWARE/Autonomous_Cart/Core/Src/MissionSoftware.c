@@ -20,6 +20,9 @@ unsigned char c;
 
 extern flag, bRobotMode;
 void vMissionSoftwareMain(void){
+
+    vProfilerInit();
+
     // Initialize all subsystems
     vTelemetrySystemInit(&xTelemetryData);
     vPowerTrainSystemInit(&xTelemetryData);
@@ -31,25 +34,7 @@ void vMissionSoftwareMain(void){
 
 
     // Main Application Loop
-    while (1)
-    {
-        // vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 80);
-        // vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 80);
-        // HAL_Delay(3000);
-        // vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 50);
-        // vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 50);
-        // HAL_Delay(3000);
-
-//    	if(flag == 0){
-//       vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
-//       vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR,CLOCKWISE);
-//
-//        vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 1000);
-//        vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 1000);
- //       HAL_Delay(600000);
-//
-//    	}
-
+    while (1){
     }
     
 }

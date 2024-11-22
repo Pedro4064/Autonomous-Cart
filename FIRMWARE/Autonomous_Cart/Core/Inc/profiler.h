@@ -1,54 +1,35 @@
-#include <stdio.h>
-#include "main.h"
-
 #ifndef __PROFILER_H__
 #define __PROFILER_H__
 
+#include <stdint.h>
+#include <stdio.h>
+
+/*
+    If no time stamp is being displayed, make sure you are using the c standard library rather than the reduced one, since
+    the reduced has no support for displaying long long variables:
+    https://community.st.com/t5/stm32cubeide-mcus/where-can-i-change-the-runtime-library-in-stm32cubeidev1-00/td-p/327232
+*/
+
+// Enable profiling
 #define PROFILING_ON 1
 
-static inline void vProfilerInit();
-static inline void vProfilerUpdateMicroseconds();
-
-// Store the previous counter value and a cumulative microseconds value for overflow detection
-static uint32_t prevDWT = 0;
-static uint64_t totalMicroseconds = 0;
-
-// Macro to retrieve the total microseconds since initialization
-#define GET_MICROSECONDS() (vProfilerUpdateMicroseconds(), totalMicroseconds)
-
 #if PROFILING_ON
-    #define START_PROFILE_SECTION() do{vProfilerUpdateMicroseconds();printf("[%llu us] STARTED:%s\r\n", totalMicroseconds, __func__);} while (0)
-    #define END_PROFILE_SECTION() do{printf("[%llu us] ENDED:%s\r\n", GET_MICROSECONDS(), __func__);} while (0)
-    int _write(int file, char *ptr, int len);
-
+    #define START_PROFILE_SECTION() startProfileSection(__func__)
+    #define END_PROFILE_SECTION() endProfileSection(__func__)
 #else
-    #define START_PROFILE_SECTION() 
-    #define END_PROFILE_SECTION() 
+    #define START_PROFILE_SECTION()
+    #define END_PROFILE_SECTION()
 #endif
 
-inline void vProfilerStartSection(){
+// Global variables for microsecond tracking (extern declaration)
+extern uint32_t prevDWT;
+extern volatile uint64_t totalMicroseconds;
+extern char __profiling_status[100];
 
-}
-static inline void vProfilerUpdateMicroseconds(){
-        uint32_t currentDWT = DWT->CYCCNT; 
-        if (currentDWT < prevDWT) { 
-            /* Overflow occurred */ 
-            totalMicroseconds += (0xFFFFFFFF - prevDWT + currentDWT + 1) / (HAL_RCC_GetHCLKFreq() / 1000000);
-        } 
-        else {
-            totalMicroseconds += (currentDWT - prevDWT) / (HAL_RCC_GetHCLKFreq() / 1000000); 
-        }
-
-        prevDWT = currentDWT;
-
-}
-
-static inline void vProfilerInit(){
-        if (!(CoreDebug->DEMCR & CoreDebug_DEMCR_TRCENA_Msk)) {
-            CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-            DWT->CYCCNT = 0;
-            DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
-        }
-}
+// Function declarations
+void vProfilerInit(void);
+uint64_t getMicroseconds(void);
+void startProfileSection(const char* functionName);
+void endProfileSection(const char* functionName);
 
 #endif
