@@ -11,8 +11,7 @@
 #include "tim.h"
 
  void vBuzzerStop(void);
- void vInitBuzzer(TIM_HandleTypeDef *htim, uint32_t channel);
- void vBuzzerConfig(unsigned short int usFrequency, unsigned short int usPeriod, TIM_HandleTypeDef *htim);
+ void vBuzzerConfig(unsigned short int usFrequency, unsigned short int usPeriod);
  void vBuzzerPlay(void);
 
 #endif /* BUZZER_H_ */

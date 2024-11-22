@@ -16,7 +16,7 @@ TelemetryCallbackOrchestration xCallbackOrchestration = {.TimerInterruptLookup =
                                                                                 },
                                                           .InputCaptureLookup = {
                                                                                     {.htim = &htim17, .xRegisteredCallbacks = {vEncoderSystemCounterUpdate}},
-																					{.htim = &htim3, .xRegisteredCallbacks = {vUltrassonicDistanceSystemExecuteMeasurement}},
+																					{.htim = &htim3, .xRegisteredCallbacks = {uiUltrassonicDistanceSystemExecuteMeasurement}},
 																					{.htim = &htim16, .xRegisteredCallbacks = {vEncoderSystemCounterUpdate}},
                                                                                 }
                                                         };

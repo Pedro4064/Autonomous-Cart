@@ -6,6 +6,7 @@
 #include "main.h"
 #include "tim.h"
 #include "UltrassonicDistanceSystem.h"
+#include "TrajectoryGenSystem.h"
 
 #define TASK_SCHEDULER_CLOCK htim4
 #define MOTOR_PID_SCHEDULER_CLOCK htim2 //! Change. Also remember to change PID library to account for different TS
@@ -27,11 +28,16 @@ void vMissionSoftwareMain(void){
     // Initialize all necessary Mission General Timers
     HAL_TIM_Base_Start_IT(&TASK_SCHEDULER_CLOCK);
     HAL_TIM_Base_Start_IT(&MOTOR_PID_SCHEDULER_CLOCK);
-
+    vBuzzerConfig(500,100);
 
     // Main Application Loop
     while (1)
     {
+    	//vBuzzerPlay();
+    	//HAL_Delay(10000);
+    	//vBuzzerStop();
+    	vTrajectoryGenSystem();
+
         // vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 80);
         // vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, 80);
         // HAL_Delay(3000);

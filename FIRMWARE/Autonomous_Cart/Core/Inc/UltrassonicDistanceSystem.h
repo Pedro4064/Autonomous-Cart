@@ -11,7 +11,7 @@
 
 void vUltrassonicDistanceSystemInit();
 
-void vUltrassonicDistanceSystemExecuteMeasurement(TIM_HandleTypeDef *htim);
+uint32_t uiUltrassonicDistanceSystemExecuteMeasurement(TIM_HandleTypeDef *htim);
 
 
 #endif /* ULTRASSONICDISTANCESYSTEM_H_ */

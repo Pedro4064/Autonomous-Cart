@@ -26,7 +26,7 @@ void vUltrassonicDistanceSystemInit(){
 	HAL_TIM_IC_Start_IT(&ECO_TIM, ULTRASSONIC_CHANNEL);
 }
 
-void vUltrassonicDistanceSystemExecuteMeasurement(TIM_HandleTypeDef *htim){
+uint32_t uiUltrassonicDistanceSystemExecuteMeasurement(TIM_HandleTypeDef *htim){
 	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)
 		{
 			if (uiFirstCaptured==0) // caso o primeiro valor do input capture nao tenha sido pego
@@ -63,7 +63,10 @@ void vUltrassonicDistanceSystemExecuteMeasurement(TIM_HandleTypeDef *htim){
 				//__HAL_TIM_DISABLE_IT(&htim3, TIM_IT_CC1);
 				//HAL_TIM_PWM_Stop(&htim20, ULTRASSONIC_CHANNEL);
 				HAL_TIM_PWM_Start(&htim20, ULTRASSONIC_CHANNEL);
+
 			}
+
 		}
+	return uiDistance;
 }
 
