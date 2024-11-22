@@ -19,13 +19,16 @@ void vInitTrajectoryGenSystem(void){
 }
 
 void vTrajectoryGenSystem(void){
+	//necessario usar o ponteiro para pegar a distancia
 	uiULTRA = uiUltrassonicDistanceSystemExecuteMeasurement(&htim3);
 	if (uiULTRA<=10) {
 		vBuzzerPlay();
+		// necessario parar o robo colocando a flag do collision
 	}
 	else{
 		vBuzzerStop();
 	}
+
 
 
 }

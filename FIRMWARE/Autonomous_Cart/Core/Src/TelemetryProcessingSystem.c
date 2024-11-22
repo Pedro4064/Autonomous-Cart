@@ -25,6 +25,7 @@ void vTelemetrySystemInit(TelemetryData* pTelemetryData){
     vEncoderSystemInit(&(pTelemetryData->fLeftMotorRPM), &(pTelemetryData->fRightMotorRPM));
     vLineSensorSystemInit(pTelemetryData->uiLineSensorData);
     vBatterySystemInit(&(pTelemetryData->fBatteryChargeData));
+    vCollisionSensorInit(&(pTelemetryData->ucCollisionStatus));
     // vImuInit(&(pTelemetryData->xImuReadings));
 
 }

@@ -68,5 +68,6 @@ uint32_t uiUltrassonicDistanceSystemExecuteMeasurement(TIM_HandleTypeDef *htim){
 
 		}
 	return uiDistance;
+//necessario mudar para o ponteiro
 }
 

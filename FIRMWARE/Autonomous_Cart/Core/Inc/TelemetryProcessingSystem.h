@@ -19,7 +19,7 @@ typedef struct TELEMETRY_DATA{
     ImuReadings xImuReadings;
     unsigned long uiLineSensorData[5];
     unsigned long uiRawAdcSensorData[5];
-	// unsigned char ucCollisionStatus;
+	unsigned char ucCollisionStatus;
 } TelemetryData;
 
 typedef union TELEMETRY_DATA_PACKAGE
