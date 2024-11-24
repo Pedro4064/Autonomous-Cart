@@ -36,8 +36,6 @@ extern unsigned char c;
 #define MOTOR_PID_SCHEDULER_CLOCK htim2 //! Change. Also remember to change PID library to account for different TS
 #define PATH_PID_SCHEDULER_CLOCK  htim4 //! Change. Also remember to change PID library to account for different TS
 
-
-
 #define MAX_VALUE_LENGHT 300
 
 unsigned char ucUARTState = IDDLE;
@@ -47,7 +45,7 @@ unsigned char cOutput[MAX_VALUE_LENGHT],ucC;
 extern UART_HandleTypeDef huart3;
 extern TelemetryData xTelemetryData;
 float fVelocityTarget;
-extern bRobotMode;
+extern unsigned char bRobotMode;
 
 void vCommunicationSMProcessByteCommunication(unsigned char ucByte){
 	static unsigned char ucParam;
@@ -226,7 +224,7 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 				HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 				break;
 			case 's': // #gs (Modo do robô)
-				snprintf(cOutput, sizeof(cOutput), "%u\r\n", xTelemetryData->fBatteryChargeData); // Substitua ucCollisionStatus por ucRobotState quando o valor for atualizado
+				snprintf(cOutput, sizeof(cOutput), "%u\r\n", bRobotMode); // Substitua ucCollisionStatus por ucRobotState quando o valor for atualizado
 				HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 				break;
 	        case 'l': // #gls;
@@ -274,11 +272,15 @@ void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue){
         case 'l':  // Define o valor de fLeftMotorSpeed (rotação do motor esquerdo)
         	if(atof(ucValue) > 0 && bRobotMode == 1){
         		vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
-        		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(atof(ucValue)));
+        		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(atof(ucValue))*(60.0f/(2.0f*3.1415)));
+        		//pMotorCommands = pControlSystemUpdateMotorCommands();
+        		//vPowerTrainSystemRpmControlUpdate();
         	}
         	else if(atof(ucValue) < 0 && bRobotMode ==1){
         		vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
-				vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(atof(ucValue)));
+        		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(atof(ucValue))*(60.0f/(2.0f*3.1415)));
+				//pMotorCommands = pControlSystemUpdateMotorCommands();
+				//vPowerTrainSystemRpmControlUpdate();
         	}else if(bRobotMode ==1){
         		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(atof(ucValue)));
         	}
@@ -300,11 +302,15 @@ void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue){
         case 'r':  // Define o valor de fRightMotorSpeed (rotação do motor direito)
         	if(atof(ucValue) > 0 && bRobotMode ==1){
 				vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
-				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(atof(ucValue)));
+				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(atof(ucValue))*(60.0f/(2.0f*3.1415)));
+				//pMotorCommands = pControlSystemUpdateMotorCommands();
+				//vPowerTrainSystemRpmControlUpdate();
 			}
 			else if(atof(ucValue) < 0 && bRobotMode == 1){
 				vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
-				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(atof(ucValue)));
+				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(atof(ucValue))*(60.0f/(2.0f*3.1415)));
+				//pMotorCommands = pControlSystemUpdateMotorCommands();
+				//vPowerTrainSystemRpmControlUpdate();
 			}else if(bRobotMode ==1){
 				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(atof(ucValue)));
 			}
