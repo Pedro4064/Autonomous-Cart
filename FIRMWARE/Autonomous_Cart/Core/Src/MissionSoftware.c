@@ -6,6 +6,7 @@
 #include "main.h"
 #include "tim.h"
 #include "UltrassonicDistanceSystem.h"
+#include "EstimationSystemInterface.h"
 #include "ComSystem.h"
 #include "Profiler.h"
 
@@ -22,6 +23,7 @@ extern flag, bRobotMode;
 void vMissionSoftwareMain(void){
 
     vProfilerInit();
+    vEstimationSystemInit();
 
     // Initialize all subsystems
     vTelemetrySystemInit(&xTelemetryData);
