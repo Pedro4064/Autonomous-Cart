@@ -13,12 +13,12 @@ typedef struct STATE_ESTIMATE{
     float32_t fY_dot;
     float32_t fY_ddot;
     float32_t fTheta;
-    float32_t fTheta_dot
+    float32_t fTheta_dot;
 }StateEstimate;
 
 typedef union SYSTEM_STATE{
     StateEstimate xStateStruct;
-    float32_t fStateVector[8]
+    float32_t fStateVector[8];
 }SystemState;
 
 

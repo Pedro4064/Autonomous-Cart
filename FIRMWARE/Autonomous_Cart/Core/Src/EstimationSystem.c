@@ -9,15 +9,34 @@ static MotorCommands* pMotorCommands;
 static float32_t fZ[2][1];
 static float32_t fU[2][1];
 static float32_t fX_hat_priori[NUM_STATES];
-static float32_t fP_posteriori[NUM_STATES][NUM_STATES];
 static float32_t fP_priori[NUM_STATES][NUM_STATES];
 static float32_t fK[NUM_STATES][2];
 static float32_t fF_jacobian[NUM_STATES][NUM_STATES];
-static float32_t fF_nonlinear[NUM_STATES][NUM_STATES];
 static float32_t fH_jacobian[2][NUM_STATES];
 static float32_t fH_nonlinear[2];
 
-static float32_t fQ[NUM_STATES][NUM_STATES];
+static float32_t fP_posteriori[NUM_STATES][NUM_STATES] = {
+                                                            {0.1, 0, 0, 0, 0, 0, 0, 0},
+                                                            {0, 0.1, 0, 0, 0, 0, 0, 0},
+                                                            {0, 0, 0.1, 0, 0, 0, 0, 0},
+                                                            {0, 0, 0, 0.1, 0, 0, 0, 0},
+                                                            {0, 0, 0, 0, 0.1, 0, 0, 0},
+                                                            {0, 0, 0, 0, 0, 0.1, 0, 0},
+                                                            {0, 0, 0, 0, 0, 0, 0.1, 0},
+                                                            {0, 0, 0, 0, 0, 0, 0, 0.1},
+                                                        };
+
+static float32_t fQ[NUM_STATES][NUM_STATES] = {
+                                                            {0.1, 0, 0, 0, 0, 0, 0, 0},
+                                                            {0, 0.1, 0, 0, 0, 0, 0, 0},
+                                                            {0, 0, 0.1, 0, 0, 0, 0, 0},
+                                                            {0, 0, 0, 0.1, 0, 0, 0, 0},
+                                                            {0, 0, 0, 0, 0.1, 0, 0, 0},
+                                                            {0, 0, 0, 0, 0, 0.1, 0, 0},
+                                                            {0, 0, 0, 0, 0, 0, 0.1, 0},
+                                                            {0, 0, 0, 0, 0, 0, 0, 0.1},
+                                                        };
+
 static float32_t fR[2][2] = {
                                 {0.0f, 0.0f},
                                 {0.0f, 0.0031}
@@ -46,7 +65,7 @@ void vEstimationSystemInit(SystemState* pSystemState, TelemetryData* pTelemetryD
     // Initialize all matrices used in the extended kalman filter implementation
     arm_mat_init_f32(&mZ, 2, 1, &fZ[0][0]);
     arm_mat_init_f32(&mU, 2, 1, &fU[0][0]);
-    arm_mat_init_f32(&mX_hat_posteriori, NUM_STATES, 1, &(pSystemState->fStateVector));
+    arm_mat_init_f32(&mX_hat_posteriori, NUM_STATES, 1, &(pSystemState->fStateVector[0]));
     arm_mat_init_f32(&mX_hat_priori, NUM_STATES, 1, &fX_hat_priori[0]);
     arm_mat_init_f32(&mP_posteriori, NUM_STATES, NUM_STATES, &fP_posteriori[0][0]);
     arm_mat_init_f32(&mP_priori, NUM_STATES, NUM_STATES, &fP_priori[0][0]);
@@ -58,7 +77,6 @@ void vEstimationSystemInit(SystemState* pSystemState, TelemetryData* pTelemetryD
     arm_mat_init_f32(&mH_nonlinear, 2, 1, &fH_nonlinear[0]);
 
 }
-
 
 /**
  * @brief Computes the dynamic model transition matrix f(x, u) and its jacobian F(x, u)
@@ -199,6 +217,9 @@ void vEstimationSystemEkfEstimate(void){
 
     // Calculate X hat posteriori /////////////////////////////////////
     //////////////////////////////////////////////////////////////////
+    fZ[0][0] = pTelemetryData->xImuReadings.fAccelX;
+    fZ[1][0] = pTelemetryData->xImuReadings.fGyroZ;
+
     float32_t fZ_h[2][1];  // z - h
     float32_t fKZ_h[NUM_STATES][1]; // K * (z - h)
 
