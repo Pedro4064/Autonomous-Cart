@@ -12,21 +12,22 @@
 #include "TelemetryProcessingSystem.h"
 
 //declarar os ponteiros
-unsigned char* pCollisionStatus;
-float* pUltrassonicDistance;
+unsigned char* pCollision;
+float* pUltrassonic;
 
 
 void vInitTrajectoryGenSystem(TelemetryData* pTelemetryData){
 
-	pCollisionStatus=&pTelemetryData->ucCollisionStatus;
-	pUltrassonicDistance=&pTelemetryData->fUltrasonicDistanceData;
+	pCollision=&pTelemetryData->ucCollisionStatus;
+	pUltrassonic=&pTelemetryData->fUltrasonicDistanceData;
 }
 
 void vTrajectoryGenSystem(void){
 	//necessario usar o ponteiro para pegar a distancia
 	uiUltrassonicDistanceSystemExecuteMeasurement(&htim3);
-	if (*pUltrassonicDistance<=10) {
+	if (*pUltrassonic<=10 && *pUltrassonic!=0 ) {
 		vBuzzerPlay();
+		*pCollision = 1;
 		// necessario parar o robo colocando a flag do collision
 	}
 	else{

@@ -16,7 +16,8 @@ TelemetryData xTelemetryData;
 TelemetryDataPackage xTelemetryDataPackage;
 static MotorCommands* pMotorCommands;
 
-extern flag;
+
+
 void vMissionSoftwareMain(void){
 
     // Initialize all subsystems
@@ -74,7 +75,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
       vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR,(pMotorCommands->fRightMotorSpeed)*(60.0f/(2.0f*3.1415)));
     }
     if(htim->Instance == MOTOR_PID_SCHEDULER_CLOCK.Instance){
-        vPowerTrainSystemRpmControlUpdate();
+
+        	vPowerTrainSystemRpmControlUpdate();
+
+
     }
 
     // After All mission critical interrupts were handled, package the telemetry data and send it over uart
