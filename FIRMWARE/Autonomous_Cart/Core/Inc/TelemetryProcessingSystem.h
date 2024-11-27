@@ -20,6 +20,7 @@ typedef struct TELEMETRY_DATA{
     unsigned long uiLineSensorData[5];
     unsigned long uiRawAdcSensorData[5];
 	unsigned char ucCollisionStatus;
+	unsigned char ucUltrassonicStatus;
 } TelemetryData;
 
 typedef union TELEMETRY_DATA_PACKAGE

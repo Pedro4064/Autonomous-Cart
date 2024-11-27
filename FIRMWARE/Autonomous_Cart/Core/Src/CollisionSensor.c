@@ -22,3 +22,9 @@ void vCollisionSensorDetectionHandler(){
 
 
 }
+void vCollisionSensorZero(){
+
+	*pCollisionStatus=0;
+
+
+}

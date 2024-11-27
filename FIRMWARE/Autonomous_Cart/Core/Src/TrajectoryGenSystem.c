@@ -13,12 +13,14 @@
 
 //declarar os ponteiros
 unsigned char* pCollision;
+unsigned char* pUSCollision;
 float* pUltrassonic;
 
 
 void vInitTrajectoryGenSystem(TelemetryData* pTelemetryData){
 
 	pCollision=&pTelemetryData->ucCollisionStatus;
+	pUSCollision=&pTelemetryData->ucUltrassonicStatus;
 	pUltrassonic=&pTelemetryData->fUltrasonicDistanceData;
 }
 
@@ -27,10 +29,11 @@ void vTrajectoryGenSystem(void){
 	uiUltrassonicDistanceSystemExecuteMeasurement(&htim3);
 	if (*pUltrassonic<=10 && *pUltrassonic!=0 ) {
 		vBuzzerPlay();
-		*pCollision = 1;
+		*pUSCollision = 1;
 		// necessario parar o robo colocando a flag do collision
 	}
 	else{
+		*pUSCollision = 0;
 		vBuzzerStop();
 	}
 

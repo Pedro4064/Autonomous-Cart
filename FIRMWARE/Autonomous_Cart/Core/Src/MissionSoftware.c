@@ -20,13 +20,13 @@ TelemetryData xTelemetryData;
 TelemetryDataPackage xTelemetryDataPackage;
 static MotorCommands* pMotorCommands;
 unsigned char c;
-
-
+int iFlagCollision,iFlagUS;
 extern flag, bRobotMode;
 
 void vMissionSoftwareMain(void){
 
     // Initialize all subsystems
+
     vTelemetrySystemInit(&xTelemetryData);
     vPowerTrainSystemInit(&xTelemetryData);
     vControlSystemInit(&xTelemetryData);
@@ -73,16 +73,20 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-
+	iFlagCollision = xTelemetryData.ucCollisionStatus;
+	iFlagUS = xTelemetryData.ucUltrassonicStatus;
     vTelemetrySystemSchedulingHandler(htim);
 
     if(htim->Instance == PATH_PID_SCHEDULER_CLOCK.Instance){
-      if(bRobotMode != 1){
+      if(bRobotMode != 1 && iFlagUS!=1 && iFlagCollision !=1){
     	  pMotorCommands = pControlSystemUpdateMotorCommands();
       	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, (pMotorCommands->fLeftMotorSpeed)*(60.0f/(2.0f*3.1415)));
       	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR,(pMotorCommands->fRightMotorSpeed)*(60.0f/(2.0f*3.1415)));
-      }else{
+      }else if(bRobotMode == 1 ){
     	  pMotorCommands = pControlSystemUpdateMotorCommands();
+      }else if (iFlagCollision==1 ||iFlagUS ==1 ){
+    	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 0);
+    	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR,0);
       }
 
     }
@@ -101,6 +105,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
     if(GPIO_Pin == SW_FRONTAL_Pin)    {
     	vCollisionSensorDetectionHandler();
+
 
     }
 }

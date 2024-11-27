@@ -10,5 +10,6 @@
 
 void vCollisionSensorInit(unsigned char *ucCollisionStatus);
 void vCollisionSensorDetectionHandler();
+void vCollisionSensorZero();
 
 #endif /* COLLISIONSENSOR_H_ */
