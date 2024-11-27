@@ -22,10 +22,12 @@ TelemetryCallbackOrchestration xCallbackOrchestration = {.TimerInterruptLookup =
                                                         };
 
 void vTelemetrySystemInit(TelemetryData* pTelemetryData){
+	vInitTrajectoryGenSystem(pTelemetryData);
     vEncoderSystemInit(&(pTelemetryData->fLeftMotorRPM), &(pTelemetryData->fRightMotorRPM));
     vLineSensorSystemInit(pTelemetryData->uiLineSensorData);
     vBatterySystemInit(&(pTelemetryData->fBatteryChargeData));
     vCollisionSensorInit(&(pTelemetryData->ucCollisionStatus));
+    vUltrassonicDistanceSystemInit(&(pTelemetryData->fUltrasonicDistanceData));
     // vImuInit(&(pTelemetryData->xImuReadings));
 
 }

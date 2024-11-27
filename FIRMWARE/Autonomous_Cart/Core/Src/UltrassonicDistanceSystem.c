@@ -13,20 +13,22 @@ uint32_t uiInputCaptureValue1 = 0; // recebe o primeiro valor do Input Capture
 uint32_t uiInputCaptureValue2 = 0; // recebe o segundo valor do Input Capture
 uint32_t uiDifference = 0;
 uint8_t uiFirstCaptured = 0;       // verifica se e`a primeira captura do input capture
-uint32_t uiDistance  = 0;
-
+float uiDistance  = 0;
+float* pUltrassonicDistance;
 
 #define ECO_TIM htim3
 #define ULTRASSONIC_CHANNEL TIM_CHANNEL_1
 
 
-void vUltrassonicDistanceSystemInit(){
+void vUltrassonicDistanceSystemInit(float *fUltrasonicDistanceData){
+	pUltrassonicDistance = fUltrasonicDistanceData;
 	HAL_TIM_PWM_Start(&htim20, ULTRASSONIC_CHANNEL);
 	htim20.Instance->CCR1 = 8;  // O PWM ficara alto por aproximadamente 12.24 us e baixo pelo restante do período de 100 ms
 	HAL_TIM_IC_Start_IT(&ECO_TIM, ULTRASSONIC_CHANNEL);
+
 }
 
-uint32_t uiUltrassonicDistanceSystemExecuteMeasurement(TIM_HandleTypeDef *htim){
+void uiUltrassonicDistanceSystemExecuteMeasurement(TIM_HandleTypeDef *htim){
 	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)
 		{
 			if (uiFirstCaptured==0) // caso o primeiro valor do input capture nao tenha sido pego
@@ -67,7 +69,8 @@ uint32_t uiUltrassonicDistanceSystemExecuteMeasurement(TIM_HandleTypeDef *htim){
 			}
 
 		}
-	return uiDistance;
+	*pUltrassonicDistance = uiDistance;
+
 //necessario mudar para o ponteiro
 }
 
