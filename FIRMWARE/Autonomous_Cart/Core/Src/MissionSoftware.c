@@ -96,12 +96,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         	vPowerTrainSystemRpmControlUpdate();
         	if((xTelemetryData.uiLineSensorData[0]==1)&&(xTelemetryData.uiLineSensorData[1]==1)&&(xTelemetryData.uiLineSensorData[2]==1)&&(xTelemetryData.uiLineSensorData[3]==1)&&(xTelemetryData.uiLineSensorData[4]==1)){
         		iCountEnd++;
-        	}
-        	else if(iCountEnd >= 13 && bRobotMode !=1 && iFlagCollision!=1 && iFlagUS!=1 ){
-        		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 0);
-        		vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR,0);
+
         	}else{
         		iCountEnd=0;
+        	}
+        	if(iCountEnd >= 13 && bRobotMode !=1 && iFlagCollision!=1 && iFlagUS!=1 ){
+        		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 0);
+        		vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR,0);
         	}
 
     }
