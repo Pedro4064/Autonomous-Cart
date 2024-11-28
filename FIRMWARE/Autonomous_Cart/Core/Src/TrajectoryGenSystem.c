@@ -36,7 +36,6 @@ void vTrajectoryGenSystem(void){
 		*pUSCollision = 0;
 		vBuzzerStop();
 	}
-
-
-
 }
+
+

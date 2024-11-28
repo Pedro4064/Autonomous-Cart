@@ -20,7 +20,7 @@ TelemetryData xTelemetryData;
 TelemetryDataPackage xTelemetryDataPackage;
 static MotorCommands* pMotorCommands;
 unsigned char c;
-int iFlagCollision,iFlagUS;
+int iFlagCollision,iFlagUS, iCountEnd;
 extern flag, bRobotMode;
 
 void vMissionSoftwareMain(void){
@@ -78,7 +78,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     vTelemetrySystemSchedulingHandler(htim);
 
     if(htim->Instance == PATH_PID_SCHEDULER_CLOCK.Instance){
-      if(bRobotMode != 1 && iFlagUS!=1 && iFlagCollision !=1){
+      if(bRobotMode != 1 && iFlagUS!=1 && iFlagCollision !=1 && iCountEnd<13){
     	  pMotorCommands = pControlSystemUpdateMotorCommands();
       	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, (pMotorCommands->fLeftMotorSpeed)*(60.0f/(2.0f*3.1415)));
       	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR,(pMotorCommands->fRightMotorSpeed)*(60.0f/(2.0f*3.1415)));
@@ -93,7 +93,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if(htim->Instance == MOTOR_PID_SCHEDULER_CLOCK.Instance){
 
         	vPowerTrainSystemRpmControlUpdate();
-
+        	if((xTelemetryData.uiLineSensorData[0]==1)&&(xTelemetryData.uiLineSensorData[1]==1)&&(xTelemetryData.uiLineSensorData[2]==1)&&(xTelemetryData.uiLineSensorData[3]==1)&&(xTelemetryData.uiLineSensorData[4]==1)){
+        		iCountEnd++;
+        	}
+        	else if(iCountEnd >= 13){
+        		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 0);
+        		vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR,0);
+        	}else{
+        		iCountEnd=0;
+        	}
 
     }
 
