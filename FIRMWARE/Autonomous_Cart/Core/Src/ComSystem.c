@@ -36,7 +36,7 @@ extern unsigned char c;
 #define MOTOR_PID_SCHEDULER_CLOCK htim2 //! Change. Also remember to change PID library to account for different TS
 #define PATH_PID_SCHEDULER_CLOCK  htim4 //! Change. Also remember to change PID library to account for different TS
 
-#define MAX_VALUE_LENGHT 300
+#define MAX_VALUE_LENGHT 400
 
 unsigned char ucUARTState = IDDLE;
 unsigned char ucValueCount ;
@@ -203,14 +203,18 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 	            snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fAccelZ);
 	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
-	        case ('g' + 'x'): // #ggx;
-	            snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fGyroX);
+	        case ('g' + 'z'): // #ggx;
+	            snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fGyroZ);
 	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
 	        case ('g' + 'y'): // #ggy;
 	            snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fGyroY);
 	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
+	        case ('g' + 'x'): // #ggy;
+				snprintf(cOutput, sizeof(cOutput), "%.2f\r\n", xTelemetryData->xImuReadings.fGyroX);
+				HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
+				break;
 	        case ('v' + 'a'): // #gva (Velocidade atual)
 				snprintf(cOutput, sizeof(cOutput), "%.3f\r\n", xTelemetryData->fLeftMotorRPM); // Substitua fLeftMotorRPM por fVelocityActual quando o valor for atualizado
 				HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
@@ -239,22 +243,24 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 	            snprintf(cOutput, sizeof(cOutput),
 	                     "{\"ultrasonicDistance\": %.3f, \"batteryCharge\": %.0f, "
 	                     "\"acceleration\": {\"x\": %.2f, \"y\": %.2f, \"z\": %.2f}, "
-	                     "\"gyro\": {\"x\": %.2f, \"y\": %.2f}, "
+	                     "\"gyro\": {\"x\": %.2f, \"y\": %.2f, \"z\": %.2f}, "
 	                     "\"lineSensorData\": [%lu,%lu,%lu,%lu,%lu], "
 	                     "\"velocity\": {\"actual\": %.3f, \"average\": %.3f}, "
-	                     "\"distanceCovered\": %.3f, \"robotState\": %u};",
+	                     "\"distanceCovered\": %.3f, \"robotState\": %u, \"collisionStatus\": %u, \"ultrassonicStatus\": %u};",
 	                     xTelemetryData->fUltrasonicDistanceData,
 	                     xTelemetryData->fBatteryChargeData,
 	                     xTelemetryData->xImuReadings.fAccelX, xTelemetryData->xImuReadings.fAccelY,
-	                     xTelemetryData->xImuReadings.fAccelZ, xTelemetryData->xImuReadings.fGyroX,
-	                     xTelemetryData->xImuReadings.fGyroY,
+	                     xTelemetryData->xImuReadings.fAccelZ, xTelemetryData->xImuReadings.fGyroZ,
+	                     xTelemetryData->xImuReadings.fGyroY,xTelemetryData->xImuReadings.fGyroX,
 	                     xTelemetryData->uiLineSensorData[0], xTelemetryData->uiLineSensorData[1],
 	                     xTelemetryData->uiLineSensorData[2], xTelemetryData->uiLineSensorData[3],
 	                     xTelemetryData->uiLineSensorData[4],
 	                     xTelemetryData->fLeftMotorRPM, // Substitua por fVelocityActual
 	                     xTelemetryData->fRightMotorRPM, // Substitua por fVelocityAverage
 	                     xTelemetryData->fLineSensorData, // Substitua por fDistanceCovered
-	                     bRobotMode); // Substitua por bRobotMode
+	                     bRobotMode,
+						 xTelemetryData->ucCollisionStatus,
+						 xTelemetryData->ucUltrassonicStatus); // Substitua por bRobotMode
 	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
 	        }
@@ -289,6 +295,8 @@ void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue){
         case 'm':  // Define o valor de bRobotMode (modo do robô)
             if(ucValue[0] == '0'){
                 bRobotMode = 0; // Modo automático
+                xTelemetryData.ucCollisionStatus = 0;
+                xTelemetryData.ucUltrassonicStatus = 0;
                 //HAL_TIM_Base_Start_IT(&MOTOR_PID_SCHEDULER_CLOCK);
                 //HAL_TIM_Base_Start_IT(&PATH_PID_SCHEDULER_CLOCK);
             }
