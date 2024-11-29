@@ -278,13 +278,13 @@ void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue){
         case 'l':  // Define o valor de fLeftMotorSpeed (rotação do motor esquerdo)
         	if(atof(ucValue) > 0 && bRobotMode == 1){
         		vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, CLOCKWISE);
-        		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(atof(ucValue))*(60.0f/(2.0f*3.1415)));
+        		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(atof(ucValue)));
         		//pMotorCommands = pControlSystemUpdateMotorCommands();
         		//vPowerTrainSystemRpmControlUpdate();
         	}
         	else if(atof(ucValue) < 0 && bRobotMode ==1){
         		vPowerTrainSystemSetMotorDirection(LEFT_MOTOR, COUNTER_CLOCKWISE);
-        		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(atof(ucValue))*(60.0f/(2.0f*3.1415)));
+        		vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, abs(atof(ucValue)));
 				//pMotorCommands = pControlSystemUpdateMotorCommands();
 				//vPowerTrainSystemRpmControlUpdate();
         	}else if(bRobotMode ==1){
@@ -310,13 +310,13 @@ void vCommunicationSMSetParam(unsigned char ucParam, unsigned char *ucValue){
         case 'r':  // Define o valor de fRightMotorSpeed (rotação do motor direito)
         	if(atof(ucValue) > 0 && bRobotMode ==1){
 				vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, CLOCKWISE);
-				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(atof(ucValue))*(60.0f/(2.0f*3.1415)));
+				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(atof(ucValue)));
 				//pMotorCommands = pControlSystemUpdateMotorCommands();
 				//vPowerTrainSystemRpmControlUpdate();
 			}
 			else if(atof(ucValue) < 0 && bRobotMode == 1){
 				vPowerTrainSystemSetMotorDirection(RIGHT_MOTOR, COUNTER_CLOCKWISE);
-				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(atof(ucValue))*(60.0f/(2.0f*3.1415)));
+				vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR, abs(atof(ucValue)));
 				//pMotorCommands = pControlSystemUpdateMotorCommands();
 				//vPowerTrainSystemRpmControlUpdate();
 			}else if(bRobotMode ==1){
