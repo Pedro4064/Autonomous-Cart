@@ -37,8 +37,8 @@ float64_t fQ[NUM_STATES][NUM_STATES] = {
                                                         };
 
 float64_t fR[2][2] = {
-                                {0.0f, 0.0f},
-                                {0.0f, 0.0031f}
+                                {0.5f, 0.0f},
+                                {0.0f, 15.0f}
                             };
 
 float64_t fF_P[NUM_STATES][NUM_STATES];     // Intermediate result F * P_posteriori
@@ -91,7 +91,7 @@ float64_t (*vEstimationSystemInit(TelemetryData* pTelemData, MotorCommands* pMot
  * 
  */
 void vEstimationSystemComputeDynamicModel(float64_t u1, float64_t u2){
-    float64_t Ts = 0.0774f;
+    float64_t Ts = 0.03865f;
     float64_t r = 0.02f;
     float64_t L = 0.165f;
 
@@ -113,7 +113,8 @@ void vEstimationSystemComputeDynamicModel(float64_t u1, float64_t u2){
  * @param u2  Right motor RPM
  */
 void vEstimationSystemCalculateFjacobian(float64_t u1, float64_t u2){
-    float64_t Ts = 0.0774f;
+    float64_t Ts = 0.03865f;
+    // float64_t Ts = 0.0774f;
     float64_t r = 0.02f;
     float64_t L = 0.165f;
 
