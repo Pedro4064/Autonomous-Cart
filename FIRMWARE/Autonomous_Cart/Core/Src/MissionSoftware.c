@@ -15,21 +15,21 @@
 #define PATH_PID_SCHEDULER_CLOCK  htim4 //! Change. Also remember to change PID library to account for different TS
 
 TelemetryData xTelemetryData;
-TelemetryDataPackage xTelemetryDataPackage;
-StateEstimate xSystemState;
-static MotorCommands* pMotorCommands;
+static TelemetryDataPackage xTelemetryDataPackage;
+static SystemState xSystemState;
+static MotorCommands xMotorCommands;
 unsigned char c;
 
 extern flag, bRobotMode;
 void vMissionSoftwareMain(void){
 
     vProfilerInit();
-    xSystemState.states = vEstimationSystemInit(&xTelemetryData, pMotorCommands);
+    vEstimationSystemInit(&xTelemetryData, &xMotorCommands, &xSystemState);
 
     // Initialize all subsystems
     vTelemetrySystemInit(&xTelemetryData);
     vPowerTrainSystemInit(&xTelemetryData);
-    vControlSystemInit(&xTelemetryData);
+    vControlSystemInit(&xTelemetryData, &xMotorCommands);
     vComSystemInit();
     // Initialize all necessary Mission General Timers
     HAL_TIM_Base_Start_IT(&TASK_SCHEDULER_CLOCK);
@@ -52,11 +52,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
     if(htim->Instance == PATH_PID_SCHEDULER_CLOCK.Instance){
       if(bRobotMode != 1){
-    	  pMotorCommands = pControlSystemUpdateMotorCommands();
-      	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, (pMotorCommands->fLeftMotorSpeed)*(60.0f/(2.0f*3.1415)));
-      	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR,(pMotorCommands->fRightMotorSpeed)*(60.0f/(2.0f*3.1415)));
+    	  vControlSystemUpdateMotorCommands();
+      	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, (xMotorCommands.fLeftMotorSpeed)*(60.0f/(2.0f*3.1415)));
+      	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR,(xMotorCommands.fRightMotorSpeed)*(60.0f/(2.0f*3.1415)));
       }else{
-    	  pMotorCommands = pControlSystemUpdateMotorCommands();
+    	  vControlSystemUpdateMotorCommands();
       }
 
         vEstimationSystemComputeEstimate();

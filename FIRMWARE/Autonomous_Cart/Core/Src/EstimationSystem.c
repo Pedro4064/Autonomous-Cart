@@ -1,9 +1,9 @@
 #include "EstimationSystem.h"
 #include "math.h"
 
-#define r 0.04
+#define r 0.02
 #define L 0.165
-#define dT 0.1
+#define dT 0.077486
 
 static TelemetryData* pTelemetryData;
 static MotorCommands* pMotComm;
@@ -18,8 +18,10 @@ void vEstimationSystemInit(TelemetryData* pTelemData, MotorCommands* pMotorComma
 void vEstimationSystemComputeEstimate(){
 
     // Calculate Theta
-    double dLeftRadSeconds = pTelemetryData->fLeftMotorRPM * 2 * 3.14  / 60;
-    double dRightRadSeconds = pTelemetryData->fRightMotorRPM * 2 * 3.14 / 60;
+    // double dLeftRadSeconds = pTelemetryData->fLeftMotorRPM * 2 * 3.14  / 60;
+    // double dRightRadSeconds = pTelemetryData->fRightMotorRPM * 2 * 3.14 / 60;
+    double dLeftRadSeconds = pMotComm->fLeftMotorSpeed;
+    double dRightRadSeconds =  pMotComm->fRightMotorSpeed;
 
     double dThetaDot = (r/L)*(dRightRadSeconds - dLeftRadSeconds);
     pSystemState->xStateStruct.dTheta = pSystemState->xStateStruct.dTheta + dThetaDot*dT;

@@ -3,8 +3,8 @@
 
 #include "PowerTrainSystem.h"
 
-void vControlSystemInit(TelemetryData* pTelemetryData);
-MotorCommands* pControlSystemUpdateMotorCommands();
+void vControlSystemInit(TelemetryData* pTelemetryData, MotorCommands* pMotorComands);
+void vControlSystemUpdateMotorCommands();
 
 
 #endif 
