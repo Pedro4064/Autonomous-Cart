@@ -36,7 +36,7 @@ void vMissionSoftwareMain(void){
     vTelemetrySystemInit(&xTelemetryData);
     vPowerTrainSystemInit(&xTelemetryData);
     vControlSystemInit(&xTelemetryData, &xMotorCommands);
-    vComSystemInit();
+    vComSystemInit(&xSystemState);
 
     // Initialize all necessary Mission General Timers
     HAL_TIM_Base_Start_IT(&TASK_SCHEDULER_CLOCK);

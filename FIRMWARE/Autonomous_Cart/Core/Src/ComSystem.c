@@ -38,9 +38,10 @@ extern unsigned char c;
 
 #define MAX_VALUE_LENGHT 400
 
+static StateEstimate* pSystemState;
+
 unsigned char ucUARTState = IDDLE;
 unsigned char ucValueCount ;
-
 unsigned char cOutput[MAX_VALUE_LENGHT],ucC;
 extern UART_HandleTypeDef huart3;
 extern TelemetryData xTelemetryData;
@@ -161,8 +162,9 @@ void vCommunicationSMProcessByteCommunication(unsigned char ucByte){
 	HAL_UART_Transmit_IT(&huart3,  cInputArray, strlen(cInputArray));
 }*/
 
-void vComSystemInit(){
+void vComSystemInit(StateEstimate* pSysState){
 	HAL_UART_Receive_IT(&huart3, &c, 1);
+	pSystemState = pSysState;
 	//HAL_UART_Transmit_IT(&huart3, &c, 1);
 	// precisamos atribuir uma variavel ponteiro para telemetry data, state estimate
 	// e pMotorCommands. Em linhas gerais toda base é de recebimento e envio.
@@ -246,7 +248,7 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 	                     "\"gyro\": {\"x\": %.2f, \"y\": %.2f, \"z\": %.2f}, "
 	                     "\"lineSensorData\": [%lu,%lu,%lu,%lu,%lu], "
 	                     "\"velocity\": {\"actual\": %.3f, \"average\": %.3f}, "
-	                     "\"distanceCovered\": %.3f, \"robotState\": %u, \"collisionStatus\": %u, \"ultrassonicStatus\": %u};",
+	                     "\"distanceCovered\": %.3f, \"robotState\": %u, \"collisionStatus\": %u, \"ultrassonicStatus\": %u, \"xPosition\": %.4f, \"yPosition\":%.4f, \"theta\":%.4f};",
 	                     xTelemetryData->fUltrasonicDistanceData,
 	                     xTelemetryData->fBatteryChargeData,
 	                     xTelemetryData->xImuReadings.fAccelX, xTelemetryData->xImuReadings.fAccelY,
@@ -260,7 +262,11 @@ void vCommunicationSMReturnParam(unsigned char ucParam, TelemetryData *xTelemetr
 	                     xTelemetryData->fLineSensorData, // Substitua por fDistanceCovered
 	                     bRobotMode,
 						 xTelemetryData->ucCollisionStatus,
-						 xTelemetryData->ucUltrassonicStatus); // Substitua por bRobotMode
+						 xTelemetryData->ucUltrassonicStatus,
+						 (*pSystemState->states)[0],
+						 (*pSystemState->states)[3],
+						 (*pSystemState->states)[6]
+						 ); // Substitua por bRobotMode
 	            HAL_UART_Transmit_IT(&huart3, (uint8_t*)cOutput, strlen(cOutput));
 	            break;
 	        }
