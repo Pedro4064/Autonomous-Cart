@@ -37,8 +37,8 @@ float64_t fQ[NUM_STATES][NUM_STATES] = {
                                                         };
 
 float64_t fR[2][2] = {
-                                {10.0f, 0.0f},
-                                {0.0f, 10.00f}
+                                {0.0f, 0.0f},
+                                {0.0f, 0.0031f}
                             };
 
 float64_t fF_P[NUM_STATES][NUM_STATES];     // Intermediate result F * P_posteriori
@@ -91,9 +91,9 @@ float64_t (*vEstimationSystemInit(TelemetryData* pTelemData, MotorCommands* pMot
  * 
  */
 void vEstimationSystemComputeDynamicModel(float64_t u1, float64_t u2){
-    float64_t Ts = 0.1f;
-    float64_t r = 0.035f;
-    float64_t L = 0.1f;
+    float64_t Ts = 0.0774f;
+    float64_t r = 0.02f;
+    float64_t L = 0.165f;
 
     // X Hat priori calculations
     fX_hat_priori[0] = fStateVector[0] + fStateVector[1] * Ts + 0.5f * fStateVector[2] * Ts * Ts;
@@ -113,10 +113,9 @@ void vEstimationSystemComputeDynamicModel(float64_t u1, float64_t u2){
  * @param u2  Right motor RPM
  */
 void vEstimationSystemCalculateFjacobian(float64_t u1, float64_t u2){
-
-    float64_t Ts = 0.1f;
-    float64_t r = 0.035f;
-    float64_t L = 0.1f;
+    float64_t Ts = 0.0774f;
+    float64_t r = 0.02f;
+    float64_t L = 0.165f;
 
     float64_t *x = fStateVector;
 
@@ -326,19 +325,28 @@ void vEstimationSystemCalculatePposteriori(){
     float64_t fIKH[NUM_STATES][NUM_STATES]; // (I - K * H)
     float64_t fIKH_t[NUM_STATES][NUM_STATES]; // Transpose of (I - K * H)
     float64_t fIKHP[NUM_STATES][NUM_STATES]; // (I - K * H) * P_priori
-    float64_t fKRK[NUM_STATES][NUM_STATES]; // K * R * K'
+
+    float64_t fKR[NUM_STATES][2]; // K * R 
+    float64_t fK_t[2][NUM_STATES]; // K'
+    float64_t fKRK_t[NUM_STATES][NUM_STATES]; // K * R * K'
 
     arm_matrix_instance_f64 mI;
     arm_matrix_instance_f64 mIKH;
     arm_matrix_instance_f64 mIKH_t;
     arm_matrix_instance_f64 mIKHP;
-    arm_matrix_instance_f64 mKRK;
+
+    arm_matrix_instance_f64 mKR;
+    arm_matrix_instance_f64 mKRK_t;
+    arm_matrix_instance_f64 mK_t;
 
     arm_mat_init_f64(&mI, NUM_STATES, NUM_STATES, (float64_t *)fI);
     arm_mat_init_f64(&mIKH, NUM_STATES, NUM_STATES, (float64_t *)fIKH);
     arm_mat_init_f64(&mIKH_t, NUM_STATES, NUM_STATES, (float64_t *)fIKH_t);
     arm_mat_init_f64(&mIKHP, NUM_STATES, NUM_STATES, (float64_t *)fIKHP);
-    arm_mat_init_f64(&mKRK, NUM_STATES, NUM_STATES, (float64_t *)fKRK);
+
+    arm_mat_init_f64(&mKR, NUM_STATES, 2, (float64_t *)fKR);
+    arm_mat_init_f64(&mK_t, 2, NUM_STATES, (float64_t *)fK_t);
+    arm_mat_init_f64(&mKRK_t, NUM_STATES, NUM_STATES, (float64_t *)fKRK_t);
 
     // Identity matrix
     for (int i = 0; i < NUM_STATES; i++) {
@@ -359,11 +367,12 @@ void vEstimationSystemCalculatePposteriori(){
     arm_mat_mult_f64(&mIKHP, &mIKH_t, &mP_posteriori);
 
     // K * R * K'
-    arm_mat_mult_f64(&mK, &mR, &mKRK);
-    arm_mat_mult_f64(&mKRK, &mK, &mKRK);
+    arm_mat_trans_f64(&mK, &mK_t);
+    arm_mat_mult_f64(&mK, &mR, &mKR);
+    arm_mat_mult_f64(&mKR, &mK_t, &mKRK_t);
 
     // Add K * R * K' to P_posteriori
-    arm_mat_add_f64(&mP_posteriori, &mKRK, &mP_posteriori);
+    arm_mat_add_f64(&mP_posteriori, &mKRK_t, &mP_posteriori);
 }
 
 void vEstimationSystemEkfEstimate(float64_t z1, float64_t z2){
@@ -401,7 +410,7 @@ void vEstimationSystemComputeEstimate(){
 
     float64_t u1 = (float64_t)pMotComm->fLeftMotorSpeed;
     float64_t u2 = (float64_t)pMotComm->fRightMotorSpeed;
-    float64_t z1 = (float64_t)pTelemetryData->xImuReadings.fAccelX;
+    float64_t z1 = (float64_t)pTelemetryData->xImuReadings.fAccelY;
     float64_t z2 = (float64_t)pTelemetryData->xImuReadings.fGyroZ;
 
     static char cFirstIteration = 1;
