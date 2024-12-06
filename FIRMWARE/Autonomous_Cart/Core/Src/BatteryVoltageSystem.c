@@ -7,6 +7,7 @@
 #include "adc.h"
 #include "BatteryVoltageSystem.h"
 #include "MissionSoftware.h"
+#include "profiler.h"
 
 #define BATTERY_AD hadc2
 #define ADC_MAX_READING 3680 // tensão de 12,62V

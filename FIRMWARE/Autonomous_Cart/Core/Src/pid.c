@@ -8,6 +8,7 @@
 /* ***************************************************************** */
 
 #include "pid.h"
+#include "profiler.h"
 
 /* ************************************************ */
 /* Method name:        vPidInit                     */
@@ -74,6 +75,7 @@ unsigned short usPidGetIntegratorWindow(const pid_data_type *pPid) {
 /* Output params:      float: New control effort      */
 /* ************************************************** */
 float fPidUpdateData(pid_data_type *pPid, float fSensorValue, float fSetValue) {
+    START_PROFILE_SECTION();
     float fError, fDifference, fOut;
 
     // Proportional error
@@ -101,6 +103,6 @@ float fPidUpdateData(pid_data_type *pPid, float fSensorValue, float fSetValue) {
         fOut = pPid->fOutputSaturation;
     else if (fOut < 0)
         fOut = 0;
-
+    END_PROFILE_SECTION();
     return fOut;
 }

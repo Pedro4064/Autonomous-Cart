@@ -7,7 +7,8 @@
 
 
 #include <tim.h>
-#include <PowerTrainSystem.h>
+#include "PowerTrainSystem.h"
+#include "profiler.h"
 
 #define MOTOR_TIM htim1
 #define MOTOR_RIGHT_CHANNEL TIM_CHANNEL_2
@@ -46,6 +47,7 @@ void vPowerTrainSystemInit(TelemetryData *pTelData){
 
 }
 void vPowerTrainSystemSetMotorDirection(Motor xMotor, MotorSpin xDirection){
+	START_PROFILE_SECTION();
 	switch (xMotor){
 		case LEFT_MOTOR:
 
@@ -70,8 +72,11 @@ void vPowerTrainSystemSetMotorDirection(Motor xMotor, MotorSpin xDirection){
 				HAL_GPIO_WritePin(RIGHT_MOTOR_DIR_IN4_GPIO_Port,RIGHT_MOTOR_DIR_IN4_Pin,GPIO_PIN_SET);
 			} break;
 	}
+	END_PROFILE_SECTION();
+
 }
 void vPowerTrainSystemSetMotorSpeed(Motor xMotor,double fSpeed){
+	START_PROFILE_SECTION();
 	switch (xMotor){
 		case LEFT_MOTOR:
 		 	xMotorCommands.fLeftMotorSpeed = fSpeed;
@@ -81,9 +86,11 @@ void vPowerTrainSystemSetMotorSpeed(Motor xMotor,double fSpeed){
 		 	xMotorCommands.fRightMotorSpeed = fSpeed;
 			break;
 	}
+	END_PROFILE_SECTION();
 }
 
 void vPowerTrainSystemRpmControlUpdate(){
+	START_PROFILE_SECTION();
 
 	fLeftActuatorEffort = fPidUpdateData(&xLeftMotorPid, pTelemetryData->fLeftMotorRPM, xMotorCommands.fLeftMotorSpeed);
 	fRightActuatorEffort = fPidUpdateData(&xRightMotorPid, pTelemetryData->fRightMotorRPM, xMotorCommands.fRightMotorSpeed);
@@ -92,6 +99,6 @@ void vPowerTrainSystemRpmControlUpdate(){
 	// __HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_LEFT_CHANNEL,xMotorCommands.fLeftMotorSpeed);
 	__HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_RIGHT_CHANNEL,(fRightActuatorEffort)*1000);
 	// __HAL_TIM_SET_COMPARE(&MOTOR_TIM,MOTOR_RIGHT_CHANNEL,xMotorCommands.fRightMotorSpeed);
-
+	END_PROFILE_SECTION();
 }
 

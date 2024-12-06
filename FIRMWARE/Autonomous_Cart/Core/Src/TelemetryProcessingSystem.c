@@ -4,6 +4,7 @@
 #include "imu.h"
 #include "encoderSystem.h"
 #include "UltrassonicDistanceSystem.h"
+#include "profiler.h"
 
 TelemetryData* pTelemetryData;
 TelemetryCallbackOrchestration xCallbackOrchestration = {.TimerInterruptLookup = {
@@ -11,7 +12,7 @@ TelemetryCallbackOrchestration xCallbackOrchestration = {.TimerInterruptLookup =
                                                                                     {.htim = &htim16, .xRegisteredCallbacks = {vEncoderSystemHandleCounterOverflow}},
 //																					{.htim = &htim3, .xRegisteredCallbacks = {vUltrassonicDistanceSystemExecuteMeasurement}},
                                                                                     {.htim = &htim4, .xRegisteredCallbacks = {vBatterySystemComputeMeasurement}}, 
-                                                                                    // {.htim = &htim4, .xRegisteredCallbacks = {vImuComputeMeasurements}}, 
+                                                                                    {.htim = &htim4, .xRegisteredCallbacks = {vImuComputeMeasurements}},
                                                                                     {.htim = &htim4, .xRegisteredCallbacks = {vLineSensorSystemProcessMeasurements}}, 
                                                                                 },
                                                           .InputCaptureLookup = {
@@ -28,8 +29,7 @@ void vTelemetrySystemInit(TelemetryData* pTelemetryData){
     vBatterySystemInit(&(pTelemetryData->fBatteryChargeData));
     vCollisionSensorInit(&(pTelemetryData->ucCollisionStatus));
     vUltrassonicDistanceSystemInit(&(pTelemetryData->fUltrasonicDistanceData));
-    // vImuInit(&(pTelemetryData->xImuReadings));
-
+    vImuInit(&(pTelemetryData->xImuReadings));
 }
 
 void vTelemetrySystemSchedulingHandler(TIM_HandleTypeDef* pTIM){

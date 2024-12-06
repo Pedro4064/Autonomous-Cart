@@ -3,6 +3,7 @@
 #include "ControlSystem.h"
 #include "TelemetryProcessingSystem.h"
 #include "pid.h"
+#include "profiler.h"
 
 #define MIN(x, y) (x<y)? x : y
 #define MAX(x, y) (x<y)? y : x
@@ -27,22 +28,24 @@
 #define THETA_ERROR_1 0.40489
 #define THETA_ERROR_0 0.66597
 
-MotorCommands xTargetMotorValues;
+MotorCommands* pTargetMotorValues;
 TelemetryData* pTelemetryValues;
 pid_data_type xLeftPid;
 pid_data_type xRightPid;
 
 float fLeftMotorThetaError;
 float fRightMotorThetaError;
-void vControlSystemInit(TelemetryData* pTelemetryData){
+void vControlSystemInit(TelemetryData* pTelemetryData, MotorCommands* pMotorComands){
     
     pTelemetryValues = pTelemetryData;
+    pTargetMotorValues = pMotorComands;
 
     vPidInit(&xLeftPid, KP_LEFT_MOTOR, KI_LEFT_MOTOR, KD_LEF_MOTOR, 1000, 20.0, 77.3);
     vPidInit(&xRightPid, KP_RIGHT_MOTOR, KI_RIGHT_MOTOR, KD_RIGHT_MOTOR, 1000, 20.0, 77.3);
 }
 
-MotorCommands* pControlSystemUpdateMotorCommands(){
+void vControlSystemUpdateMotorCommands(){
+    START_PROFILE_SECTION();
 
     static float fLeftMotorPreviousThetaError;
     static float fRightMotorPreviousThetaError;
@@ -56,11 +59,10 @@ MotorCommands* pControlSystemUpdateMotorCommands(){
     fRightPidErrorInput = (fLeftMotorThetaError + fRightMotorThetaError + pTelemetryValues->uiLineSensorData[2] == 0)? fRightMotorPreviousThetaError:fRightMotorThetaError;
     fLeftPidErrorInput = (fLeftMotorThetaError + fRightMotorThetaError + pTelemetryValues->uiLineSensorData[2] == 0)? fLeftMotorPreviousThetaError:fLeftMotorThetaError;
 
-    xTargetMotorValues.fLeftMotorSpeed = 6 - fPidUpdateData(&xRightPid, 0, fRightPidErrorInput);
-    xTargetMotorValues.fRightMotorSpeed = 6 - fPidUpdateData(&xLeftPid, 0, (-1)*fLeftPidErrorInput);
+    pTargetMotorValues->fLeftMotorSpeed = 6 - fPidUpdateData(&xRightPid, 0, fRightPidErrorInput);
+    pTargetMotorValues->fRightMotorSpeed = 6 - fPidUpdateData(&xLeftPid, 0, (-1)*fLeftPidErrorInput);
 
     fLeftMotorPreviousThetaError = fLeftPidErrorInput;
     fRightMotorPreviousThetaError= fRightPidErrorInput;
-
-    return &xTargetMotorValues;
+    END_PROFILE_SECTION();
 }
