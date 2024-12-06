@@ -8,7 +8,9 @@
 #define NUM_STATES 8
 
 typedef struct STATE_ESTIMATE{
-    float64_t (*states)[8];
+    double dX;
+    double dY;
+    double dTheta;
 }StateEstimate;
 
 typedef union SYSTEM_STATE{
@@ -17,7 +19,7 @@ typedef union SYSTEM_STATE{
 }SystemState;
 
 
-float64_t (*vEstimationSystemInit(TelemetryData* pTelemData, MotorCommands* pMotorCommands))[8];
+void vEstimationSystemInit(TelemetryData* pTelemData, MotorCommands* pMotorCommands, SystemState* pSysState);
 void vEstimationSystemComputeEstimate();
 
 
