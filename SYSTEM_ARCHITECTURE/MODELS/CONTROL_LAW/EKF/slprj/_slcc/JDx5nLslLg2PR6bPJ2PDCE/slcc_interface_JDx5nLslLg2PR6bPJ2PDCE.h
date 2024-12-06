@@ -13,14 +13,14 @@ extern "C" {
 /* Variable Definitions */
 
 /* Function Declarations */
-DLL_EXPORT_CC extern void get_fP_priori_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8][8]);
 DLL_EXPORT_CC extern void get_fK_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8][2]);
-DLL_EXPORT_CC extern void get_fH_jacobian_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[2][8]);
-DLL_EXPORT_CC extern void get_fStateVector_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8]);
-DLL_EXPORT_CC extern void get_fP_posteriori_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8][8]);
 DLL_EXPORT_CC extern void get_fH_nonlinear_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[2]);
-DLL_EXPORT_CC extern void get_fF_jacobian_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8][8]);
+DLL_EXPORT_CC extern void get_fP_posteriori_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8][8]);
+DLL_EXPORT_CC extern void get_fStateVector_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8]);
 DLL_EXPORT_CC extern void get_fX_hat_priori_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8]);
+DLL_EXPORT_CC extern void get_fF_jacobian_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8][8]);
+DLL_EXPORT_CC extern void get_fH_jacobian_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[2][8]);
+DLL_EXPORT_CC extern void get_fP_priori_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8][8]);
 DLL_EXPORT_CC extern const char_T *get_dll_checksum_JDx5nLslLg2PR6bPJ2PDCE(void);
 DLL_EXPORT_CC extern q31_t read_q15x2_JDx5nLslLg2PR6bPJ2PDCE(const q15_t *pQ15);
 DLL_EXPORT_CC extern void write_q15x2_ia_JDx5nLslLg2PR6bPJ2PDCE(q15_t **pQ15, q31_t value);

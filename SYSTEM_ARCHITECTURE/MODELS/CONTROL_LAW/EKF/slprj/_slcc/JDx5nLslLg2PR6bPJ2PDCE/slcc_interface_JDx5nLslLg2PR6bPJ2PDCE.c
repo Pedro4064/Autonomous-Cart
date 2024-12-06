@@ -13,29 +13,9 @@
 /* Function Declarations */
 
 /* Function Definitions */
-void get_fP_priori_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8][8])
-{
-    *varAddr = &fP_priori;
-}
-
 void get_fK_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8][2])
 {
     *varAddr = &fK;
-}
-
-void get_fH_jacobian_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[2][8])
-{
-    *varAddr = &fH_jacobian;
-}
-
-void get_fStateVector_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8])
-{
-    *varAddr = &fStateVector;
-}
-
-void get_fP_posteriori_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8][8])
-{
-    *varAddr = &fP_posteriori;
 }
 
 void get_fH_nonlinear_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[2])
@@ -43,14 +23,34 @@ void get_fH_nonlinear_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[2])
     *varAddr = &fH_nonlinear;
 }
 
-void get_fF_jacobian_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8][8])
+void get_fP_posteriori_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8][8])
 {
-    *varAddr = &fF_jacobian;
+    *varAddr = &fP_posteriori;
+}
+
+void get_fStateVector_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8])
+{
+    *varAddr = &fStateVector;
 }
 
 void get_fX_hat_priori_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8])
 {
     *varAddr = &fX_hat_priori;
+}
+
+void get_fF_jacobian_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8][8])
+{
+    *varAddr = &fF_jacobian;
+}
+
+void get_fH_jacobian_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[2][8])
+{
+    *varAddr = &fH_jacobian;
+}
+
+void get_fP_priori_addr_JDx5nLslLg2PR6bPJ2PDCE(float64_t (**varAddr)[8][8])
+{
+    *varAddr = &fP_priori;
 }
 
 const char_T *get_dll_checksum_JDx5nLslLg2PR6bPJ2PDCE(void)

@@ -16,7 +16,7 @@
 
 TelemetryData xTelemetryData;
 TelemetryDataPackage xTelemetryDataPackage;
-SystemState xSystemState;
+StateEstimate xSystemState;
 static MotorCommands* pMotorCommands;
 unsigned char c;
 
@@ -24,7 +24,7 @@ extern flag, bRobotMode;
 void vMissionSoftwareMain(void){
 
     vProfilerInit();
-    vEstimationSystemInit(&xSystemState, &xTelemetryData, pMotorCommands);
+    xSystemState.states = vEstimationSystemInit(&xTelemetryData, pMotorCommands);
 
     // Initialize all subsystems
     vTelemetrySystemInit(&xTelemetryData);
@@ -59,6 +59,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     	  pMotorCommands = pControlSystemUpdateMotorCommands();
       }
 
+        vEstimationSystemComputeEstimate();
     }
     if(htim->Instance == MOTOR_PID_SCHEDULER_CLOCK.Instance){
         vPowerTrainSystemRpmControlUpdate();

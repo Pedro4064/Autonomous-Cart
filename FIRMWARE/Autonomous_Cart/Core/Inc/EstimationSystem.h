@@ -5,24 +5,19 @@
 #ifndef __ESTIMATION_SYSTEM_H__
 #define __ESTIMATION_SYSTEM_H__
 
+#define NUM_STATES 8
+
 typedef struct STATE_ESTIMATE{
-    float32_t fX;
-    float32_t fX_dot;
-    float32_t fX_ddot;
-    float32_t fY;
-    float32_t fY_dot;
-    float32_t fY_ddot;
-    float32_t fTheta;
-    float32_t fTheta_dot;
+    float64_t (*states)[8];
 }StateEstimate;
 
 typedef union SYSTEM_STATE{
     StateEstimate xStateStruct;
-    float32_t fStateVector[8];
+    float64_t fStateVector[8];
 }SystemState;
 
 
-void vEstimationSystemInit(SystemState* pSystemState, TelemetryData* pTelemetryData, MotorCommands* pMotorCommands);
+float64_t (*vEstimationSystemInit(TelemetryData* pTelemData, MotorCommands* pMotorCommands))[8];
 void vEstimationSystemComputeEstimate();
 
 

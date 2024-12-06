@@ -11,7 +11,7 @@
 */
 
 // Enable profiling
-#define PROFILING_ON 1
+#define PROFILING_ON 0
 
 #if PROFILING_ON
     #define START_PROFILE_SECTION() startProfileSection(__func__)
