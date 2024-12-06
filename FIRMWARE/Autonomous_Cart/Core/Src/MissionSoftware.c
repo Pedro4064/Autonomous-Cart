@@ -67,9 +67,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
       	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, (xMotorCommands.fLeftMotorSpeed)*(60.0f/(2.0f*3.1415)));
       	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR,(xMotorCommands.fRightMotorSpeed)*(60.0f/(2.0f*3.1415)));
       }
-      else if(bRobotMode == 1 ){
-    	  vControlSystemUpdateMotorCommands();
-      }
       else if (iFlagCollision==1 ||iFlagUS ==1 ){
     	  vPowerTrainSystemSetMotorSpeed(LEFT_MOTOR, 0);
     	  vPowerTrainSystemSetMotorSpeed(RIGHT_MOTOR,0);
