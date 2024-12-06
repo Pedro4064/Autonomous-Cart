@@ -59,10 +59,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     	  vControlSystemUpdateMotorCommands();
       }
 
-        vEstimationSystemComputeEstimate();
     }
     if(htim->Instance == MOTOR_PID_SCHEDULER_CLOCK.Instance){
         vPowerTrainSystemRpmControlUpdate();
+        vEstimationSystemComputeEstimate();
     }
 
     // After All mission critical interrupts were handled, package the telemetry data and send it over uart
