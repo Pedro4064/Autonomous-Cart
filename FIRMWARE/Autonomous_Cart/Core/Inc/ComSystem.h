@@ -9,6 +9,7 @@
 #define INC_COMMUNICATION_H_
 
 #include "TelemetryProcessingSystem.h"
+#include "EstimationSystem.h"
 
 
 // ***************************************************** //
@@ -49,7 +50,7 @@ void vCommunicationAppendCharacter();
 void vCommunicationSentToFloat();
 
 
-void vComSystemInit();
+void vComSystemInit(StateEstimate* pSysState);
 
 void vComSystemSendRobotData();
 
